@@ -1,0 +1,432 @@
+/* ==========================================================================
+   SUI.CSS - LUXURY LAYOUT ARCHITECTURE (ULTRA PRO MAX)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VIEWPORT & FLUID CONTAINERS
+   -------------------------------------------------------------------------- */
+.sui-container {
+  /* Logical properties adapt automatically to LTR/RTL reading modes */
+  inline-size: 100%;
+  max-inline-size: var(--sui-max-width, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--sui-space-6);
+  position: relative;
+}
+
+.sui-container-fluid {
+  inline-size: 100%;
+  padding-inline: var(--sui-space-6);
+  position: relative;
+}
+
+.sui-container-reading {
+  inline-size: 100%;
+  max-inline-size: 65ch; /* Optimal reading width for typography */
+  margin-inline: auto;
+  padding-inline: var(--sui-space-6);
+}
+
+/* Container Queries Registration - The modern replacement for Media Queries */
+.sui-cq { container-type: inline-size; }
+.sui-cq-normal { container-type: normal; }
+
+/* --------------------------------------------------------------------------
+   2. THE GRID ENGINE (Subgrid + Intrinsic Sizing)
+   -------------------------------------------------------------------------- */
+.sui-grid { display: grid; }
+.sui-inline-grid { display: inline-grid; }
+
+/* Auto-fitting fluid grid (No media queries required) */
+.sui-grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--sui-min-col, 300px)), 1fr));
+  gap: var(--sui-space-6);
+}
+
+.sui-grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--sui-min-col, 300px)), 1fr));
+  gap: var(--sui-space-6);
+}
+
+/* 12-Column Main Layout Grid */
+.sui-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--sui-space-4);
+  align-items: start;
+}
+
+/* CSS Subgrid - Inherit parent's grid tracks */
+.sui-subgrid {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+  gap: inherit;
+}
+
+/* Spanning System */
+.sui-col-1 { grid-column: span 1 / span 1; }
+.sui-col-2 { grid-column: span 2 / span 2; }
+.sui-col-3 { grid-column: span 3 / span 3; }
+.sui-col-4 { grid-column: span 4 / span 4; }
+.sui-col-5 { grid-column: span 5 / span 5; }
+.sui-col-6 { grid-column: span 6 / span 6; }
+.sui-col-7 { grid-column: span 7 / span 7; }
+.sui-col-8 { grid-column: span 8 / span 8; }
+.sui-col-9 { grid-column: span 9 / span 9; }
+.sui-col-10 { grid-column: span 10 / span 10; }
+.sui-col-11 { grid-column: span 11 / span 11; }
+.sui-col-12 { grid-column: 1 / -1; }
+
+/* Column Starting Positions */
+.sui-start-1 { grid-column-start: 1; }
+.sui-start-2 { grid-column-start: 2; }
+.sui-start-3 { grid-column-start: 3; }
+.sui-start-4 { grid-column-start: 4; }
+.sui-start-auto { grid-column-start: auto; }
+
+/* Fixed & Content-based Grid Columns */
+.sui-grid-sidebar {
+  display: grid;
+  grid-template-columns: var(--sui-sidebar-w, 280px) minmax(0, 1fr);
+  gap: var(--sui-space-6);
+}
+
+.sui-grid-content-first {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  gap: var(--sui-space-4);
+}
+
+.sui-grid-content-last {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  gap: var(--sui-space-4);
+}
+
+/* --------------------------------------------------------------------------
+   3. RESPONSIVE GRID BEHAVIORS (Container Query Driven)
+   -------------------------------------------------------------------------- */
+/* When placed inside a .sui-cq, these columns collapse if the container is tight */
+@container (max-width: 768px) {
+  .sui-col-4, .sui-col-6, .sui-col-8, .sui-col-9 {
+    grid-column: 1 / -1; /* Full width */
+  }
+  .sui-grid-sidebar {
+    grid-template-columns: 1fr; /* Stacks vertically */
+  }
+}
+
+@container (max-width: 480px) {
+  .sui-col-3, .sui-col-2 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Standard Media Query Fallbacks (Viewport Level) */
+@media (max-width: 992px) {
+  .sui-col-lg-12 { grid-column: 1 / -1; }
+  .sui-grid-sidebar { grid-template-columns: var(--sui-sidebar-w, 240px) minmax(0, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .sui-col-md-12 { grid-column: 1 / -1; }
+  .sui-row { gap: var(--sui-space-6); }
+  .sui-grid-sidebar { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 576px) {
+  .sui-col-sm-12 { grid-column: 1 / -1; }
+}
+
+/* --------------------------------------------------------------------------
+   4. FLEXBOX & ALIGNMENT PRIMITIVES (One-Dimensional Engine)
+   -------------------------------------------------------------------------- */
+.sui-flex { display: flex; }
+.sui-inline-flex { display: inline-flex; }
+
+/* Directions */
+.sui-flex-row { flex-direction: row; }
+.sui-flex-row-rev { flex-direction: row-reverse; }
+.sui-flex-col { flex-direction: column; }
+.sui-flex-col-rev { flex-direction: column-reverse; }
+
+/* Wrapping */
+.sui-flex-wrap { flex-wrap: wrap; }
+.sui-flex-wrap-rev { flex-wrap: wrap-reverse; }
+.sui-flex-nowrap { flex-wrap: nowrap; }
+
+/* The fix for Flexbox content overflow */
+.sui-min-w-0 { min-width: 0; }
+.sui-min-h-0 { min-height: 0; }
+
+/* Flex Sizing */
+.sui-flex-1 { flex: 1 1 0%; min-width: 0; } /* Standard flex fill */
+.sui-flex-auto { flex: 1 1 auto; }
+.sui-flex-none { flex: 0 0 auto; } /* Rigid size */
+.sui-grow { flex-grow: 1; min-width: 0; }
+.sui-grow-0 { flex-grow: 0; }
+.sui-shrink { flex-shrink: 1; }
+.sui-shrink-0 { flex-shrink: 0; }
+
+/* Main Axis Alignment (Justify) */
+.sui-justify-start { justify-content: flex-start; }
+.sui-justify-end { justify-content: flex-end; }
+.sui-justify-center { justify-content: center; }
+.sui-justify-between { justify-content: space-between; }
+.sui-justify-around { justify-content: space-around; }
+.sui-justify-evenly { justify-content: space-evenly; }
+
+/* Cross Axis Alignment (Items) */
+.sui-items-start { align-items: flex-start; }
+.sui-items-end { align-items: flex-end; }
+.sui-items-center { align-items: center; }
+.sui-items-baseline { align-items: baseline; }
+.sui-items-stretch { align-items: stretch; }
+
+/* Individual Cross Axis Alignment (Self) */
+.sui-self-auto { align-self: auto; }
+.sui-self-start { align-self: flex-start; }
+.sui-self-end { align-self: flex-end; }
+.sui-self-center { align-self: center; }
+.sui-self-stretch { align-self: stretch; }
+.sui-self-baseline { align-self: baseline; }
+
+/* Absolute Center Helper */
+.sui-place-center {
+  display: grid;
+  place-content: center;
+}
+.sui-place-items-center {
+  display: grid;
+  place-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   5. MACRO APP LAYOUTS (Pre-built complex page structures)
+   -------------------------------------------------------------------------- */
+/* Holy Grail Layout - Header, Nav, Main, Sidebar, Footer */
+.sui-layout-app {
+  display: grid;
+  min-height: 100dvh; /* Modern viewport unit */
+  grid-template-rows: auto 1fr auto;
+}
+
+.sui-layout-app-body {
+  display: grid;
+  grid-template-columns: 240px 1fr 300px;
+  grid-template-areas: "nav main aside";
+}
+
+@media (max-width: 1024px) {
+  .sui-layout-app-body {
+    grid-template-columns: 200px 1fr;
+    grid-template-areas: "nav main";
+  }
+  .sui-layout-app-aside { display: none; } /* Hide secondary sidebar on tablet */
+}
+
+@media (max-width: 768px) {
+  .sui-layout-app-body {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main";
+  }
+  .sui-layout-app-nav { display: none; } /* Off-canvas on mobile */
+}
+
+.sui-layout-nav { grid-area: nav; }
+.sui-layout-main { grid-area: main; min-width: 0; }
+.sui-layout-aside { grid-area: aside; }
+
+/* Split View Layout (Login pages, feature highlights) */
+.sui-layout-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100dvh;
+}
+.sui-layout-split-pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--sui-space-6);
+}
+@media (max-width: 768px) {
+  .sui-layout-split { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+}
+
+/* Masonry Fallback (Grid-based approximation) */
+.sui-masonry {
+  columns: 3;
+  column-gap: var(--sui-space-4);
+}
+.sui-masonry-item {
+  break-inside: avoid;
+  margin-bottom: var(--sui-space-4);
+}
+@media (max-width: 992px) { .sui-masonry { columns: 2; } }
+@media (max-width: 576px) { .sui-masonry { columns: 1; } }
+
+/* --------------------------------------------------------------------------
+   6. SPATIAL POSITIONING & SCROLLING
+   -------------------------------------------------------------------------- */
+.sui-static { position: static; }
+.sui-relative { position: relative; }
+.sui-absolute { position: absolute; }
+.sui-fixed { position: fixed; }
+.sui-sticky { position: sticky; }
+
+/* Positional Insets */
+.sui-inset-0 { inset: 0; }
+.sui-inset-x-0 { left: 0; right: 0; }
+.sui-inset-y-0 { top: 0; bottom: 0; }
+.sui-top-0 { top: 0; }
+.sui-right-0 { right: 0; }
+.sui-bottom-0 { bottom: 0; }
+.sui-left-0 { left: 0; }
+
+.sui-absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Modern Header Positioning */
+.sui-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--sui-bg); /* Fallback */
+}
+@supports (backdrop-filter: blur(10px)) {
+  .sui-sticky-header {
+    background-color: oklch(from var(--sui-bg) l c h / 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* Anchor Positioning API (New 2026 CSS Standard) */
+/* Allows popovers and tooltips to stick to targets without JavaScript */
+.sui-anchor-target {
+  anchor-name: --sui-popover-anchor;
+}
+.sui-anchor-popover {
+  position: absolute;
+  position-anchor: --sui-popover-anchor;
+  top: anchor(bottom);
+  left: anchor(center);
+  transform: translateX(-50%);
+  margin-top: var(--sui-space-2);
+}
+
+/* Overflow & Scrolling */
+.sui-overflow-auto { overflow: auto; }
+.sui-overflow-hidden { overflow: hidden; }
+.sui-overflow-visible { overflow: visible; }
+.sui-overflow-scroll { overflow: scroll; }
+.sui-overflow-x-auto { overflow-x: auto; }
+.sui-overflow-y-auto { overflow-y: auto; }
+
+/* Scroll Snapping */
+.sui-scroll-snap-x { scroll-snap-type: x mandatory; }
+.sui-scroll-snap-y { scroll-snap-type: y mandatory; }
+.sui-snap-center { scroll-snap-align: center; }
+.sui-snap-start { scroll-snap-align: start; }
+.sui-snap-end { scroll-snap-align: end; }
+
+/* --------------------------------------------------------------------------
+   7. Z-INDEX SCALE (Hardware Accelerated Tiers)
+   -------------------------------------------------------------------------- */
+.sui-z-under { z-index: -1; }
+.sui-z-0 { z-index: 0; }
+.sui-z-10 { z-index: 10; }
+.sui-z-20 { z-index: 20; }
+.sui-z-30 { z-index: 30; }
+.sui-z-40 { z-index: 40; }
+.sui-z-50 { z-index: 50; } /* Standard dropdowns/popovers */
+.sui-z-modal { z-index: 1000; }
+.sui-z-toast { z-index: 2000; }
+.sui-z-max { z-index: 9999; }
+
+/* --------------------------------------------------------------------------
+   8. SIZING & ASPECT RATIOS
+   -------------------------------------------------------------------------- */
+/* Widths */
+.sui-w-full { width: 100%; }
+.sui-w-screen { width: 100vw; }
+.sui-w-min { width: min-content; }
+.sui-w-max { width: max-content; }
+.sui-w-fit { width: fit-content; }
+
+/* Heights */
+.sui-h-full { height: 100%; }
+.sui-h-screen { height: 100vh; }
+.sui-h-dvh { height: 100dvh; } /* Dynamic viewport height (fixes iOS Safari bugs) */
+.sui-h-min { height: min-content; }
+.sui-h-max { height: max-content; }
+.sui-h-fit { height: fit-content; }
+
+/* Aspect Ratios (Native) */
+.sui-aspect-square { aspect-ratio: 1 / 1; }
+.sui-aspect-video { aspect-ratio: 16 / 9; }
+.sui-aspect-portrait { aspect-ratio: 3 / 4; }
+.sui-aspect-wide { aspect-ratio: 21 / 9; }
+
+/* Object Fit (Media/Images) */
+.sui-object-cover { object-fit: cover; }
+.sui-object-contain { object-fit: contain; }
+.sui-object-fill { object-fit: fill; }
+.sui-object-center { object-position: center; }
+
+/* --------------------------------------------------------------------------
+   9. GAP UTILITIES (For Flex & Grid)
+   -------------------------------------------------------------------------- */
+.sui-gap-0 { gap: 0; }
+.sui-gap-1 { gap: var(--sui-space-1, 0.25rem); }
+.sui-gap-2 { gap: var(--sui-space-2, 0.5rem); }
+.sui-gap-3 { gap: var(--sui-space-3, 0.75rem); }
+.sui-gap-4 { gap: var(--sui-space-4, 1rem); }
+.sui-gap-6 { gap: var(--sui-space-6, 1.5rem); }
+.sui-gap-8 { gap: var(--sui-space-8, 2rem); }
+.sui-gap-12 { gap: var(--sui-space-12, 3rem); }
+
+/* ==========================================================================
+   SUBGRID MATRICES
+   ========================================================================== */
+
+/* Matrix Container: 3-row grid per item (Header, Body, Actions) */
+.sui-subgrid-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: auto auto 1fr;
+  gap: var(--sui-space-6);
+}
+
+/* Matrix Card: Adopts the matrix's rows so titles & footers align across cards */
+.sui-subgrid-item {
+  grid-row: span 3;
+  display: grid;
+  grid-template-rows: subgrid;
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-xl);
+  padding: var(--sui-space-6);
+}
+
+/* Subgrid Form Layout: Keeps input labels & fields perfectly parallel */
+.sui-form-matrix {
+  display: grid;
+  grid-template-columns: minmax(120px, max-content) 1fr;
+  gap: var(--sui-space-4) var(--sui-space-6);
+  align-items: center;
+}
+
+.sui-form-row {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+}

@@ -1,0 +1,294 @@
+/* ==========================================================================
+   SUI.CSS - ADVANCED NATIVE APIs & LOGIC ENGINE (2026 SPECS)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. SCROLL-DRIVEN ANIMATIONS & VIEW TIMELINES
+   ========================================================================== */
+
+/* Reading Progress Bar */
+@keyframes sui-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.sui-scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--sui-color-primary-500), var(--sui-color-accent-500));
+  transform-origin: 0 50%;
+  animation: sui-progress linear;
+  animation-timeline: scroll(root);
+  z-index: var(--sui-z-toast);
+}
+
+/* Scroll-Linked Shrinking Header (Zero JS Sticky Nav) */
+@keyframes sui-header-shrink {
+  from { padding-block: var(--sui-space-6); background: transparent; backdrop-filter: blur(0px); border-bottom-color: transparent; }
+  to { padding-block: var(--sui-space-3); background: oklch(from var(--sui-surface) l c h / 0.85); backdrop-filter: blur(12px); border-bottom-color: var(--sui-border); }
+}
+.sui-header-dynamic {
+  position: sticky;
+  top: 0;
+  animation: sui-header-shrink linear forwards;
+  animation-timeline: scroll(root block);
+  animation-range: 0 150px; /* Completes animation after 150px of scrolling */
+  z-index: var(--sui-z-sticky);
+}
+
+/* Scroll Reveal Engine for Cards and Images */
+@keyframes sui-reveal-card {
+  from { opacity: 0; transform: translateY(80px) scale(0.95); clip-path: inset(10% 10% 10% 10% round 16px); }
+  to { opacity: 1; transform: translateY(0) scale(1); clip-path: inset(0% 0% 0% 0% round 16px); }
+}
+.sui-view-reveal {
+  animation: sui-reveal-card linear both;
+  animation-timeline: view();
+  animation-range: entry 5% cover 30%; /* Starts when 5% visible, finishes at 30% */
+}
+
+/* Parallax Image Engine */
+@keyframes sui-parallax {
+  from { object-position: 50% 0%; }
+  to { object-position: 50% 100%; }
+}
+.sui-img-parallax {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  animation: sui-parallax linear;
+  animation-timeline: view();
+}
+
+
+/* ==========================================================================
+   2. COMMAND MODULE (ANCHOR POSITIONING & POPOVERS)
+   ========================================================================== */
+
+/* Universal Anchor Reference */
+.sui-anchor { anchor-name: --sui-dynamic-anchor; }
+
+/* Base Popover Engine */
+.sui-popover {
+  position-anchor: --sui-dynamic-anchor;
+  margin: 0;
+  inset: auto;
+  border: 1px solid var(--sui-border-strong);
+  background: var(--sui-surface);
+  border-radius: var(--sui-radius-lg);
+  padding: var(--sui-space-4);
+  box-shadow: var(--sui-shadow-lg);
+  
+  /* @starting-style transition for smooth entry/exit */
+  opacity: 0;
+  transform: translateY(var(--sui-popover-offset, -10px));
+  transition: opacity 0.25s var(--sui-ease-spring), transform 0.25s var(--sui-ease-spring), display 0.25s allow-discrete, overlay 0.25s allow-discrete;
+}
+.sui-popover:popover-open { opacity: 1; transform: translateY(0); }
+@starting-style { .sui-popover:popover-open { opacity: 0; transform: translateY(var(--sui-popover-offset, -10px)); } }
+
+/* Intelligent Positioning Variants */
+.sui-popover-bottom { position-area: bottom span-all; position-try-fallbacks: flip-block, flip-inline; --sui-popover-offset: -10px; }
+.sui-popover-top { position-area: top span-all; position-try-fallbacks: flip-block, flip-inline; --sui-popover-offset: 10px; }
+.sui-popover-right { position-area: right span-all; position-try-fallbacks: flip-inline, flip-block; --sui-popover-offset: -10px; }
+
+/* Anchor-Sized Menus (Dropdown matches exact width of the button) */
+.sui-dropdown-menu {
+  position-area: bottom span-all;
+  width: anchor-size(width); /* Matches anchor width natively */
+  margin-top: var(--sui-space-2);
+}
+
+
+/* ==========================================================================
+   3. ADVANCED LAYOUTS (MASONRY & CAROUSELS)
+   ========================================================================== */
+
+/* Native CSS Masonry (Pinterest-style grids without JS) */
+.sui-masonry {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-rows: masonry; /* The 2026 Masonry Spec */
+  gap: var(--sui-space-6);
+  align-tracks: stretch;
+}
+
+/* Ultra Pro Max Carousel (Snap, Markers, Auto-scroll) */
+.sui-carousel {
+  display: flex;
+  gap: var(--sui-space-4);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--sui-space-4);
+  scroll-marker-group: after; /* Native Pagination Dots */
+  padding-bottom: var(--sui-space-6);
+  scrollbar-width: none; /* Hide scrollbar for clean UI */
+}
+.sui-carousel::-webkit-scrollbar { display: none; }
+
+.sui-carousel-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always; /* Forces stopping on each slide */
+}
+@media (min-width: 768px) { .sui-carousel-slide { flex: 0 0 calc(50% - var(--sui-space-2)); } }
+@media (min-width: 1024px) { .sui-carousel-slide { flex: 0 0 calc(33.333% - var(--sui-space-3)); } }
+
+/* Carousel Pagination Styling */
+.sui-carousel-slide::scroll-marker {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--sui-border-strong);
+  cursor: pointer;
+  transition: all 0.3s var(--sui-ease-smooth);
+}
+.sui-carousel-slide::scroll-marker:target-current {
+  background-color: var(--sui-color-primary-500);
+  width: 24px; /* Expands active dot into a pill shape */
+  border-radius: var(--sui-radius-full);
+}
+.sui-carousel::scroll-marker-group {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+
+/* ==========================================================================
+   4. NEXT-GEN FORM CONTROLS
+   ========================================================================== */
+
+/* Auto-expanding Textarea (Replaces JS resize scripts) */
+.sui-textarea-auto {
+  field-sizing: content; /* Expands height natively based on text content */
+  min-height: 3lh; /* Minimum 3 lines of height */
+  max-height: 10lh; /* Max 10 lines before scrolling */
+  resize: none;
+}
+
+/* Native Custom Select Picker (Customizing the dropdown UI directly) */
+select.sui-select-custom, 
+selectlist.sui-selectlist {
+  appearance: none;
+}
+select.sui-select-custom::picker(select) {
+  /* Targets the actual dropdown window rendered by the OS */
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border-strong);
+  border-radius: var(--sui-radius-md);
+  padding: var(--sui-space-2);
+  box-shadow: var(--sui-shadow-lg);
+}
+
+
+/* ==========================================================================
+   5. VIEW TRANSITIONS API (NATIVE APP ROUTING)
+   ========================================================================== */
+
+/* Base Transition Configuration */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Page Forward / Backward Directional Logic */
+:root:active-view-transition-type(forwards) {
+  &::view-transition-old(page-content) { animation: sui-slide-out-left 0.4s both; }
+  &::view-transition-new(page-content) { animation: sui-slide-in-right 0.4s both; }
+}
+:root:active-view-transition-type(backwards) {
+  &::view-transition-old(page-content) { animation: sui-slide-out-right 0.4s both; }
+  &::view-transition-new(page-content) { animation: sui-slide-in-left 0.4s both; }
+}
+
+/* Targeted Element Morphing */
+.sui-vt-hero { view-transition-name: hero-image; }
+.sui-vt-profile-dp { view-transition-name: profile-dp; }
+.sui-vt-header { view-transition-name: site-header; }
+
+
+/* ==========================================================================
+   6. CONTAINER STYLE QUERIES & LOGIC ENGINE
+   ========================================================================== */
+
+/* Define the Container Name */
+.sui-logic-container {
+  container-name: sui-logic;
+}
+
+/* Components style themselves based on the parent's CSS variables */
+@container style(--theme: dark) {
+  .sui-smart-card {
+    background: oklch(20% 0.05 var(--sui-brand-hue));
+    color: white;
+    border-color: oklch(30% 0.05 var(--sui-brand-hue));
+  }
+}
+
+@container style(--layout: dense) {
+  .sui-smart-card {
+    padding: var(--sui-space-2);
+    font-size: var(--sui-text-sm);
+  }
+}
+
+/* ==========================================================================
+   7. MATH FUNCTIONS & CIRCULAR LAYOUTS
+   ========================================================================== */
+
+/* Trigonometric Circular Avatar Arrangement */
+.sui-circle-cluster {
+  display: grid;
+  place-items: center;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.sui-circle-item {
+  position: absolute;
+  /* Uses sin/cos to place items in a perfect circle dynamically */
+  --angle: calc(360deg / var(--total) * var(--index));
+  --radius: 80px;
+  transform: translate(
+    calc(cos(var(--angle)) * var(--radius)),
+    calc(sin(var(--angle)) * var(--radius))
+  );
+}
+
+
+/* ==========================================================================
+   8. HEIGHT: AUTO ANIMATIONS (ACCORDIONS)
+   ========================================================================== */
+
+/* The Holy Grail of CSS: Animating to height: auto natively */
+.sui-accordion {
+  interpolate-size: allow-keywords; /* Enables calc() and animations to keyword sizes */
+}
+.sui-accordion-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.4s var(--sui-ease-spring), opacity 0.3s;
+  opacity: 0;
+}
+.sui-accordion:has(input:checked) .sui-accordion-content,
+.sui-accordion[open] .sui-accordion-content {
+  height: auto; /* Now animates smoothly thanks to interpolate-size */
+  opacity: 1;
+}
+
+/* ==========================================================================
+   9. CUSTOM HIGHLIGHT API (SEARCH RESULTS)
+   ========================================================================== */
+
+/* Styles text ranges mapped via the CSS Highlight API */
+::highlight(sui-search-result) {
+  background-color: var(--sui-color-warning-500);
+  color: var(--sui-bg);
+  font-weight: bold;
+}

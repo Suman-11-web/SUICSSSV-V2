@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SUI.css Tables — Responsive Data Tables &amp; Matrices</title>
+
+  <meta name="description" content="Explore clean, responsive table components, striped rows, hover states, and data grids in SUI.css.">
+  <meta name="keywords" content="SUI.css tables, CSS data tables, responsive tables, striped tables, CSS framework tables">
+  <meta name="author" content="SUI.css">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://suman-11-web.github.io/SUI-FRAMEWORK.CSS/example/tables.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SUI.css Tables — Responsive Data Tables">
+  <meta property="og:description" content="Explore responsive data tables and data grids in SUI.css.">
+  <meta property="og:url" content="https://suman-11-web.github.io/SUI-FRAMEWORK.CSS/example/tables.html">
+  <meta property="og:site_name" content="SUI.css">
+  <meta property="og:image" content="../logosui.png">
+  
+  <!-- Core Framework -->
+  <link rel="stylesheet" href="../dist/sui.min.css">
+  
+  <style>
+    /* ==========================================================================
+       PREMIUM GLOBAL STYLES & LAYOUT
+       ========================================================================== */
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background-color: var(--sui-bg);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    /* Floating Island Navbar */
+    .sui-floating-nav {
+      position: fixed;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      margin-inline: auto; 
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-sizing: border-box;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+      background: oklch(from var(--sui-surface) l c h / 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--sui-border);
+      border-radius: 9999px;
+      box-shadow: 0 20px 40px -10px oklch(0% 0 0 / 0.15);
+    }
+
+    .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--sui-text); flex-shrink: 0; }
+    .nav-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .nav-pill-link { position: relative; padding: 0.4rem 0.9rem; font-size: 0.85rem; font-weight: 500; color: var(--sui-text-muted); text-decoration: none; border-radius: 999px; transition: color 0.3s ease; z-index: 1; white-space: nowrap; }
+    .nav-pill-link:hover { color: var(--sui-text); background: var(--sui-surface-hover); }
+    .nav-pill-link.active { color: var(--sui-text); background: var(--sui-border-subtle); }
+
+    .nav-desktop-menu { display: none; }
+    .nav-mobile-btn { display: flex; align-items: center; justify-content: center; background: var(--sui-surface-hover); border: 1px solid var(--sui-border); padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--sui-text); transition: background 0.2s ease; }
+    .nav-mobile-btn:hover { background: var(--sui-border); }
+    
+    @media (min-width: 992px) {
+      .nav-desktop-menu { display: flex; align-items: center; gap: 0.25rem; }
+      .nav-mobile-btn { display: none !important; }
+    }
+
+    /* Global Mobile Drawer */
+    .mobile-drawer { position: fixed; inset: 0; z-index: 9999; display: flex; justify-content: flex-end; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .mobile-drawer.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
+    .drawer-backdrop { position: absolute; inset: 0; background: oklch(0% 0 0 / 0.5); backdrop-filter: blur(4px); cursor: pointer; }
+    .drawer-panel { position: relative; width: 280px; height: 100%; background: var(--sui-surface); border-left: 1px solid var(--sui-border); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; box-shadow: -10px 0 30px oklch(0% 0 0 / 0.2); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
+    .mobile-drawer.is-open .drawer-panel { transform: translateX(0); }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 10rem var(--sui-space-6) 6rem;
+      position: relative;
+      text-align: center;
+      border-bottom: 1px solid var(--sui-border-subtle);
+    }
+    
+    .hero-mesh-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: 
+        radial-gradient(circle at 80% 20%, oklch(from var(--sui-color-primary-500) l c h / 0.1), transparent 30%),
+        radial-gradient(circle at 20% 80%, oklch(from var(--sui-color-accent-500) l c h / 0.1), transparent 30%);
+      filter: blur(60px);
+    }
+
+    .hero-content { position: relative; z-index: 10; max-width: 900px; margin: 0 auto; }
+
+    /* macOS Headers & Code Blocks */
+    .macos-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      height: 40px;
+      background: #2d2d2d;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+    }
+    .macos-dots { display: flex; gap: 8px; }
+    .macos-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .macos-dot.red { background-color: #ff5f56; }
+    .macos-dot.yellow { background-color: #ffbd2e; }
+    .macos-dot.green { background-color: #27c93f; }
+
+    /* Showcase Container */
+    .showcase-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--sui-space-12) var(--sui-space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sui-space-12);
+    }
+    
+    .demo-section {
+      background: var(--sui-surface);
+      border: 1px solid var(--sui-border);
+      border-radius: var(--sui-radius-xl);
+      overflow: hidden;
+    }
+
+    .demo-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--sui-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .demo-canvas {
+      padding: var(--sui-space-8) var(--sui-space-6);
+      background: var(--sui-bg);
+      background-image: radial-gradient(var(--sui-border-subtle) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .code-reveal-panel {
+      display: none;
+      border-top: 1px solid var(--sui-border);
+      background: #1e1e1e;
+    }
+    
+    .code-reveal-panel.is-open {
+      display: block;
+      animation: sui-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="sui-bg">
+
+  <!-- =======================================================================
+       GLOBAL NAVBAR
+       ======================================================================= -->
+  <nav class="sui-floating-nav sui-animate-slide-up">
+    <a href="../index.html" class="nav-brand">
+      <div class="sui-avatar sui-animate-glow" style="width: 2rem; height: 2rem; background: var(--sui-color-primary-500); color: white;">S</div>
+      <strong style="font-size: 0.95rem;">SUI.css</strong>
+    </a>
+    
+    <div class="nav-desktop-menu">
+      <a href="../index.html" class="nav-pill-link">Home</a>
+      <a href="../docs/index.html" class="nav-pill-link">Docs</a>
+      <a href="buttons.html" class="nav-pill-link active">Components</a>
+      <a href="utilities.html" class="nav-pill-link">Utilities</a>
+      <a href="animations.html" class="nav-pill-link">Animations</a>
+      <a href="advanced.html" class="nav-pill-link">Examples</a>
+    </div>
+    
+    <div class="nav-actions">
+      <a href="https://github.com/Suman-11-web" class="sui-btn sui-btn-primary sui-btn-sm sui-rounded-full nav-github-btn" style="padding: 0.4rem 1rem; font-size: 0.85rem;">GitHub &rarr;</a>
+      <button id="globalMenuBtn" class="nav-mobile-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- GLOBAL MOBILE DRAWER -->
+  <div id="globalMobileDrawer" class="mobile-drawer">
+    <div class="drawer-backdrop" id="globalCloseBackdrop"></div>
+    <div class="drawer-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong style="font-size: 1.1rem; color: var(--sui-text);">SUI.css</strong>
+        <button id="globalCloseBtn" class="nav-mobile-btn" style="border: none; background: transparent;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <a href="../index.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Home</a>
+        <a href="../docs/index.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Docs</a>
+        <a href="buttons.html" class="sui-btn sui-btn-primary sui-w-full sui-justify-start">Components</a>
+        <a href="utilities.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Utilities</a>
+        <a href="animations.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Animations</a>
+        <a href="advanced.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Examples</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       HERO SECTION
+       ======================================================================= -->
+  <header class="hero-section">
+    <div class="hero-mesh-bg"></div>
+    <div class="hero-content sui-animate-blur-in">
+      <span class="sui-badge sui-badge-primary sui-mb-4">v2.1.0 New Component</span>
+      <h1 class="sui-text-hero sui-mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Data Tables &amp; Grids</h1>
+      <p class="sui-text-lg sui-text-muted sui-max-w-2xl sui-mx-auto">
+        Pixel-perfect, production-grade tables with striped rows, hover micro-interactions, responsive horizontal scrolling, and compact data viewports.
+      </p>
+    </div>
+  </header>
+
+  <!-- =======================================================================
+       COMPONENT SHOWCASE
+       ======================================================================= -->
+  <main class="showcase-container">
+
+    <!-- 1. Interactive Striped & Hover Table -->
+    <section class="demo-section sui-animate-spring-up sui-delay-1">
+      <div class="demo-header">
+        <div>
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <h2 class="sui-text-xl" style="margin: 0;">Interactive Striped Table</h2>
+            <span class="sui-badge sui-badge-success" style="font-size: 0.65rem;">.sui-table-striped</span>
+            <span class="sui-badge sui-badge-primary" style="font-size: 0.65rem;">.sui-table-hover</span>
+          </div>
+          <p class="sui-text-sm sui-text-muted" style="margin: 0.25rem 0 0;">Alternating zebra striping with high-contrast row hover highlights.</p>
+        </div>
+        <button class="sui-btn sui-btn-outline sui-btn-sm btn-code">View Code</button>
+      </div>
+
+      <div class="demo-canvas">
+        <div class="sui-table-responsive">
+          <table class="sui-table sui-table-striped sui-table-hover">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Plan</th>
+                <th>Usage</th>
+                <th>Amount</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="sui-flex sui-items-center sui-gap-3">
+                    <div class="sui-avatar sui-bg-primary" style="width: 2rem; height: 2rem; color: white;">JD</div>
+                    <div>
+                      <strong class="sui-block sui-text-sm">Jane Doe</strong>
+                      <span class="sui-text-xs sui-text-muted">jane@company.com</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="sui-badge sui-badge-success">Active</span></td>
+                <td>Enterprise Suite</td>
+                <td>94.2%</td>
+                <td><strong>$1,240.00</strong></td>
+                <td style="text-align: right;">
+                  <button class="sui-btn sui-btn-subtle sui-btn-sm">Edit</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="sui-flex sui-items-center sui-gap-3">
+                    <div class="sui-avatar sui-bg-accent" style="width: 2rem; height: 2rem; color: white;">AR</div>
+                    <div>
+                      <strong class="sui-block sui-text-sm">Alex Rivera</strong>
+                      <span class="sui-text-xs sui-text-muted">alex.r@cloud.dev</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="sui-badge sui-badge-warning">Pending</span></td>
+                <td>Pro Annual</td>
+                <td>62.8%</td>
+                <td><strong>$480.00</strong></td>
+                <td style="text-align: right;">
+                  <button class="sui-btn sui-btn-subtle sui-btn-sm">Edit</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="sui-flex sui-items-center sui-gap-3">
+                    <div class="sui-avatar sui-bg-danger" style="width: 2rem; height: 2rem; color: white;">MK</div>
+                    <div>
+                      <strong class="sui-block sui-text-sm">Michael Kim</strong>
+                      <span class="sui-text-xs sui-text-muted">m.kim@techlab.io</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="sui-badge sui-badge-danger">Cancelled</span></td>
+                <td>Startup Starter</td>
+                <td>12.0%</td>
+                <td><strong>$0.00</strong></td>
+                <td style="text-align: right;">
+                  <button class="sui-btn sui-btn-subtle sui-btn-sm">Renew</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Code Reveal Panel -->
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots">
+            <div class="macos-dot red"></div>
+            <div class="macos-dot yellow"></div>
+            <div class="macos-dot green"></div>
+          </div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-table-1', this)">Copy</button>
+        </div>
+<pre id="code-table-1" style="margin: 0; padding: 1.5rem; color: #a5d6ff; font-family: monospace; font-size: 0.85rem; overflow-x: auto;"><code>&lt;div class="sui-table-responsive"&gt;
+  &lt;table class="sui-table sui-table-striped sui-table-hover"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Customer&lt;/th&gt;
+        &lt;th&gt;Status&lt;/th&gt;
+        &lt;th&gt;Plan&lt;/th&gt;
+        &lt;th&gt;Amount&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Jane Doe&lt;/td&gt;
+        &lt;td&gt;&lt;span class="sui-badge sui-badge-success"&gt;Active&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;Enterprise Suite&lt;/td&gt;
+        &lt;td&gt;$1,240.00&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- 2. Bordered & Compact Data Grid -->
+    <section class="demo-section sui-animate-spring-up sui-delay-2">
+      <div class="demo-header">
+        <div>
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <h2 class="sui-text-xl" style="margin: 0;">Bordered &amp; Compact Matrix</h2>
+            <span class="sui-badge sui-badge-accent" style="font-size: 0.65rem;">.sui-table-bordered</span>
+            <span class="sui-badge sui-badge-outline" style="font-size: 0.65rem;">.sui-table-sm</span>
+          </div>
+          <p class="sui-text-sm sui-text-muted" style="margin: 0.25rem 0 0;">Condensed cell padding ideal for high-density SaaS matrices and dashboards.</p>
+        </div>
+        <button class="sui-btn sui-btn-outline sui-btn-sm btn-code">View Code</button>
+      </div>
+
+      <div class="demo-canvas">
+        <div class="sui-table-responsive">
+          <table class="sui-table sui-table-bordered sui-table-sm sui-table-hover">
+            <thead>
+              <tr>
+                <th>Service Name</th>
+                <th>Region</th>
+                <th>Latency</th>
+                <th>Uptime</th>
+                <th>Health Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>api-gateway-us-east</code></td>
+                <td>us-east-1</td>
+                <td>18 ms</td>
+                <td>99.99%</td>
+                <td><span class="sui-badge sui-badge-success">Operational</span></td>
+              </tr>
+              <tr>
+                <td><code>auth-service-eu-west</code></td>
+                <td>eu-west-1</td>
+                <td>24 ms</td>
+                <td>99.98%</td>
+                <td><span class="sui-badge sui-badge-success">Operational</span></td>
+              </tr>
+              <tr>
+                <td><code>database-replica-ap</code></td>
+                <td>ap-southeast-1</td>
+                <td>112 ms</td>
+                <td>98.50%</td>
+                <td><span class="sui-badge sui-badge-warning">High Load</span></td>
+              </tr>
+              <tr>
+                <td><code>search-indexer-cluster</code></td>
+                <td>us-central-1</td>
+                <td>42 ms</td>
+                <td>99.95%</td>
+                <td><span class="sui-badge sui-badge-success">Operational</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Code Reveal Panel -->
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots">
+            <div class="macos-dot red"></div>
+            <div class="macos-dot yellow"></div>
+            <div class="macos-dot green"></div>
+          </div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-table-2', this)">Copy</button>
+        </div>
+<pre id="code-table-2" style="margin: 0; padding: 1.5rem; color: #a5d6ff; font-family: monospace; font-size: 0.85rem; overflow-x: auto;"><code>&lt;table class="sui-table sui-table-bordered sui-table-sm sui-table-hover"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Service&lt;/th&gt;
+      &lt;th&gt;Region&lt;/th&gt;
+      &lt;th&gt;Latency&lt;/th&gt;
+      &lt;th&gt;Health&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;api-gateway&lt;/td&gt;
+      &lt;td&gt;us-east-1&lt;/td&gt;
+      &lt;td&gt;18 ms&lt;/td&gt;
+      &lt;td&gt;&lt;span class="sui-badge sui-badge-success"&gt;Operational&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =======================================================================
+       GLOBAL FOOTER
+       ======================================================================= -->
+  <footer class="sui-bg-surface sui-border-t sui-border-subtle sui-py-12">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 0 var(--sui-space-6);">
+      <div class="sui-grid sui-gap-8 sui-text-left" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        
+        <div class="sui-flex sui-flex-col sui-gap-4">
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <div class="sui-avatar" style="width: 2rem; height: 2rem; background: var(--sui-color-primary-500); color: white;">S</div>
+            <strong class="sui-text-lg">Sui.css</strong>
+          </div>
+          <p class="sui-text-sm sui-text-muted">The ultra pro max CSS architecture for modern web applications.</p>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Modules</strong>
+          <a href="buttons.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Buttons &amp; Badges</a>
+          <a href="tables.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Tables &amp; Grids</a>
+          <a href="modals.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Modals &amp; Drawers</a>
+          <a href="navigation.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Navigation &amp; Tabs</a>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Architecture</strong>
+          <a href="layout.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Layout Engine</a>
+          <a href="utilities.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Utility Classes</a>
+          <a href="animations.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Motion &amp; Spring</a>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Resources</strong>
+          <a href="../how-to-use.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Setup Guide</a>
+          <a href="../docs/index.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Documentation</a>
+          <a href="https://github.com/Suman-11-web" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">GitHub Repository</a>
+        </div>
+
+      </div>
+      
+      <div class="sui-border-t sui-border-subtle sui-mt-12 sui-pt-8 sui-flex sui-justify-between sui-items-center sui-flex-wrap sui-gap-4">
+        <p class="sui-text-sm sui-text-muted">&copy; 2026 Sui.css Framework. Built for developers. Free and open source.</p>
+        <span class="sui-badge sui-badge-outline">SUI.css v2.1.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../dist/sui.min.js"></script>
+  <script>
+    function copyCodeBlock(elementId, btnElement) {
+      const textToCopy = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        btnElement.style.color = '#7ee787';
+        btnElement.style.borderColor = '#7ee787';
+        setTimeout(() => {
+          btnElement.innerText = originalText;
+          btnElement.style.color = '#ccc';
+          btnElement.style.borderColor = '#555';
+        }, 2000);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const globalMenuBtn = document.getElementById('globalMenuBtn');
+      const globalDrawer = document.getElementById('globalMobileDrawer');
+      function closeGlobal() { if(globalDrawer) globalDrawer.classList.remove('is-open'); }
+      if (globalMenuBtn) globalMenuBtn.addEventListener('click', () => globalDrawer.classList.add('is-open'));
+      document.getElementById('globalCloseBtn')?.addEventListener('click', closeGlobal);
+      document.getElementById('globalCloseBackdrop')?.addEventListener('click', closeGlobal);
+
+      const codeButtons = document.querySelectorAll('.btn-code');
+      codeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          const section = e.target.closest('.demo-section');
+          const codePanel = section.querySelector('.code-reveal-panel');
+          const isOpen = codePanel.classList.contains('is-open');
+          if (isOpen) {
+            codePanel.classList.remove('is-open');
+            e.target.textContent = 'View Code';
+          } else {
+            codePanel.classList.add('is-open');
+            e.target.textContent = 'Hide Code';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

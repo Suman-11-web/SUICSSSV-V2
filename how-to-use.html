@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sui.css v2.0 — Complete setup and usage guide.">
+    <title>Sui.css — How to Use</title>
+
+    <!-- Core Framework -->
+    <link rel="stylesheet" href="dist/sui.min.css">
+
+    <style>
+        /* =========================================================
+           DOCUMENTATION LAYOUT OVERRIDES 
+           (Leveraging Sui.css variables where possible)
+        ========================================================== */
+        :root {
+            --docs-sidebar-width: 280px;
+            --docs-topbar-height: 68px;
+        }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+        
+        body {
+            background: radial-gradient(circle at 80% 0%, oklch(from var(--sui-color-primary-500) l c h / 0.12), transparent 30%),
+                        radial-gradient(circle at 10% 20%, oklch(from var(--sui-color-primary-500) l c h / 0.08), transparent 28%),
+                        var(--sui-bg);
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* =========================================================
+           ZERO-DEPENDENCY SYNTAX COLORS (BULLETPROOF)
+        ========================================================== */
+        .sui-hl-comment { color: #8b949e; font-style: italic; }
+        .sui-hl-tag { color: #7ee787; font-weight: 500; }
+        .sui-hl-attr { color: #79c0ff; }
+        .sui-hl-string { color: #a5d6ff; }
+        .sui-hl-prop { color: #d2a8ff; }
+
+        /* =========================================================
+           TOP BAR
+        ========================================================== */
+        .docs-topbar {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--docs-topbar-height);
+            display: flex; align-items: center; justify-content: space-between; padding: 0 var(--sui-space-6);
+            background: oklch(from var(--sui-bg) l c h / 0.82); backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px); border-bottom: 1px solid var(--sui-border); z-index: 1000;
+        }
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================== */
+        .docs-sidebar {
+            position: fixed; top: var(--docs-topbar-height); bottom: 0; left: 0; width: var(--docs-sidebar-width);
+            overflow-y: auto; padding: var(--sui-space-6) var(--sui-space-4);
+            background: oklch(from var(--sui-bg) l c h / 0.88); border-right: 1px solid var(--sui-border); z-index: 900;
+        }
+
+        .sidebar-label {
+            margin: var(--sui-space-6) var(--sui-space-3) var(--sui-space-2);
+            color: var(--sui-text-muted); font-size: 0.65rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .sidebar-label:first-child { margin-top: 0; }
+
+        .nav-link {
+            display: flex; align-items: center; gap: var(--sui-space-2); padding: 0.5rem 0.75rem; margin: 2px 0;
+            border-radius: var(--sui-radius-md); color: var(--sui-text-muted); font-size: 0.85rem; text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover { color: var(--sui-text); background: var(--sui-surface-hover); transform: translateX(2px); }
+        .nav-link.active {
+            color: var(--sui-text);
+            background: linear-gradient(90deg, oklch(from var(--sui-color-primary-500) l c h / 0.18), transparent);
+            box-shadow: inset 2px 0 0 var(--sui-color-primary-500);
+        }
+
+        .nav-number { width: 20px; color: var(--sui-text-muted); font-family: monospace; font-size: 0.65rem; }
+
+        /* =========================================================
+           MAIN CONTENT AREA
+        ========================================================== */
+        .docs-main { margin-left: var(--docs-sidebar-width); padding-top: var(--docs-topbar-height); }
+        .docs-container { width: min(1050px, calc(100% - 48px)); margin: 0 auto; padding: 70px 0 120px; }
+
+        /* =========================================================
+           CUSTOM HERO & SECTION STYLES
+        ========================================================== */
+        .hero {
+            position: relative; padding: 3.5rem 3rem; margin-bottom: 4rem; overflow: hidden;
+            border: 1px solid var(--sui-border); border-radius: var(--sui-radius-2xl);
+            background: linear-gradient(135deg, oklch(from var(--sui-color-primary-500) l c h / 0.12), transparent);
+            box-shadow: 0 30px 100px oklch(0% 0 0 / 0.28);
+        }
+        .hero::before {
+            content: ""; position: absolute; width: 320px; height: 320px; top: -170px; right: -80px;
+            border-radius: 50%; background: oklch(from var(--sui-color-primary-500) l c h / 0.15); filter: blur(40px);
+        }
+
+        .doc-section { margin-bottom: 5.5rem; scroll-margin-top: 100px; }
+        
+        .docs-search { position: sticky; top: 82px; z-index: 50; margin-bottom: 3rem; }
+        .search-box { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border: 1px solid var(--sui-border); border-radius: var(--sui-radius-lg); background: oklch(from var(--sui-surface) l c h / 0.88); backdrop-filter: blur(14px); }
+        .search-box input { width: 100%; border: none; background: transparent; color: var(--sui-text); font-size: 0.9rem; outline: none; }
+        
+        /* UI Elements (Callouts, Tables, Demos) */
+        .callout { display: flex; gap: 1rem; padding: 1.25rem; margin: 1.5rem 0; border: 1px solid var(--sui-border); border-radius: var(--sui-radius-lg); }
+        .callout.success { border-left: 4px solid var(--sui-color-success-500); background: oklch(from var(--sui-color-success-500) l c h / 0.05); }
+        .callout.warning { border-left: 4px solid var(--sui-color-warning-500); background: oklch(from var(--sui-color-warning-500) l c h / 0.05); }
+        .callout.info { border-left: 4px solid var(--sui-color-primary-500); background: oklch(from var(--sui-color-primary-500) l c h / 0.05); }
+
+        .table-wrap { overflow-x: auto; border: 1px solid var(--sui-border); border-radius: var(--sui-radius-lg); margin: 1.5rem 0; background: var(--sui-surface); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+        th, td { padding: 1rem; border-bottom: 1px solid var(--sui-border); }
+        th { color: var(--sui-text-muted); background: var(--sui-surface-hover); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+        tr:last-child td { border-bottom: none; }
+        td code { color: var(--sui-color-primary-500); background: oklch(from var(--sui-color-primary-500) l c h / 0.1); padding: 2px 6px; border-radius: 4px; }
+
+        .demo-box { padding: 2rem; border: 1px solid var(--sui-border); border-radius: var(--sui-radius-xl); background: radial-gradient(circle at top right, oklch(from var(--sui-color-primary-500) l c h / 0.08), transparent 40%), var(--sui-bg); margin: 1.5rem 0; }
+        
+        .inline-code { padding: 2px 6px; border: 1px solid var(--sui-border); border-radius: 4px; color: var(--sui-color-primary-500); background: oklch(from var(--sui-color-primary-500) l c h / 0.08); font-family: monospace; font-size: 0.85em; }
+
+        /* =========================================================
+           CODE BLOCKS
+        ========================================================== */
+        .code-block { margin: 1.5rem 0; overflow: hidden; border: 1px solid var(--sui-border); border-radius: var(--sui-radius-lg); background: #09090d; }
+        .code-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; border-bottom: 1px solid var(--sui-border); background: oklch(from var(--sui-surface) l c h / 0.5); }
+        .code-language { color: var(--sui-text-muted); font-family: monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* Hardcoded padding for 100% bug-free rendering */
+        pre { 
+            margin: 0 !important; 
+            padding: 1.25rem 1.5rem !important; 
+            border-radius: 0 !important; 
+            background: transparent !important; 
+            font-size: 0.85rem !important; 
+            overflow-x: auto;
+        }
+
+        /* Mobile Breakpoints */
+        .menu-btn { display: none; }
+        @media (max-width: 900px) {
+            .menu-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--sui-border); border-radius: var(--sui-radius-md); background: var(--sui-surface-hover); cursor: pointer; color: var(--sui-text); }
+            .nav-github-btn { display: none; }
+            .docs-sidebar { transform: translateX(-100%); transition: transform .25s ease; }
+            .docs-sidebar.open { transform: translateX(0); box-shadow: 20px 0 80px oklch(0% 0 0 / 0.45); }
+            .docs-main { margin-left: 0; }
+            .hero { padding: 2.5rem 1.5rem; }
+            .docs-container { width: min(100% - 30px, 850px); padding-top: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- =============================================================
+     TOP BAR
+============================================================== -->
+<header class="docs-topbar sui-animate-slide-up">
+    <a href="index.html" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+        <div class="sui-avatar sui-animate-glow" style="width: 2.5rem; height: 2.5rem; background: var(--sui-color-primary-500); color: white; border-radius: 11px;">S</div>
+        <div>
+            <strong style="display: block; color: var(--sui-text); font-size: 0.95rem;">Sui.css</strong>
+            <span style="color: var(--sui-text-muted); font-size: 0.7rem;" class="sui-hidden md:sui-block">Simple • Utility • Interface</span>
+        </div>
+    </a>
+
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span class="sui-badge sui-badge-primary sui-hidden md:sui-inline-flex" style="background: oklch(from var(--sui-color-primary-500) l c h / 0.1); color: var(--sui-color-primary-500);">v2.0 Architecture</span>
+        <a class="sui-btn sui-btn-outline sui-btn-sm nav-github-btn" href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Open documentation menu" aria-controls="sidebar" aria-expanded="false" aria-haspopup="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+    </div>
+</header>
+
+<!-- =============================================================
+     SIDEBAR
+============================================================== -->
+<aside class="docs-sidebar" id="sidebar" role="region" aria-label="Documentation navigation sidebar">
+    <nav aria-label="Documentation contents">
+        <div class="sidebar-label" role="heading" aria-level="2">Getting Started</div>
+        <a class="nav-link active" href="#introduction" aria-current="page"><span class="nav-number">01</span>Introduction</a>
+        <a class="nav-link" href="#installation"><span class="nav-number">02</span>Installation</a>
+        <a class="nav-link" href="#first-project"><span class="nav-number">03</span>First Project</a>
+
+        <div class="sidebar-label" role="heading" aria-level="2">Framework</div>
+        <a class="nav-link" href="#tokens"><span class="nav-number">04</span>Design Tokens</a>
+        <a class="nav-link" href="#layout"><span class="nav-number">05</span>Layout</a>
+        <a class="nav-link" href="#utilities"><span class="nav-number">06</span>Utilities</a>
+        <a class="nav-link" href="#components"><span class="nav-number">07</span>Components</a>
+        <a class="nav-link" href="#animations"><span class="nav-number">08</span>Animations</a>
+        <a class="nav-link" href="#responsive"><span class="nav-number">09</span>Responsive</a>
+
+        <div class="sidebar-label" role="heading" aria-level="2">Advanced</div>
+        <a class="nav-link" href="#customization"><span class="nav-number">10</span>Customization</a>
+        <a class="nav-link" href="#production"><span class="nav-number">11</span>Production</a>
+        <a class="nav-link" href="#complete-example"><span class="nav-number">12</span>Complete Example</a>
+        <div class="sidebar-label" role="heading" aria-level="2">Navigation</div>
+        <a class="nav-link" href="./index.html"><span class="nav-number">&larr;</span>Home Page</a>
+    </nav>
+</aside>
+
+<!-- =============================================================
+     MAIN
+============================================================== -->
+<main class="docs-main" id="top">
+    <div class="docs-container">
+
+        <!-- =====================================================
+             HERO & SEARCH
+        ====================================================== -->
+        <section class="hero sui-animate-blur-in">
+            <span class="sui-badge sui-badge-success sui-mb-4" style="background: oklch(from var(--sui-color-success-500) l c h / 0.1);">Documentation • Stable</span>
+            
+            <h1 class="sui-text-hero sui-tracking-tighter sui-mb-4" style="background: linear-gradient(120deg, #fff, var(--sui-color-primary-500)); -webkit-background-clip: text; color: transparent; max-width: 800px;">
+                Build interfaces with Sui.css.
+            </h1>
+            
+            <p class="sui-text-lg sui-text-muted sui-mb-8" style="max-width: 600px;">
+                A lightweight, utility-first and component-ready CSS framework designed to help you build modern responsive interfaces faster.
+            </p>
+
+            <div class="sui-flex sui-gap-2 sui-flex-wrap">
+                <span class="sui-badge">v2.1.0</span>
+                <span class="sui-badge">CSS Engine</span>
+                <span class="sui-badge">Responsive</span>
+                <span class="sui-badge">Utility-first</span>
+            </div>
+        </section>
+
+        <div class="docs-search sui-animate-slide-up">
+            <div class="search-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--sui-text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" id="searchInput" placeholder="Search documentation..." autocomplete="off">
+            </div>
+        </div>
+
+        <!-- =====================================================
+             01 — INTRODUCTION
+        ====================================================== -->
+        <section class="doc-section" id="introduction" data-search="introduction sui css framework overview">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">01</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Introduction</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Sui.css is a reusable CSS framework built around utilities, layout primitives, components, design tokens and animations.</p>
+
+            <div class="sui-grid sui-gap-4" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                <div class="sui-card sui-hover-lift">
+                    <div class="sui-avatar sui-bg-surface-hover sui-mb-4">⚡</div>
+                    <h3 class="sui-text-lg sui-mb-2">Lightweight</h3>
+                    <p class="sui-text-sm sui-text-muted">Use only the classes required by your interface while keeping your markup simple.</p>
+                </div>
+                <div class="sui-card sui-hover-lift">
+                    <div class="sui-avatar sui-bg-surface-hover sui-mb-4">🧩</div>
+                    <h3 class="sui-text-lg sui-mb-2">Modular</h3>
+                    <p class="sui-text-sm sui-text-muted">Sui.css separates reset, tokens, layout, utilities, and components into layers.</p>
+                </div>
+                <div class="sui-card sui-hover-lift">
+                    <div class="sui-avatar sui-bg-surface-hover sui-mb-4">📱</div>
+                    <h3 class="sui-text-lg sui-mb-2">Responsive</h3>
+                    <p class="sui-text-sm sui-text-muted">Build layouts that adapt across mobile, tablet and desktop screen sizes.</p>
+                </div>
+                <div class="sui-card sui-hover-lift">
+                    <div class="sui-avatar sui-bg-surface-hover sui-mb-4">🎨</div>
+                    <h3 class="sui-text-lg sui-mb-2">Customizable</h3>
+                    <p class="sui-text-sm sui-text-muted">Design tokens allow you to customize colors, spacing, typography, and radius.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             02 — INSTALLATION
+        ====================================================== -->
+        <section class="doc-section" id="installation" data-search="installation install cdn local setup download">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">02</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Installation</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Choose the installation method that matches your project. For quick prototypes, use the CDN. For local development, use the compiled stylesheet.</p>
+
+            <div class="callout success">
+                <div class="sui-text-success">✓</div>
+                <div>
+                    <strong class="sui-block sui-mb-1">Recommended</strong>
+                    <p class="sui-text-sm sui-text-muted sui-m-0">Use the production build <span class="inline-code">sui.min.css</span> when deploying a website.</p>
+                </div>
+            </div>
+
+            <!-- New v2.0.0 CDN Links -->
+            <h3 class="sui-text-xl sui-mb-2 sui-mt-8">Global CDN (v2.1.0 jsDelivr)</h3>
+            <p class="sui-text-sm sui-text-muted sui-mb-4">The new recommended CDN for maximum global delivery speeds.</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;!-- CSS --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.1.0/dist/sui.min.css"&gt;
+
+&lt;!-- JS Core --&gt;
+&lt;script src="https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.1.0/dist/sui.min.js"&gt;&lt;/script&gt;</code></pre>
+            </div>
+
+            <!-- Old GitHub Pages CDN Link -->
+            <h3 class="sui-text-xl sui-mb-2 sui-mt-8">Old GitHub Pages CDN</h3>
+            <p class="sui-text-sm sui-text-muted sui-mb-4">Legacy CDN link.</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;link rel="stylesheet" href="https://suman-11-web.github.io/SUI-FRAMEWORK.CSS/dist/sui.min.css"&gt;</code></pre>
+            </div>
+
+            <h3 class="sui-text-xl sui-mb-2 sui-mt-8">Local project</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;link rel="stylesheet" href="./dist/sui.min.css"&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             03 — FIRST PROJECT
+        ====================================================== -->
+        <section class="doc-section" id="first-project" data-search="first project getting started html boilerplate">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">03</div>
+                <h2 class="sui-text-2xl" style="margin:0;">First Project</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Create a basic HTML document and load Sui.css before writing your interface.</p>
+
+            <div class="sui-grid sui-gap-4 sui-mb-8">
+                <div class="sui-card sui-flex sui-gap-4 sui-items-start">
+                    <div class="sui-avatar sui-bg-surface-hover sui-text-primary">01</div>
+                    <div>
+                        <h3 class="sui-text-lg sui-mb-1">Create your HTML file</h3>
+                        <p class="sui-text-sm sui-text-muted sui-m-0">Create an index.html file inside your project.</p>
+                    </div>
+                </div>
+                <div class="sui-card sui-flex sui-gap-4 sui-items-start">
+                    <div class="sui-avatar sui-bg-surface-hover sui-text-primary">02</div>
+                    <div>
+                        <h3 class="sui-text-lg sui-mb-1">Include Sui.css</h3>
+                        <p class="sui-text-sm sui-text-muted sui-m-0">Add the compiled stylesheet inside the head element.</p>
+                    </div>
+                </div>
+                <div class="sui-card sui-flex sui-gap-4 sui-items-start">
+                    <div class="sui-avatar sui-bg-surface-hover sui-text-primary">03</div>
+                    <div>
+                        <h3 class="sui-text-lg sui-mb-1">Start building</h3>
+                        <p class="sui-text-sm sui-text-muted sui-m-0">Combine Sui layout, utility and component classes to create your interface.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Sui.css Project&lt;/title&gt;
+    
+    &lt;!-- SUI CSS v2.1.0 --&gt;
+    &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.1.0/dist/sui.min.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello Sui.css&lt;/h1&gt;
+    
+    &lt;!-- SUI JS v2.1.0 --&gt;
+    &lt;script src="https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.1.0/dist/sui.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             04 — TOKENS
+        ====================================================== -->
+        <section class="doc-section" id="tokens" data-search="tokens colors spacing radius shadow design system variables">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">04</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Design Tokens</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Design tokens provide centralized values for your framework. Your token implementation lives inside <span class="inline-code">src/layers/tokens.css</span>.</p>
+
+            <div class="callout info">
+                <div>💡</div>
+                <div>
+                    <strong class="sui-block sui-mb-1">Why tokens?</strong>
+                    <p class="sui-text-sm sui-text-muted sui-m-0">Instead of repeating raw values throughout your stylesheet, define reusable variables once and reference them throughout Sui.css.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">CSS</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">:root {
+    --sui-brand-hue: 250;
+    --sui-primary-500: oklch(60% 0.2 var(--sui-brand-hue));
+    --sui-success: oklch(65% 0.15 150);
+    --sui-danger: oklch(60% 0.2 25);
+    
+    --sui-space-2: 0.5rem;
+    --sui-space-4: 1rem;
+    --sui-radius-md: 0.5rem;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             05 — LAYOUT
+        ====================================================== -->
+        <section class="doc-section" id="layout" data-search="layout flex grid container alignment gap">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">05</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Layout</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Use Sui layout utilities to construct responsive page structures without repeatedly writing custom CSS.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>.sui-flex</code></td><td>Creates a flex container.</td></tr>
+                        <tr><td><code>.sui-grid</code></td><td>Creates a grid container.</td></tr>
+                        <tr><td><code>.sui-items-center</code></td><td>Centers items on the cross axis.</td></tr>
+                        <tr><td><code>.sui-justify-center</code></td><td>Centers content horizontally.</td></tr>
+                        <tr><td><code>.sui-justify-between</code></td><td>Places content at opposite ends.</td></tr>
+                        <tr><td><code>.sui-gap-4</code></td><td>Applies a framework spacing value.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;div class="sui-flex sui-items-center sui-justify-between sui-gap-4"&gt;
+    &lt;div&gt;Brand&lt;/div&gt;
+    &lt;nav&gt;Navigation&lt;/nav&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             06 — UTILITIES
+        ====================================================== -->
+        <section class="doc-section" id="utilities" data-search="utilities spacing typography colors display margin padding width height">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">06</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Utilities</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Utility classes provide small, composable styles that can be combined directly in your HTML.</p>
+
+            <div class="sui-grid sui-gap-4" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="sui-card">
+                    <div class="sui-avatar sui-bg-surface-hover sui-mb-4">↔</div>
+                    <h3 class="sui-text-lg sui-mb-2">Spacing</h3>
+                    <p class="sui-text-sm sui-text-muted">Margin, padding and gap utilities.</p>
+                </div>
+                <div class="sui-card">
+                    <div class="sui-avatar sui-bg-surface-hover sui-mb-4">T</div>
+                    <h3 class="sui-text-lg sui-mb-2">Typography</h3>
+                    <p class="sui-text-sm sui-text-muted">Text size, weight, and alignment.</p>
+                </div>
+                <div class="sui-card">
+                    <div class="sui-avatar sui-bg-surface-hover sui-mb-4">◈</div>
+                    <h3 class="sui-text-lg sui-mb-2">Colors</h3>
+                    <p class="sui-text-sm sui-text-muted">Text and background color utilities.</p>
+                </div>
+                <div class="sui-card">
+                    <div class="sui-avatar sui-bg-surface-hover sui-mb-4">□</div>
+                    <h3 class="sui-text-lg sui-mb-2">Display</h3>
+                    <p class="sui-text-sm sui-text-muted">Display, visibility, and sizing utilities.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;section class="sui-p-4"&gt;
+    &lt;h2 class="sui-text-center"&gt;Welcome&lt;/h2&gt;
+    &lt;p&gt;Build your interface with Sui.css.&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             07 — COMPONENTS
+        ====================================================== -->
+        <section class="doc-section" id="components" data-search="components buttons cards forms alerts navbar modal badge">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">07</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Components</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Components combine multiple CSS rules into reusable interface patterns.</p>
+
+            <div class="demo-box">
+                <div class="sui-text-muted sui-text-sm sui-font-bold sui-mb-4" style="letter-spacing: 1.2px; text-transform: uppercase;">Example Component</div>
+                <button class="sui-btn sui-btn-primary">Primary Button</button>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;button class="sui-btn sui-btn-primary"&gt;Primary Button&lt;/button&gt;</code></pre>
+            </div>
+
+            <h3 class="sui-text-xl sui-mb-2 sui-mt-8">Card</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;article class="sui-card"&gt;
+    &lt;h3&gt;Sui.css Card&lt;/h3&gt;
+    &lt;p&gt;Reusable interface component.&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+            </div>
+
+            <h3 class="sui-text-xl sui-mb-2 sui-mt-8">Form</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;form class="sui-flex sui-flex-col sui-gap-2"&gt;
+    &lt;label class="sui-label" for="email"&gt;Email&lt;/label&gt;
+    &lt;input class="sui-input" id="email" type="email" placeholder="you@example.com"&gt;
+    &lt;button class="sui-btn sui-btn-primary" type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            </div>
+
+            <!-- New v2.1.0 Components Documentation -->
+            <h3 class="sui-text-xl sui-mb-2 sui-mt-8">Responsive Data Tables <span class="sui-badge sui-badge-primary" style="font-size: 0.65rem;">v2.1.0 NEW</span></h3>
+            <p class="sui-text-sm sui-text-muted">Built for high-density SaaS views with striped rows, cell hover states, and horizontal responsiveness.</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;div class="sui-table-responsive"&gt;
+    &lt;table class="sui-table sui-table-striped sui-table-hover sui-table-bordered"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Jane Doe&lt;/td&gt;
+                &lt;td&gt;Admin&lt;/td&gt;
+                &lt;td&gt;&lt;span class="sui-badge sui-badge-success"&gt;Active&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="sui-text-xl sui-mb-2 sui-mt-8">Accessible Modals &amp; Dialogs <span class="sui-badge sui-badge-primary" style="font-size: 0.65rem;">v2.1.0 NEW</span></h3>
+            <p class="sui-text-sm sui-text-muted">Includes focus trapping, ESC key listener, backdrop blur, and standardized header/body/footer structure.</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;!-- Open Trigger --&gt;
+&lt;button class="sui-btn sui-btn-primary" data-sui-modal-target="demoModal"&gt;Launch Modal&lt;/button&gt;
+
+&lt;!-- Modal Overlay --&gt;
+&lt;div id="demoModal" class="sui-dialog-overlay"&gt;
+    &lt;div class="sui-dialog sui-dialog-lg sui-animate-spring-up"&gt;
+        &lt;div class="sui-dialog-header"&gt;
+            &lt;h3 class="sui-dialog-title"&gt;Dialog Title&lt;/h3&gt;
+            &lt;button class="sui-dialog-close" data-sui-modal-close&gt;&amp;times;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="sui-dialog-body"&gt;Modal content body.&lt;/div&gt;
+        &lt;div class="sui-dialog-footer"&gt;
+            &lt;button class="sui-btn sui-btn-outline" data-sui-modal-close&gt;Cancel&lt;/button&gt;
+            &lt;button class="sui-btn sui-btn-primary"&gt;Save&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="sui-text-xl sui-mb-2 sui-mt-8">Toasts &amp; Dismissible Alerts <span class="sui-badge sui-badge-primary" style="font-size: 0.65rem;">v2.1.0 NEW</span></h3>
+            <p class="sui-text-sm sui-text-muted">Trigger notifications programmatically with status icons, or dismiss banners with data attributes.</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">JAVASCRIPT &amp; HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">// JS Toast Trigger
+SUI.toast.show({
+    title: 'Success',
+    message: 'Operation completed successfully.',
+    type: 'success' // success | danger | warning | info
+});
+
+&lt;!-- Dismissible Alert Banner --&gt;
+&lt;div class="sui-alert sui-alert-success"&gt;
+    &lt;span class="sui-alert-icon"&gt;✓&lt;/span&gt;
+    &lt;div class="sui-alert-content"&gt;All changes saved.&lt;/div&gt;
+    &lt;button class="sui-alert-close" data-sui-dismiss="alert"&gt;&amp;times;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             08 — ANIMATIONS
+        ====================================================== -->
+        <section class="doc-section" id="animations" data-search="animations transitions fade slide scale hover spin pulse">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">08</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Animations</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Sui.css includes reusable animation utilities for adding hardware-accelerated motion without writing logic from scratch.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Class</th><th>Typical use</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>.sui-animate-blur-in</code></td><td>Apple-style entry reveal.</td></tr>
+                        <tr><td><code>.sui-animate-slide-up</code></td><td>Reveal content from below.</td></tr>
+                        <tr><td><code>.sui-animate-spring-up</code></td><td>Natural overshoot scale/lift.</td></tr>
+                        <tr><td><code>.sui-hover-lift</code></td><td>Elevation interaction on cards/buttons.</td></tr>
+                        <tr><td><code>.sui-animate-pulse-glow</code></td><td>Attention or recording indicators.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;div class="sui-animate-blur-in"&gt;
+    &lt;h2&gt;Welcome to Sui.css&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             09 — RESPONSIVE
+        ====================================================== -->
+        <section class="doc-section" id="responsive" data-search="responsive mobile tablet desktop breakpoints media queries">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">09</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Responsive Design</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Build interfaces that adapt to different viewport sizes using the responsive utilities provided by Sui.css.</p>
+
+            <div class="callout warning">
+                <div>⚠</div>
+                <div>
+                    <strong class="sui-block sui-mb-1">Mobile First Architecture</strong>
+                    <p class="sui-text-sm sui-text-muted sui-m-0">Sui.css uses mobile-first media queries. Use the <span class="inline-code">md:</span> prefix to apply changes on desktop and tablet screens.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;!-- Stack on mobile, flex row on desktop --&gt;
+&lt;div class="sui-flex sui-flex-col md:sui-flex-row"&gt;
+    &lt;div&gt;Content&lt;/div&gt;
+    &lt;div&gt;Sidebar&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             10 — CUSTOMIZATION
+        ====================================================== -->
+        <section class="doc-section" id="customization" data-search="customization theme variables tokens custom colors">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">10</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Customization</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Customize Sui.css by overriding design tokens in your own stylesheet.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">CSS</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">:root {
+    --sui-brand-hue: 280; /* Changes entire framework palette */
+    --sui-radius-md: 14px;
+}</code></pre>
+            </div>
+
+            <div class="callout info">
+                <div>🧠</div>
+                <div>
+                    <strong class="sui-block sui-mb-1">Keep customization separate</strong>
+                    <p class="sui-text-sm sui-text-muted sui-m-0">Avoid editing the generated <span class="inline-code">dist/sui.min.css</span> directly. Keep project-specific overrides in your own stylesheet after importing Sui.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             11 — PRODUCTION
+        ====================================================== -->
+        <section class="doc-section" id="production" data-search="production build minify deploy release npm github cdn">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">11</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Production</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">Use the minified build for production websites and keep the source files for framework development.</p>
+
+            <div class="sui-grid sui-gap-4 sui-mb-8">
+                <div class="sui-card sui-flex sui-gap-4 sui-items-start">
+                    <div class="sui-avatar sui-bg-surface-hover sui-text-primary">01</div>
+                    <div>
+                        <h3 class="sui-text-lg sui-mb-1">Develop</h3>
+                        <p class="sui-text-sm sui-text-muted sui-m-0">Make framework changes inside <span class="inline-code">src/layers/</span>.</p>
+                    </div>
+                </div>
+                <div class="sui-card sui-flex sui-gap-4 sui-items-start">
+                    <div class="sui-avatar sui-bg-surface-hover sui-text-primary">02</div>
+                    <div>
+                        <h3 class="sui-text-lg sui-mb-1">Build</h3>
+                        <p class="sui-text-sm sui-text-muted sui-m-0">Run your configured npm build command to generate Lightning CSS output.</p>
+                    </div>
+                </div>
+                <div class="sui-card sui-flex sui-gap-4 sui-items-start">
+                    <div class="sui-avatar sui-bg-surface-hover sui-text-primary">03</div>
+                    <div>
+                        <h3 class="sui-text-lg sui-mb-1">Test</h3>
+                        <p class="sui-text-sm sui-text-muted sui-m-0">Verify the generated CSS against the Visual QA Matrix.</p>
+                    </div>
+                </div>
+                <div class="sui-card sui-flex sui-gap-4 sui-items-start">
+                    <div class="sui-avatar sui-bg-surface-hover sui-text-primary">04</div>
+                    <div>
+                        <h3 class="sui-text-lg sui-mb-1">Publish</h3>
+                        <p class="sui-text-sm sui-text-muted sui-m-0">Publish the repository and distribute via CDN.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">TERMINAL</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;"># Install dependencies
+npm install
+
+# Build Sui.css via Lightning CSS
+npm run build
+
+# Check generated files
+ls dist/</code></pre>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             12 — COMPLETE EXAMPLE
+        ====================================================== -->
+        <section class="doc-section" id="complete-example" data-search="complete example website landing page final project">
+            <div class="sui-flex sui-items-start sui-gap-4 sui-mb-4">
+                <div class="sui-avatar sui-bg-primary sui-text-inverse" style="border-radius: 11px;">12</div>
+                <h2 class="sui-text-2xl" style="margin:0;">Complete Example</h2>
+            </div>
+            <p class="sui-text-muted sui-mb-6" style="margin-left: 3.5rem;">A small example showing how framework classes can be combined to create a complete interface.</p>
+
+            <div class="demo-box">
+                <div class="sui-text-muted sui-text-sm sui-font-bold sui-mb-4" style="letter-spacing: 1.2px; text-transform: uppercase;">Live Example</div>
+                
+                <div class="sui-flex sui-items-center sui-justify-between sui-gap-4 sui-flex-wrap">
+                    <div>
+                        <h2 class="sui-text-2xl" style="margin:0;">Build with Sui.css</h2>
+                        <p class="sui-text-muted sui-text-sm sui-mt-2 sui-mb-0">Simple. Modern. Reusable.</p>
+                    </div>
+                    <button class="sui-btn sui-btn-primary sui-hover-lift">Get Started</button>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">HTML</span>
+                    <button class="sui-btn sui-btn-outline sui-btn-sm copy-btn">Copy</button>
+                </div>
+                <pre><code style="color: #ededed;">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Sui.css Project&lt;/title&gt;
+    
+    &lt;!-- SUI CSS v2.1.0 --&gt;
+    &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.1.0/dist/sui.min.css"&gt;
+&lt;/head&gt;
+&lt;body class="sui-bg"&gt;
+    &lt;main class="sui-container sui-flex sui-items-center sui-justify-between sui-gap-4 sui-flex-wrap sui-py-12"&gt;
+        &lt;div&gt;
+            &lt;h1 class="sui-text-2xl"&gt;Build with Sui.css&lt;/h1&gt;
+            &lt;p class="sui-text-muted"&gt;Simple. Modern. Reusable.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;button class="sui-btn sui-btn-primary sui-hover-lift"&gt;Get Started&lt;/button&gt;
+    &lt;/main&gt;
+    
+    &lt;!-- SUI JS v2.1.0 --&gt;
+    &lt;script src="https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.1.0/dist/sui.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <div class="callout success">
+                <div class="sui-text-success">✓</div>
+                <div>
+                    <strong class="sui-block sui-mb-1">You're ready</strong>
+                    <p class="sui-text-sm sui-text-muted sui-m-0">Sui.css is now connected to your project. Continue building with your framework's layout, utility, component and animation classes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+        <footer class="sui-border-t sui-border-subtle sui-pt-8 sui-mt-12 sui-text-muted sui-text-sm">
+            <p><strong class="sui-text">Sui.css</strong> — Simple Utility Interface CSS Framework.</p>
+            <p>Version 2.0.0 · Documentation </p>
+        </footer>
+
+    </div>
+</main>
+
+<!-- =============================================================
+     JAVASCRIPT
+============================================================== -->
+<script>
+    // Sidebar Logic
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+
+    function toggleSidebar(open) {
+        const isOpen = open !== undefined ? open : !sidebar.classList.contains("open");
+        sidebar.classList.toggle("open", isOpen);
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    }
+
+    if (menuBtn) {
+        menuBtn.addEventListener("click", () => toggleSidebar());
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", () => toggleSidebar(false));
+    });
+
+    // Keyboard Arrow Navigation in Sidebar
+    if (sidebar) {
+        sidebar.addEventListener("keydown", (e) => {
+            const focused = document.activeElement;
+            const idx = navLinks.indexOf(focused);
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                const next = idx === -1 ? 0 : (idx + 1) % navLinks.length;
+                navLinks[next].focus();
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                const prev = idx === -1 ? navLinks.length - 1 : (idx - 1 + navLinks.length) % navLinks.length;
+                navLinks[prev].focus();
+            } else if (e.key === "Escape") {
+                toggleSidebar(false);
+                if (menuBtn) menuBtn.focus();
+            }
+        });
+    }
+
+    // Active Navigation Observer
+    const sections = document.querySelectorAll(".doc-section");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const id = entry.target.id;
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                link.removeAttribute("aria-current");
+                if (link.getAttribute("href") === `#${id}`) {
+                    link.classList.add("active");
+                    link.setAttribute("aria-current", "page");
+                }
+            });
+        });
+    }, { rootMargin: "-20% 0px -65% 0px" });
+
+    sections.forEach(section => observer.observe(section));
+
+    // Copy Buttons
+    document.querySelectorAll(".copy-btn").forEach(button => {
+        button.addEventListener("click", async () => {
+            const codeBlock = button.closest(".code-block");
+            const code = codeBlock.querySelector("code");
+            if (!code) return;
+            
+            try {
+                await navigator.clipboard.writeText(code.innerText);
+                const original = button.innerText;
+                button.innerText = "Copied ✓";
+                button.classList.add("sui-text-success");
+                setTimeout(() => {
+                    button.innerText = original;
+                    button.classList.remove("sui-text-success");
+                }, 1500);
+            } catch (error) {
+                button.innerText = "Failed";
+                setTimeout(() => button.innerText = "Copy", 1500);
+            }
+        });
+    });
+
+    // Search
+    const searchInput = document.getElementById("searchInput");
+    if(searchInput) {
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.trim().toLowerCase();
+            sections.forEach(section => {
+                const searchableText = (section.innerText + " " + section.dataset.search).toLowerCase();
+                section.style.display = (!query || searchableText.includes(query)) ? "" : "none";
+            });
+        });
+        
+        document.addEventListener("keydown", event => {
+            if (event.key === "/" && document.activeElement !== searchInput) {
+                event.preventDefault();
+                searchInput.focus();
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,1207 @@
+/* ==========================================================================
+   SUI.CSS - LUXURY COMPONENTS LAYER (ULTRA PRO MAX)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. BUTTONS (Advanced States, Sizes, & Variants)
+   -------------------------------------------------------------------------- */
+.sui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sui-space-2);
+  padding: 0.625rem 1.25rem;
+  font-size: var(--sui-text-base);
+  font-weight: 500;
+  border-radius: var(--sui-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.sui-btn:disabled, 
+.sui-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Variants */
+.sui-btn-primary {
+  background-color: var(--sui-color-primary-500);
+  color: var(--sui-text-contrast);
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.sui-btn-primary:hover {
+  background-color: var(--sui-primary-hover);
+  border-color: var(--sui-primary-border);
+}
+.sui-btn-primary:active {
+  background-color: var(--sui-primary-active);
+}
+
+.sui-btn-secondary {
+  background-color: var(--sui-surface-hover);
+  color: var(--sui-text);
+  border-color: var(--sui-border);
+}
+.sui-btn-secondary:hover {
+  background-color: var(--sui-border);
+}
+
+.sui-btn-outline {
+  background-color: transparent;
+  border-color: var(--sui-border);
+  color: var(--sui-text);
+}
+.sui-btn-outline:hover {
+  border-color: var(--sui-primary-500);
+  color: var(--sui-primary-500);
+  background-color: oklch(from var(--sui-primary-500) 0.95 c h / 0.1);
+}
+
+.sui-btn-ghost {
+  background-color: transparent;
+  color: var(--sui-text-muted);
+}
+.sui-btn-ghost:hover {
+  background-color: var(--sui-surface-hover);
+  color: var(--sui-text);
+}
+
+.sui-btn-danger {
+  background-color: oklch(60% 0.2 25);
+  color: white;
+}
+.sui-btn-danger:hover {
+  background-color: oklch(50% 0.2 25);
+  box-shadow: 0 8px 16px -4px oklch(60% 0.2 25 / 0.4);
+}
+
+/* Button Sizes */
+.sui-btn-sm { padding: 0.375rem 0.75rem; font-size: var(--sui-text-sm); border-radius: 0.375rem; }
+.sui-btn-lg { padding: 0.875rem 1.75rem; font-size: var(--sui-text-lg); border-radius: var(--sui-radius-lg); }
+.sui-btn-icon { padding: 0.625rem; border-radius: 50%; aspect-ratio: 1; }
+
+/* --------------------------------------------------------------------------
+   2. BADGES & PILLS
+   -------------------------------------------------------------------------- */
+.sui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
+  background-color: var(--sui-primary-50);
+  color: var(--sui-primary-900);
+  border: 1px solid oklch(from var(--sui-primary-500) l c h / 0.1);
+}
+
+.sui-badge-dot::before {
+  content: "";
+  display: inline-block;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.sui-badge-success { background-color: oklch(95% 0.05 140); color: oklch(30% 0.1 140); }
+.sui-badge-danger { background-color: oklch(95% 0.05 25); color: oklch(40% 0.1 25); }
+.sui-badge-warning { background-color: oklch(95% 0.1 75); color: oklch(40% 0.15 75); }
+
+@media (prefers-color-scheme: dark) {
+  .sui-badge { background-color: oklch(from var(--sui-primary-500) 0.2 c h); color: var(--sui-primary-50); }
+  .sui-badge-success { background-color: oklch(25% 0.05 140); color: oklch(85% 0.1 140); }
+  .sui-badge-danger { background-color: oklch(25% 0.05 25); color: oklch(85% 0.1 25); }
+  .sui-badge-warning { background-color: oklch(25% 0.1 75); color: oklch(85% 0.15 75); }
+}
+
+/* --------------------------------------------------------------------------
+   3. LUXURY CARDS & PANELS
+   -------------------------------------------------------------------------- */
+.sui-card {
+  background-color: var(--sui-surface);
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-lg);
+  padding: var(--sui-space-6);
+  box-shadow: 0 4px 6px -1px oklch(0% 0 0 / 0.05), 0 2px 4px -2px oklch(0% 0 0 / 0.05);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sui-space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.sui-card-interactive:hover,
+.sui-card:has(.sui-btn-primary):hover {
+  border-color: var(--sui-primary-500);
+  box-shadow: 0 20px 25px -5px oklch(0% 0 0 / 0.1), 0 8px 10px -6px oklch(0% 0 0 / 0.1);
+  transform: translateY(-4px);
+}
+
+.sui-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--sui-border);
+  padding-bottom: var(--sui-space-4);
+  margin-bottom: var(--sui-space-2);
+}
+
+/* Glassmorphism */
+.sui-glass {
+  background: oklch(100% 0 0 / 0.65);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid oklch(100% 0 0 / 0.4);
+  box-shadow: 0 8px 32px 0 oklch(0% 0 0 / 0.05);
+  border-radius: var(--sui-radius-lg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .sui-glass {
+    background: oklch(15% 0.02 var(--sui-brand-hue) / 0.5);
+    border: 1px solid oklch(100% 0 0 / 0.1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. ADVANCED FORM CONTROLS (Native Replacement)
+   -------------------------------------------------------------------------- */
+.sui-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sui-space-2);
+  margin-bottom: var(--sui-space-4);
+}
+
+.sui-label {
+  font-size: var(--sui-text-sm);
+  font-weight: 500;
+  color: var(--sui-text);
+}
+
+.sui-input, .sui-textarea, .sui-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: var(--sui-text-base);
+  border-radius: var(--sui-radius-md);
+  border: 1px solid var(--sui-border);
+  background-color: var(--sui-surface);
+  color: var(--sui-text);
+  transition: all 0.2s ease;
+  outline: none;
+  appearance: none;
+}
+
+.sui-textarea { resize: vertical; min-height: 100px; }
+
+.sui-input:hover, .sui-textarea:hover, .sui-select:hover {
+  border-color: oklch(from var(--sui-border) 0.7 c h);
+}
+
+.sui-input:focus, .sui-textarea:focus, .sui-select:focus {
+  border-color: var(--sui-primary-500);
+  box-shadow: 0 0 0 4px oklch(from var(--sui-primary-500) l c h / 0.15);
+  background-color: var(--sui-bg);
+}
+
+/* iOS Style Toggle Switch */
+.sui-toggle {
+  appearance: none;
+  width: 3rem;
+  height: 1.5rem;
+  background-color: var(--sui-border);
+  border-radius: 9999px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+.sui-toggle::after {
+  content: '';
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px oklch(0% 0 0 / 0.2);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.sui-toggle:checked { background-color: var(--sui-primary-500); }
+.sui-toggle:checked::after { transform: translateX(1.5rem); }
+
+/* Custom Checkbox */
+.sui-checkbox {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1.5px solid var(--sui-border);
+  border-radius: 0.25rem;
+  background-color: var(--sui-surface);
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: all 0.2s;
+}
+.sui-checkbox::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em white;
+  background-color: white;
+  transform-origin: center;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.sui-checkbox:checked {
+  background-color: var(--sui-primary-500);
+  border-color: var(--sui-primary-500);
+}
+.sui-checkbox:checked::before { transform: scale(1); }
+
+/* --------------------------------------------------------------------------
+   5. AVATARS & USER PROFILES
+   -------------------------------------------------------------------------- */
+.sui-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--sui-primary-50);
+  color: var(--sui-primary-900);
+  font-weight: 600;
+  font-size: 1rem;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  border: 2px solid var(--sui-surface);
+}
+
+.sui-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sui-avatar-group {
+  display: flex;
+  align-items: center;
+}
+.sui-avatar-group .sui-avatar {
+  margin-left: -0.75rem;
+  transition: transform 0.2s;
+}
+.sui-avatar-group .sui-avatar:hover {
+  transform: translateY(-4px);
+  z-index: 10;
+}
+
+/* Online Status Indicator */
+.sui-avatar-online::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: 25%;
+  background-color: oklch(95% 0.05 140);
+  border: 2px solid var(--sui-surface);
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   6. PURE CSS TOOLTIPS
+   -------------------------------------------------------------------------- */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -8px) scale(0.9);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--sui-radius-md);
+  background-color: oklch(20% 0.05 var(--sui-brand-hue));
+  color: white;
+  font-size: var(--sui-text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+[data-tooltip]::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-width: 6px;
+  border-style: solid;
+  border-color: oklch(20% 0.05 var(--sui-brand-hue)) transparent transparent transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+[data-tooltip]:hover::before { opacity: 1; transform: translate(-50%, -12px) scale(1); }
+[data-tooltip]:hover::after { opacity: 1; transform: translate(-50%, -6px); }
+
+/* --------------------------------------------------------------------------
+   7. ALERTS, TOASTS & FEEDBACK
+   -------------------------------------------------------------------------- */
+.sui-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sui-space-4);
+  padding: 1rem 1.25rem;
+  border-radius: var(--sui-radius-lg);
+  background-color: var(--sui-surface);
+  border: 1px solid var(--sui-border);
+  box-shadow: var(--sui-shadow-sm);
+}
+.sui-alert-icon { flex-shrink: 0; font-size: 1.25rem; }
+.sui-alert-title { font-weight: 600; margin-bottom: 0.25rem; color: var(--sui-text); }
+.sui-alert-desc { font-size: var(--sui-text-sm); color: var(--sui-text-muted); }
+
+.sui-toast {
+  position: fixed;
+  bottom: var(--sui-space-6);
+  right: var(--sui-space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--sui-space-4);
+  padding: 1rem 1.5rem;
+  border-radius: var(--sui-radius-lg);
+  background-color: var(--sui-surface);
+  border-left: 4px solid var(--sui-primary-500);
+  box-shadow: 0 10px 15px -3px oklch(0% 0 0 / 0.1);
+  z-index: 9999;
+  animation: sui-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Skeletons */
+.sui-skeleton {
+  background-color: var(--sui-surface-hover);
+  border-radius: var(--sui-radius-md);
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
+.sui-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, oklch(100% 0 0 / 0.4), transparent);
+  animation: sui-shimmer 1.5s infinite;
+  transform: translateX(-100%);
+}
+@media (prefers-color-scheme: dark) {
+  .sui-skeleton::after { background: linear-gradient(90deg, transparent, oklch(100% 0 0 / 0.05), transparent); }
+}
+
+/* Spinner */
+.sui-spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid var(--sui-surface-hover);
+  border-top-color: var(--sui-primary-500);
+  border-radius: 50%;
+  animation: sui-spin 0.8s linear infinite;
+}
+
+/* Progress Bar */
+.sui-progress-bg {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--sui-surface-hover);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.sui-progress-bar {
+  height: 100%;
+  background-color: var(--sui-primary-500);
+  border-radius: 9999px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   8. MODALS & SLIDE-OVERS (DRAWERS)
+   -------------------------------------------------------------------------- */
+.sui-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: oklch(0% 0 0 / 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  animation: sui-fade-in 0.2s ease;
+}
+
+.sui-dialog {
+  background-color: var(--sui-bg);
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-lg);
+  padding: var(--sui-space-6);
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 25px 50px -12px oklch(0% 0 0 / 0.25);
+  animation: sui-scale-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sui-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--sui-bg);
+  border-left: 1px solid var(--sui-border);
+  box-shadow: -10px 0 25px oklch(0% 0 0 / 0.1);
+  padding: var(--sui-space-6);
+  z-index: 5001;
+  animation: sui-slide-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   9. NAVIGATION & ACCORDIONS
+   -------------------------------------------------------------------------- */
+.sui-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sui-space-4) var(--sui-space-6);
+  background-color: var(--sui-bg);
+  border-bottom: 1px solid var(--sui-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Tabs */
+.sui-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--sui-border);
+  gap: var(--sui-space-6);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sui-tab {
+  padding: 0.75rem 0.25rem;
+  color: var(--sui-text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.sui-tab:hover { color: var(--sui-text); }
+.sui-tab.active {
+  color: var(--sui-primary-500);
+  border-bottom-color: var(--sui-primary-500);
+}
+
+/* Accordion using native <details> */
+.sui-accordion {
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-md);
+  background-color: var(--sui-surface);
+  overflow: hidden;
+}
+.sui-accordion summary {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+.sui-accordion summary:hover { background-color: var(--sui-surface-hover); }
+.sui-accordion summary::-webkit-details-marker { display: none; }
+.sui-accordion summary::after {
+  content: "+";
+  font-size: 1.25rem;
+  transition: transform 0.3s;
+}
+.sui-accordion[open] summary::after { transform: rotate(45deg); }
+.sui-accordion-content {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--sui-border);
+  color: var(--sui-text-muted);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   10. MEDIA & SOCIAL COMPONENTS
+   -------------------------------------------------------------------------- */
+/* Scroll Snapping Carousel (Great for images/reels) */
+.sui-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: var(--sui-space-4);
+  padding-block: var(--sui-space-2);
+  scrollbar-width: none; /* Firefox */
+}
+.sui-carousel::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+.sui-carousel-item {
+  scroll-snap-align: center;
+  flex: 0 0 80%;
+  border-radius: var(--sui-radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Chat Message Bubbles */
+.sui-chat-bubble {
+  max-width: 75%;
+  padding: 0.75rem 1rem;
+  border-radius: 1.25rem;
+  font-size: var(--sui-text-base);
+  line-height: 1.4;
+  margin-bottom: var(--sui-space-2);
+  position: relative;
+}
+.sui-chat-bubble-received {
+  background-color: var(--sui-surface);
+  color: var(--sui-text);
+  border-bottom-left-radius: 0.25rem;
+  align-self: flex-start;
+  border: 1px solid var(--sui-border);
+}
+.sui-chat-bubble-sent {
+  background-color: var(--sui-primary-500);
+  color: white;
+  border-bottom-right-radius: 0.25rem;
+  align-self: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   11. INTERNAL KEYFRAME ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes sui-slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes sui-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sui-scale-up {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes sui-slide-left {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes sui-shimmer {
+  100% { transform: translateX(100%); }
+}
+@keyframes sui-spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* =========================================================
+   SUI.CSS - NATIVE SYNTAX HIGHLIGHTING (Replaces Prism CSS)
+   ========================================================= */
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #e2e8f0;
+  background: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+  tab-size: 4;
+  hyphens: none;
+}
+
+/* Tokens */
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #64748b; /* Slate */
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #94a3b8; /* Muted */
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+  color: #fb7185; /* Soft Red/Pink */
+}
+
+.token.function-name {
+  color: #6196cc; /* Blue */
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+  color: #fb923c; /* Orange */
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+  color: #fbbf24; /* Yellow */
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: #c084fc; /* Purple */
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+  color: #34d399; /* Green */
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #22d3ee; /* Cyan */
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+.sui-btn-subtle {
+  background-color: var(--sui-primary-subtle);
+  color: var(--sui-color-primary-500);
+  border: 1px solid var(--sui-primary-border);
+}
+
+.sui-btn-subtle:hover {
+  background-color: color-mix(in oklch, var(--sui-color-primary-500) 22%, transparent);
+}
+
+/* ==========================================================================
+   12. NATIVE SYNTAX HIGHLIGHTER (Zero Dependency)
+   ========================================================================== */
+.sui-hl-comment { color: oklch(60% 0.05 var(--sui-brand-hue)); font-style: italic; }
+.sui-hl-tag { color: oklch(75% 0.15 340); font-weight: 500; } 
+.sui-hl-attr { color: oklch(80% 0.15 150); } 
+.sui-hl-string { color: oklch(85% 0.15 80); }
+
+/* --------------------------------------------------------------------------
+   13. SWITCH TOGGLE (Accessible iOS/Material Physics)
+   -------------------------------------------------------------------------- */
+.sui-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sui-space-3);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--sui-text-sm);
+  color: var(--sui-text);
+}
+.sui-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.sui-switch-track {
+  position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  background-color: var(--sui-border-strong);
+  border-radius: var(--sui-radius-full);
+  transition: background-color 0.25s var(--sui-ease-spring), box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+.sui-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s var(--sui-ease-spring);
+}
+.sui-switch input:checked + .sui-switch-track {
+  background-color: var(--sui-color-primary-500);
+}
+.sui-switch input:checked + .sui-switch-track .sui-switch-thumb {
+  transform: translateX(1.25rem);
+}
+.sui-switch input:focus-visible + .sui-switch-track {
+  outline: 2px solid var(--sui-color-primary-500);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   14. AVATAR GROUP & STATUS INDICATORS
+   -------------------------------------------------------------------------- */
+.sui-avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+.sui-avatar-group .sui-avatar {
+  margin-left: -0.75rem;
+  border: 2px solid var(--sui-surface);
+  transition: transform 0.2s ease, z-index 0.2s ease;
+}
+.sui-avatar-group .sui-avatar:first-child {
+  margin-left: 0;
+}
+.sui-avatar-group .sui-avatar:hover {
+  transform: translateY(-3px) scale(1.05);
+  z-index: 10;
+}
+.sui-avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: 2px solid var(--sui-surface);
+}
+.sui-avatar-status-online { background-color: var(--sui-color-success-500); }
+.sui-avatar-status-busy { background-color: var(--sui-color-danger-500); }
+.sui-avatar-status-away { background-color: var(--sui-color-warning-500); }
+
+/* --------------------------------------------------------------------------
+   15. KPI METRICS & STAT CARDS (Clean Editorial Architecture)
+   -------------------------------------------------------------------------- */
+.sui-stat {
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.sui-stat:hover {
+  border-color: var(--sui-border-strong);
+  box-shadow: var(--sui-shadow-md);
+}
+.sui-stat-label {
+  font-size: var(--sui-text-sm);
+  color: var(--sui-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.sui-stat-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--sui-text);
+  letter-spacing: -0.02em;
+}
+.sui-stat-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--sui-text-xs);
+  color: var(--sui-text-muted);
+  margin-top: 0.25rem;
+}
+.sui-stat-trend-up {
+  color: var(--sui-color-success-500);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.sui-stat-trend-down {
+  color: var(--sui-color-danger-500);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   16. SKELETON LOADERS
+   -------------------------------------------------------------------------- */
+.sui-skeleton {
+  background: linear-gradient(90deg, var(--sui-border-subtle) 25%, var(--sui-surface-hover) 37%, var(--sui-border-subtle) 63%);
+  background-size: 400% 100%;
+  animation: sui-skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--sui-radius-md);
+  display: block;
+}
+@keyframes sui-skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+.sui-skeleton-text {
+  height: 1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.sui-skeleton-title {
+  height: 1.75rem;
+  width: 60%;
+  margin-bottom: 0.75rem;
+}
+.sui-skeleton-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   17. BREADCRUMBS
+   -------------------------------------------------------------------------- */
+.sui-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sui-space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--sui-text-sm);
+}
+.sui-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sui-space-2);
+  color: var(--sui-text-muted);
+}
+.sui-breadcrumb-item a {
+  color: var(--sui-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.sui-breadcrumb-item a:hover {
+  color: var(--sui-color-primary-500);
+}
+.sui-breadcrumb-item.active {
+  color: var(--sui-text);
+  font-weight: 600;
+}
+.sui-breadcrumb-separator {
+  color: var(--sui-text-muted);
+  opacity: 0.5;
+  user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   18. LIVE PING & PULSE INDICATOR
+   -------------------------------------------------------------------------- */
+.sui-ping {
+  position: relative;
+  display: inline-flex;
+  width: 0.625rem;
+  height: 0.625rem;
+  vertical-align: middle;
+}
+.sui-ping-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--sui-color-success-500);
+}
+.sui-ping-wave {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--sui-color-success-500);
+  animation: sui-ping-anim 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes sui-ping-anim {
+  75%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   19. NEXT-GEN SPECTRUM RANGE SLIDER & COLOR CONTROLS
+   -------------------------------------------------------------------------- */
+.sui-hue-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 9999px;
+  background: linear-gradient(to right,
+    oklch(60% 0.25 0),
+    oklch(60% 0.25 45),
+    oklch(60% 0.25 90),
+    oklch(60% 0.25 135),
+    oklch(60% 0.25 180),
+    oklch(60% 0.25 225),
+    oklch(60% 0.25 270),
+    oklch(60% 0.25 315),
+    oklch(60% 0.25 360)
+  );
+  outline: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.sui-hue-slider:focus-visible {
+  outline: 2px solid var(--sui-color-primary-500);
+  outline-offset: 4px;
+}
+
+.sui-hue-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid oklch(60% 0.22 var(--sui-brand-hue, 255));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.sui-hue-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 0 6px oklch(60% 0.22 var(--sui-brand-hue, 255) / 0.35);
+}
+
+.sui-hue-slider::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid oklch(60% 0.22 var(--sui-brand-hue, 255));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   20. PREMIUM OKLCH GLOW CARD & TONAL MATRICES
+   -------------------------------------------------------------------------- */
+.sui-glow-card {
+  position: relative;
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border-strong);
+  border-radius: var(--sui-radius-xl);
+  box-shadow: 0 10px 30px -10px oklch(from var(--sui-color-primary-500) l c h / 0.15), var(--sui-shadow-lg);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sui-glow-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    oklch(60% 0.25 var(--sui-brand-hue, 255)), 
+    oklch(65% 0.22 calc(var(--sui-brand-hue, 255) + 60))
+  );
+  opacity: 0.9;
+}
+
+.sui-swatch-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+}
+
+.sui-swatch-chip:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sui-swatch-chip.active {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px oklch(from var(--sui-color-primary-500) l c h / 0.5), 0 4px 14px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px) scale(1.06);
+}
+
+.sui-tonal-strip {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  border-radius: var(--sui-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--sui-border);
+  box-shadow: var(--sui-shadow-sm);
+}
+
+.sui-tonal-cell {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-family: monospace;
+  font-weight: 600;
+  transition: transform 0.15s ease, z-index 0.15s ease;
+}
+
+.sui-tonal-cell:hover {
+  transform: scale(1.15);
+  z-index: 5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sui-badge-glow {
+  background: oklch(from var(--sui-color-primary-500) l c h / 0.15);
+  color: var(--sui-color-primary-500);
+  border: 1px solid oklch(from var(--sui-color-primary-500) l c h / 0.35);
+  box-shadow: 0 0 16px -2px oklch(from var(--sui-color-primary-500) l c h / 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   21. ARCHITECTURAL COMPARISON MATRIX & VERSION CONTROLS
+   -------------------------------------------------------------------------- */
+.sui-compare-card {
+  position: relative;
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border-strong);
+  border-radius: var(--sui-radius-xl);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.3), var(--sui-shadow-lg);
+  overflow: hidden;
+}
+
+.sui-compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+.sui-compare-table th,
+.sui-compare-table td {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--sui-border-subtle);
+  vertical-align: middle;
+  transition: background-color 0.2s ease;
+}
+
+.sui-compare-table tr:last-child td {
+  border-bottom: none;
+}
+
+.sui-compare-table tbody tr:hover td {
+  background-color: var(--sui-surface-hover);
+}
+
+.sui-col-highlight {
+  position: relative;
+  background: linear-gradient(180deg, oklch(from var(--sui-color-primary-500) l c h / 0.12) 0%, oklch(from var(--sui-color-primary-500) l c h / 0.04) 100%) !important;
+  border-left: 2px solid oklch(from var(--sui-color-primary-500) l c h / 0.35);
+  border-right: 2px solid oklch(from var(--sui-color-primary-500) l c h / 0.35);
+}
+
+.sui-col-highlight-header {
+  border-top: 3px solid var(--sui-color-primary-500);
+}
+
+.sui-metric-badge-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  color: var(--sui-color-success-500);
+  background: oklch(from var(--sui-color-success-500) l c h / 0.12);
+  border: 1px solid oklch(from var(--sui-color-success-500) l c h / 0.3);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--sui-radius-sm);
+  font-size: 0.8rem;
+}
+
+.sui-metric-badge-warn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--sui-text-muted);
+  font-size: 0.82rem;
+}
+
+.sui-version-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--sui-surface);
+  color: var(--sui-text);
+  border: 1px solid var(--sui-border-strong);
+  border-radius: 9999px;
+  padding: 0.35rem 2rem 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.65rem center;
+  transition: all 0.2s ease;
+}
+
+.sui-version-select:hover,
+.sui-version-select:focus {
+  border-color: var(--sui-color-primary-500);
+  outline: none;
+  box-shadow: 0 0 0 3px oklch(from var(--sui-color-primary-500) l c h / 0.2);
+}
+

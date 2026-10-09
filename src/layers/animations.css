@@ -1,0 +1,497 @@
+/* -------------------------------------------------------------------------- */
+/* SUI.CSS - PREMIUM ANIMATION ENGINE                                         */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  /* Premium Easing Curves */
+  --sui-ease-smooth: cubic-bezier(0.16, 1, 0.3, 1); /* Apple-style buttery smooth */
+  --sui-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Natural overshoot */
+  --sui-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Playful pop */
+  
+  /* Animation Durations */
+  --sui-duration-fast: 200ms;
+  --sui-duration-normal: 400ms;
+  --sui-duration-slow: 800ms;
+}
+
+/* ==========================================================================
+   1. ENTRY REVEALS (Page Load & Scroll In)
+   ========================================================================== */
+
+/* The "Luxury" Blur Reveal - Starts blurred and moves up into focus */
+@keyframes sui-blur-in {
+  0% { opacity: 0; filter: blur(12px); transform: translateY(30px) scale(0.98); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+.sui-animate-blur-in {
+  animation: sui-blur-in var(--sui-duration-slow) var(--sui-ease-smooth) forwards;
+  opacity: 0; /* Prevent flash */
+  will-change: transform, opacity, filter;
+}
+
+/* Spring Up - Pops up with a slight natural bounce */
+@keyframes sui-spring-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.sui-animate-spring-up {
+  animation: sui-spring-up var(--sui-duration-normal) var(--sui-ease-spring) forwards;
+  opacity: 0;
+}
+
+/* Scale Fade - Subtle zoom in for cards and images */
+@keyframes sui-scale-fade {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.sui-animate-scale-fade {
+  animation: sui-scale-fade var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+  opacity: 0;
+}
+
+/* ==========================================================================
+   2. STAGGER DELAYS (For lists, grids, and sequences)
+   ========================================================================== */
+.sui-delay-1 { animation-delay: 100ms; }
+.sui-delay-2 { animation-delay: 200ms; }
+.sui-delay-3 { animation-delay: 300ms; }
+.sui-delay-4 { animation-delay: 400ms; }
+.sui-delay-5 { animation-delay: 500ms; }
+
+/* ==========================================================================
+   3. MICRO-INTERACTIONS (Hover & Active States)
+   ========================================================================== */
+
+/* Lift - Elevates the element on hover */
+.sui-hover-lift {
+  transition: transform var(--sui-duration-fast) var(--sui-ease-spring), box-shadow var(--sui-duration-fast) var(--sui-ease-smooth);
+}
+.sui-hover-lift:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 24px -8px oklch(0% 0 0 / 0.15);
+}
+
+/* Push - Compresses the element when clicked (Great for buttons) */
+.sui-active-push:active {
+  transform: scale(0.95);
+  transition: transform 100ms ease;
+}
+
+/* Glow - Adds a pulsating neon aura on hover */
+.sui-hover-glow {
+  transition: box-shadow var(--sui-duration-normal) var(--sui-ease-smooth);
+}
+.sui-hover-glow:hover {
+  box-shadow: 0 0 20px oklch(from var(--sui-primary-500) l c h / 0.5), 
+              0 0 40px oklch(from var(--sui-primary-500) l c h / 0.2);
+}
+
+/* ==========================================================================
+   4. CONTINUOUS MOTION (Loading & Idle States)
+   ========================================================================== */
+
+/* Shimmer - For Skeleton Loaders */
+@keyframes sui-shimmer-sweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.sui-animate-shimmer {
+  background: linear-gradient(90deg, 
+    var(--sui-surface-hover) 25%, 
+    var(--sui-border) 50%, 
+    var(--sui-surface-hover) 75%
+  );
+  background-size: 200% 100%;
+  animation: sui-shimmer-sweep 2s infinite linear;
+}
+
+/* Floating - Gentle up/down idle movement */
+@keyframes sui-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.sui-animate-float {
+  animation: sui-float 3s ease-in-out infinite;
+}
+
+/* Pulse Glow - Breathing effect for notification dots or recording states */
+@keyframes sui-pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 oklch(from var(--sui-primary-500) l c h / 0.7); }
+  50% { opacity: 0.8; transform: scale(1.05); box-shadow: 0 0 0 10px oklch(from var(--sui-primary-500) l c h / 0); }
+}
+.sui-animate-pulse-glow {
+  animation: sui-pulse-glow 2s infinite;
+}
+
+/* Continuous Slow Spin - For loading wheels or decorative background gradients */
+@keyframes sui-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.sui-animate-spin {
+  animation: sui-spin-slow 8s linear infinite;
+}
+
+/* ==========================================================================
+   5. ACCESSIBILITY (Respect User Preferences)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   ADDITIONAL 10 ULTRA PRO MAX MOTION PRIMITIVES
+   ========================================================================== */
+
+/* 7. Slide In Right (Off-canvas & Drawers) */
+@keyframes sui-slide-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.sui-animate-slide-right {
+  animation: sui-slide-right var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* 8. Slide Up Fade (Bottom sheets & Toasts) */
+@keyframes sui-slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sui-animate-slide-up {
+  animation: sui-slide-up var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+  opacity: 0;
+}
+
+/* 9. Jelly / Squash & Stretch Pop */
+@keyframes sui-jelly {
+  0% { transform: scale(1, 1); }
+  30% { transform: scale(1.25, 0.75); }
+  40% { transform: scale(0.75, 1.25); }
+  50% { transform: scale(1.15, 0.85); }
+  65% { transform: scale(0.95, 1.05); }
+  75% { transform: scale(1.05, 0.95); }
+  100% { transform: scale(1, 1); }
+}
+.sui-animate-jelly {
+  animation: sui-jelly 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* 10. Shake Warning (Error states, invalid inputs) */
+@keyframes sui-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+.sui-animate-shake {
+  animation: sui-shake 0.45s ease-in-out both;
+}
+
+/* 11. Heartbeat / Reaction Burst (Like button, favorite toggle) */
+@keyframes sui-heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.3); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.3); }
+  70% { transform: scale(1); }
+}
+.sui-animate-heartbeat {
+  animation: sui-heartbeat 1.2s ease-in-out both;
+}
+
+/* 12. 3D Card Flip In */
+@keyframes sui-flip-3d {
+  from { opacity: 0; transform: perspective(800px) rotateY(-90deg); }
+  to { opacity: 1; transform: perspective(800px) rotateY(0deg); }
+}
+.sui-animate-flip-3d {
+  animation: sui-flip-3d var(--sui-duration-slow) var(--sui-ease-smooth) forwards;
+  transform-style: preserve-3d;
+  opacity: 0;
+}
+
+/* 13. Shimmer Border Glow (Continuous luxury rotating ring) */
+@keyframes sui-border-spin {
+  0% { --sui-angle: 0deg; }
+  100% { --sui-angle: 360deg; }
+}
+@property --sui-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.sui-animate-border-glow {
+  background: linear-gradient(var(--sui-surface), var(--sui-surface)) padding-box,
+              conic-gradient(from var(--sui-angle), var(--sui-color-primary-500), var(--sui-color-accent-500), var(--sui-color-primary-500)) border-box;
+  border: 2px solid transparent;
+  animation: sui-border-spin 4s linear infinite;
+}
+
+/* 14. Aurora Gradient Flow (Hero text or dynamic backgrounds) */
+@keyframes sui-gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.sui-animate-gradient-flow {
+  background: linear-gradient(-45deg, var(--sui-color-primary-500), var(--sui-color-accent-500), #ec4899, #8b5cf6);
+  background-size: 300% 300%;
+  animation: sui-gradient-flow 6s ease infinite;
+}
+
+/* 15. Glitch Snap (Cyberpunk / Matrix micro-glitch) */
+@keyframes sui-glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+.sui-animate-glitch {
+  animation: sui-glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* 16. Ripple Click Aura (Expands & fades) */
+@keyframes sui-ripple-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.sui-animate-ripple {
+  position: relative;
+}
+.sui-animate-ripple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--sui-color-primary-500);
+  animation: sui-ripple-ring 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+/* ==========================================================================
+   SCROLL-DRIVEN ANIMATIONS ENGINE
+   ========================================================================== */
+
+/* 1. Viewport Reading Progress Bar */
+@keyframes sui-scroll-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.sui-scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sui-color-primary-500), var(--sui-color-accent-500));
+  transform-origin: 0 50%;
+  animation: sui-scroll-progress auto linear;
+  animation-timeline: scroll(root block);
+  z-index: 1000;
+}
+
+/* 2. Scroll Reveal for Cards / Feed Items */
+@keyframes sui-view-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.sui-scroll-reveal {
+  animation: sui-view-reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 30%;
+}
+
+/* 3. Parallax Header / Image Zoom */
+@keyframes sui-parallax-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.15); }
+}
+
+.sui-scroll-parallax {
+  animation: sui-parallax-zoom linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0vh 100vh;
+}
+
+/* ==========================================================================
+   EXTENDED MOTION SUITE (SUI v2.1.0)
+   ========================================================================== */
+
+/* 17. Wiggle / Playful Bell Vibration */
+@keyframes sui-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(-14deg); }
+  30% { transform: rotate(12deg); }
+  45% { transform: rotate(-8deg); }
+  60% { transform: rotate(6deg); }
+  75% { transform: rotate(-3deg); }
+}
+.sui-animate-wiggle {
+  animation: sui-wiggle 0.75s ease-in-out both;
+  transform-origin: 50% 5em;
+}
+
+/* 18. Rubber Band Elasticity */
+@keyframes sui-rubber {
+  0% { transform: scale3d(1, 1, 1); }
+  30% { transform: scale3d(1.25, 0.75, 1); }
+  40% { transform: scale3d(0.75, 1.25, 1); }
+  50% { transform: scale3d(1.15, 0.85, 1); }
+  65% { transform: scale3d(0.95, 1.05, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+  100% { transform: scale3d(1, 1, 1); }
+}
+.sui-animate-rubber {
+  animation: sui-rubber 0.9s both;
+}
+
+/* 19. Bounce In Pop */
+@keyframes sui-bounce-in {
+  0% { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+  20% { transform: scale3d(1.1, 1.1, 1.1); }
+  40% { transform: scale3d(0.9, 0.9, 0.9); }
+  60% { opacity: 1; transform: scale3d(1.03, 1.03, 1.03); }
+  80% { transform: scale3d(0.97, 0.97, 0.97); }
+  100% { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+.sui-animate-bounce-in {
+  animation: sui-bounce-in 0.75s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+/* 20. Zoom In Focus */
+@keyframes sui-zoom-in {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.sui-animate-zoom-in {
+  animation: sui-zoom-in var(--sui-duration-normal) var(--sui-ease-spring) forwards;
+}
+
+/* 21. Swing Pendulum */
+@keyframes sui-swing {
+  20% { transform: rotate3d(0, 0, 1, 15deg); }
+  40% { transform: rotate3d(0, 0, 1, -10deg); }
+  60% { transform: rotate3d(0, 0, 1, 5deg); }
+  80% { transform: rotate3d(0, 0, 1, -5deg); }
+  100% { transform: rotate3d(0, 0, 1, 0deg); }
+}
+.sui-animate-swing {
+  transform-origin: top center;
+  animation: sui-swing 1s ease-in-out both;
+}
+
+/* 22. Error / Warning Shake */
+@keyframes sui-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80% { transform: translateX(6px); }
+}
+.sui-animate-shake {
+  animation: sui-shake 0.6s ease-in-out both;
+}
+
+/* 23. Rotate In Spiral */
+@keyframes sui-rotate-in {
+  0% { opacity: 0; transform: rotate(-200deg) scale(0.4); }
+  100% { opacity: 1; transform: rotate(0) scale(1); }
+}
+.sui-animate-rotate-in {
+  animation: sui-rotate-in 0.6s var(--sui-ease-spring) forwards;
+}
+
+/* 24. Slide Down Curtain */
+@keyframes sui-slide-down {
+  0% { opacity: 0; transform: translateY(-40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.sui-animate-slide-down {
+  animation: sui-slide-down var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+}
+
+/* 25. Lateral Slide Left */
+@keyframes sui-slide-left {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.sui-animate-slide-left {
+  animation: sui-slide-left var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+}
+
+/* 26. Lateral Slide Right */
+@keyframes sui-slide-right {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.sui-animate-slide-right {
+  animation: sui-slide-right var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+}
+
+/* 27. Shimmer Text */
+@keyframes sui-shimmer-text {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.sui-animate-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--sui-text) 0%,
+    oklch(from var(--sui-color-primary-500) l c h / 0.9) 25%,
+    var(--sui-text) 50%,
+    oklch(from var(--sui-color-accent-500) l c h / 0.9) 75%,
+    var(--sui-text) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sui-shimmer-text 4s linear infinite;
+}
+
+/* 28. Continuous Slow Spin */
+@keyframes sui-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.sui-animate-spin-slow {
+  animation: sui-spin-slow 12s linear infinite;
+}
+
+/* Micro-Interaction Hover Classes */
+.sui-hover-wiggle:hover {
+  animation: sui-wiggle 0.6s ease-in-out;
+}
+.sui-hover-grow {
+  transition: transform var(--sui-duration-fast) var(--sui-ease-spring);
+}
+.sui-hover-grow:hover {
+  transform: scale(1.08);
+}
+.sui-hover-rotate {
+  transition: transform var(--sui-duration-fast) var(--sui-ease-spring);
+}
+.sui-hover-rotate:hover {
+  transform: rotate(6deg) scale(1.04);
+}
+.sui-hover-glow {
+  transition: box-shadow var(--sui-duration-fast) var(--sui-ease-smooth);
+}
+.sui-hover-glow:hover {
+  box-shadow: 0 0 25px oklch(from var(--sui-color-primary-500) l c h / 0.45);
+}

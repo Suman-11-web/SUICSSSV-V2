@@ -1,0 +1,24 @@
+{
+  "name": "sui-css",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port=3000 --host=0.0.0.0",
+    "build": "node build.cjs && vite build",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit",
+    "build:bundle": "node build.cjs",
+    "build:css": "node build.cjs",
+    "build:js": "node build.cjs"
+  },
+  "dependencies": {
+    "vite": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "esbuild": "^0.25.0",
+    "terser": "^5.51.2",
+    "typescript": "^7.0.2"
+  }
+}

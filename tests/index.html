@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sui.css - Premium QA Matrix</title>
+  
+  <!-- Core Framework -->
+  <link rel="stylesheet" href="../dist/sui.min.css">
+  
+  <style>
+    /* --------------------------------------------------------------------------
+       QA DASHBOARD STYLES
+       -------------------------------------------------------------------------- */
+    body {
+      background-color: var(--sui-bg);
+      font-family: system-ui, -apple-system, sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      padding-top: 80px; /* Space for fixed nav */
+      padding-bottom: 4rem;
+    }
+
+    /* Floating Debug Control Panel */
+    .qa-controls {
+      position: fixed;
+      top: 1rem;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+      padding: 0.5rem 1rem;
+      background: oklch(from var(--sui-surface) l c h / 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--sui-border);
+      border-radius: 9999px;
+      box-shadow: 0 10px 30px -10px oklch(0% 0 0 / 0.2);
+    }
+
+    .qa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--sui-text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .qa-btn:hover { background: var(--sui-surface-hover); border-color: var(--sui-border); }
+    .qa-btn.is-active { background: var(--sui-color-primary-500); color: white; border-color: var(--sui-color-primary-500); }
+
+    /* Matrix Layout */
+    .matrix-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 1rem;
+    }
+    
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    @media (max-width: 768px) {
+      .matrix-grid { grid-template-columns: 1fr; padding: 0 1rem; }
+    }
+
+    /* Premium Test Cards */
+    .test-card {
+      background: var(--sui-surface);
+      border: 1px solid var(--sui-border);
+      border-radius: var(--sui-radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--sui-shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .test-card:hover { box-shadow: var(--sui-shadow-md); transform: translateY(-2px); }
+    
+    .test-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: var(--sui-surface-hover);
+      border-bottom: 1px solid var(--sui-border);
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--sui-text-muted);
+    }
+    
+    .test-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      color: var(--sui-color-success-600);
+    }
+    .test-status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--sui-color-success-500); box-shadow: 0 0 8px var(--sui-color-success-500); }
+
+    .test-card-body {
+      padding: 2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--sui-bg); /* Mirrors exact page background */
+    }
+
+    /* X-Ray Debug Mode (Toggled via JS) */
+    body.xray-mode .test-card-body * {
+      outline: 1px solid rgba(255, 0, 128, 0.4) !important;
+      background: rgba(255, 0, 128, 0.05) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =======================================================================
+       1. DEBUG CONTROL PANEL
+       ======================================================================= -->
+  <nav class="qa-controls sui-animate-slide-up">
+    <div style="display: flex; align-items: center; gap: 0.5rem; padding-right: 1rem; border-right: 1px solid var(--sui-border);">
+      <div class="sui-avatar sui-bg-primary sui-text-inverse" style="width: 1.8rem; height: 1.8rem; font-size: 0.8rem;">QA</div>
+      <strong style="font-size: 0.9rem;" class="sui-hidden md:sui-block">Sui Matrix</strong>
+    </div>
+    
+    <div style="display: flex; gap: 0.25rem; padding-left: 0.5rem;">
+      <button id="toggleTheme" class="qa-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <span class="sui-hidden md:sui-block">Theme</span>
+      </button>
+      
+      <button id="toggleXray" class="qa-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        <span class="sui-hidden md:sui-block">X-Ray</span>
+      </button>
+
+      <button id="toggleRtl" class="qa-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 10 20 15 15 20"></polyline><line x1="4" y1="15" x2="20" y2="15"></line><line x1="4" y1="7" x2="20" y2="7"></line><polyline points="9 12 4 7 9 2"></polyline></svg>
+        <span class="sui-hidden md:sui-block">RTL</span>
+      </button>
+      
+      <a href="../index.html" class="qa-btn" style="margin-left: 0.5rem; background: var(--sui-surface-hover);">Exit QA</a>
+    </div>
+  </nav>
+
+  <!-- =======================================================================
+       2. HEADER
+       ======================================================================= -->
+  <header class="matrix-header sui-animate-blur-in">
+    <h1 class="sui-text-hero sui-tracking-tighter">Visual Regression Matrix</h1>
+    <p class="sui-text-lg sui-text-muted">Isolate and stress-test the framework's architecture.</p>
+  </header>
+
+  <!-- =======================================================================
+       3. COMPONENT GRID
+       ======================================================================= -->
+  <main class="matrix-grid">
+
+    <!-- TYPOGRAPHY -->
+    <article class="test-card sui-animate-spring-up sui-delay-1">
+      <div class="test-card-header">
+        <span>TYPOGRAPHY-01</span>
+        <span class="test-status">Passing</span>
+      </div>
+      <div class="test-card-body">
+        <h1 class="sui-text-hero sui-mb-2">Fluid Hero</h1>
+        <h2 class="sui-mb-2">Heading Scale 2</h2>
+        <p class="sui-text-muted">Testing the <code>text-wrap: balance;</code> property on standard body text to ensure orphans are prevented. Includes an <a href="#" class="sui-text-link">inline link</a> and <strong>bold rendering</strong>.</p>
+      </div>
+    </article>
+
+    <!-- BUTTON MATRIX -->
+    <article class="test-card sui-animate-spring-up sui-delay-2">
+      <div class="test-card-header">
+        <span>BUTTONS-01</span>
+        <span class="test-status">Passing</span>
+      </div>
+      <div class="test-card-body">
+        <div class="sui-flex sui-flex-wrap sui-gap-4">
+          <button class="sui-btn sui-btn-primary sui-hover-lift">Primary Lift</button>
+          <button class="sui-btn sui-btn-outline sui-active-push">Outline Push</button>
+          <button class="sui-btn sui-btn-primary" disabled>Disabled State</button>
+          <button class="sui-btn sui-btn-primary sui-btn-icon" style="border-radius: 50%;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- FORM ALIGNMENT (SUBGRID STRESS TEST) -->
+    <article class="test-card sui-animate-spring-up sui-delay-3">
+      <div class="test-card-header">
+        <span>FORMS-01 (SUBGRID)</span>
+        <span class="test-status">Passing</span>
+      </div>
+      <div class="test-card-body">
+        <form class="sui-grid sui-gap-4" style="grid-template-columns: 1fr 1fr;">
+          <input type="text" class="sui-input" placeholder="Text Input" style="grid-column: span 2;">
+          <select class="sui-input"><option>Option A</option><option>Option B</option></select>
+          <input type="password" class="sui-input" placeholder="Password">
+          
+          <div class="sui-flex sui-items-center sui-gap-2 sui-mt-2" style="grid-column: span 2;">
+            <input type="checkbox" id="test-check" class="sui-checkbox" checked>
+            <label for="test-check" class="sui-label sui-mb-0">I agree to the terms (Baseline test)</label>
+          </div>
+        </form>
+      </div>
+    </article>
+
+    <!-- THEME INHERITANCE (NESTED DARK MODE) -->
+    <article class="test-card sui-animate-spring-up sui-delay-4">
+      <div class="test-card-header">
+        <span>THEME-01 (INHERITANCE)</span>
+        <span class="test-status">Passing</span>
+      </div>
+      <!-- Forcing dark mode purely via CSS variable overrides within this block -->
+      <div class="test-card-body" style="--sui-bg: oklch(15% 0.02 var(--sui-brand-hue)); --sui-surface: oklch(20% 0.02 var(--sui-brand-hue)); --sui-text: oklch(98% 0.01 var(--sui-brand-hue)); --sui-border: oklch(30% 0.02 var(--sui-brand-hue)); background: var(--sui-bg); color: var(--sui-text);">
+        <h3 class="sui-text-xl sui-mb-2">Forced Dark Context</h3>
+        <p class="sui-text-muted sui-mb-4" style="color: oklch(75% 0.02 var(--sui-brand-hue));">This block tests if OKLCH variables accurately respond to forced scope changes.</p>
+        
+        <div class="sui-card" style="background: var(--sui-surface); border-color: var(--sui-border);">
+          <div class="sui-flex sui-justify-between sui-items-center">
+            <strong>Nested Surface</strong>
+            <span class="sui-badge">Isolated</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- RELATIONAL SELECTORS (:HAS) -->
+    <article class="test-card sui-animate-spring-up sui-delay-5">
+      <div class="test-card-header">
+        <span>RELATIONAL-01 (:HAS)</span>
+        <span class="test-status">Passing</span>
+      </div>
+      <div class="test-card-body">
+        <p class="sui-text-muted sui-mb-4">Hovering the card below will trigger a glow effect because the CSS engine detects the primary button inside it.</p>
+        <article class="sui-card">
+          <div class="sui-flex sui-justify-between sui-items-center">
+            <strong>Smart Container</strong>
+            <button class="sui-btn sui-btn-primary sui-btn-sm">Action Detect</button>
+          </div>
+        </article>
+      </div>
+    </article>
+
+    <!-- ANIMATION & MOTION -->
+    <article class="test-card sui-animate-spring-up sui-delay-6">
+      <div class="test-card-header">
+        <span>MOTION-01</span>
+        <span class="test-status">Passing</span>
+      </div>
+      <div class="test-card-body sui-flex sui-items-center sui-justify-center sui-gap-6">
+        <div class="sui-avatar sui-bg-primary sui-text-inverse sui-animate-pulse-glow" style="width: 4rem; height: 4rem; font-size: 1.5rem;">A</div>
+        <div class="sui-avatar sui-bg-accent sui-text-inverse sui-animate-float" style="width: 4rem; height: 4rem; font-size: 1.5rem;">B</div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- =======================================================================
+       4. DASHBOARD ENGINE SCRIPT
+       ======================================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const body = document.body;
+      const html = document.documentElement;
+      
+      // Toggle X-Ray Mode
+      const xrayBtn = document.getElementById('toggleXray');
+      xrayBtn.addEventListener('click', () => {
+        body.classList.toggle('xray-mode');
+        xrayBtn.classList.toggle('is-active');
+      });
+
+      // Toggle Dark/Light Mode
+      const themeBtn = document.getElementById('toggleTheme');
+      themeBtn.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Emulate prefers-color-scheme via data-attribute or class depending on framework config
+        // Assuming the framework respects a class or media query, we force it here:
+        if (newTheme === 'dark') {
+          html.style.colorScheme = 'dark';
+          // Inject dark variables globally for testing if native media query isn't enough
+          document.documentElement.style.setProperty('--sui-bg', 'oklch(15% 0.02 var(--sui-brand-hue))');
+          document.documentElement.style.setProperty('--sui-surface', 'oklch(20% 0.02 var(--sui-brand-hue))');
+          document.documentElement.style.setProperty('--sui-text', 'oklch(98% 0.01 var(--sui-brand-hue))');
+          document.documentElement.style.setProperty('--sui-border', 'oklch(30% 0.02 var(--sui-brand-hue))');
+        } else {
+          html.style.colorScheme = 'light';
+          document.documentElement.style.removeProperty('--sui-bg');
+          document.documentElement.style.removeProperty('--sui-surface');
+          document.documentElement.style.removeProperty('--sui-text');
+          document.documentElement.style.removeProperty('--sui-border');
+        }
+        
+        html.setAttribute('data-theme', newTheme);
+        themeBtn.classList.toggle('is-active');
+      });
+
+      // Toggle Right-to-Left (RTL) Layout Test
+      const rtlBtn = document.getElementById('toggleRtl');
+      rtlBtn.addEventListener('click', () => {
+        const currentDir = html.getAttribute('dir');
+        if (currentDir === 'rtl') {
+          html.setAttribute('dir', 'ltr');
+          rtlBtn.classList.remove('is-active');
+        } else {
+          html.setAttribute('dir', 'rtl');
+          rtlBtn.classList.add('is-active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

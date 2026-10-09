@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Core Framework -->
+  <link rel="stylesheet" href="../dist/sui.min.css">
+
+<title>SUI.css Animations — CSS Animation Utilities</title>
+
+<meta name="description" content="Explore animation and motion utilities available in SUI.css for creating modern interactive web interfaces.">
+<meta name="keywords" content="SUI.css animations, CSS animations, CSS animation utilities, web animations, frontend animations">
+<meta name="author" content="SUI.css">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://suman-11-web.github.io/SUI-FRAMEWORK.CSS/example/animations.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="SUI.css Animations">
+<meta property="og:description" content="Explore animation utilities and interactive effects available in SUI.css.">
+<meta property="og:url" content="https://suman-11-web.github.io/SUI-FRAMEWORK.CSS/example/animations.html">
+<meta property="og:site_name" content="SUI.css">
+<meta property="og:image" content="../logosui.png">
+
+  <style>
+    /* ==========================================================================
+       PREMIUM GLOBAL STYLES & LAYOUT
+       ========================================================================== */
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background-color: var(--sui-bg);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    /* --------------------------------------------------------------------------
+       BULLETPROOF FLOATING ISLAND NAVBAR
+       -------------------------------------------------------------------------- */
+    .sui-floating-nav {
+      position: fixed;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      margin-inline: auto; 
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-sizing: border-box;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+      background: oklch(from var(--sui-surface) l c h / 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--sui-border);
+      border-radius: 9999px;
+      box-shadow: 0 20px 40px -10px oklch(0% 0 0 / 0.15);
+    }
+
+    .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--sui-text); flex-shrink: 0; }
+    .nav-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .nav-pill-link { position: relative; padding: 0.4rem 0.9rem; font-size: 0.85rem; font-weight: 500; color: var(--sui-text-muted); text-decoration: none; border-radius: 999px; transition: color 0.3s ease; z-index: 1; white-space: nowrap; }
+    .nav-pill-link:hover { color: var(--sui-text); background: var(--sui-surface-hover); }
+    .nav-pill-link.active { color: var(--sui-text); background: var(--sui-border-subtle); }
+
+    .nav-desktop-menu { display: none; }
+    .nav-mobile-btn { display: flex; align-items: center; justify-content: center; background: var(--sui-surface-hover); border: 1px solid var(--sui-border); padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--sui-text); transition: background 0.2s ease; }
+    .nav-mobile-btn:hover { background: var(--sui-border); }
+    
+    @media (min-width: 992px) {
+      .nav-desktop-menu { display: flex; align-items: center; gap: 0.25rem; }
+      .nav-mobile-btn { display: none !important; }
+    }
+
+    /* Global Mobile Drawer */
+    .mobile-drawer { position: fixed; inset: 0; z-index: 9999; display: flex; justify-content: flex-end; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .mobile-drawer.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
+    .drawer-backdrop { position: absolute; inset: 0; background: oklch(0% 0 0 / 0.5); backdrop-filter: blur(4px); cursor: pointer; }
+    .drawer-panel { position: relative; width: 280px; height: 100%; background: var(--sui-surface); border-left: 1px solid var(--sui-border); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; box-shadow: -10px 0 30px oklch(0% 0 0 / 0.2); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
+    .mobile-drawer.is-open .drawer-panel { transform: translateX(0); }
+
+    /* --------------------------------------------------------------------------
+       HERO SECTION WITH MESH BACKGROUND
+       -------------------------------------------------------------------------- */
+    .hero-section {
+      padding: 10rem var(--sui-space-6) 6rem;
+      position: relative;
+      text-align: center;
+      border-bottom: 1px solid var(--sui-border-subtle);
+      overflow: hidden;
+    }
+    
+    .hero-mesh-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: 
+        radial-gradient(circle at 80% 20%, oklch(from var(--sui-color-primary-500) l c h / 0.1), transparent 30%),
+        radial-gradient(circle at 20% 80%, oklch(from var(--sui-color-accent-500) l c h / 0.1), transparent 30%);
+      filter: blur(60px);
+      animation: sui-pulse-glow 8s infinite alternate;
+    }
+
+    .hero-content { position: relative; z-index: 10; max-width: 900px; margin: 0 auto; }
+
+    /* --------------------------------------------------------------------------
+       MACOS HEADERS & CODE BLOCKS
+       -------------------------------------------------------------------------- */
+    .macos-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      height: 40px;
+      background: #2d2d2d;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+    }
+    .macos-dots { display: flex; gap: 8px; }
+    .macos-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .macos-dot.red { background-color: #ff5f56; }
+    .macos-dot.yellow { background-color: #ffbd2e; }
+    .macos-dot.green { background-color: #27c93f; }
+
+    .code-block {
+      background: #1e1e1e;
+      color: #a5d6ff;
+      padding: 1.5rem;
+      margin: 0;
+      font-family: monospace;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      border: none;
+    }
+
+    /* --------------------------------------------------------------------------
+       ANIMATION SHOWCASE SPECIFIC STYLES
+       -------------------------------------------------------------------------- */
+    .anim-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--sui-space-8);
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: var(--sui-space-12) var(--sui-space-6);
+    }
+    
+    .anim-demo-box {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--sui-bg);
+      background-image: radial-gradient(var(--sui-border-strong) 1px, transparent 1px);
+      background-size: 20px 20px;
+      border-bottom: 1px solid var(--sui-border);
+      border-radius: var(--sui-radius-lg) var(--sui-radius-lg) 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-reveal-panel {
+      display: none;
+      border-top: 1px solid var(--sui-border);
+      position: relative;
+      background: #1e1e1e;
+    }
+    .code-reveal-panel.is-open {
+      display: block;
+      animation: sui-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="sui-bg">
+
+  <!-- =======================================================================
+       GLOBAL NAVBAR
+       ======================================================================= -->
+  <nav class="sui-floating-nav sui-animate-slide-up">
+    <a href="../index.html" class="nav-brand">
+      <div class="sui-avatar sui-animate-glow" style="width: 2rem; height: 2rem; background: var(--sui-color-primary-500); color: white;">S</div>
+      <strong style="font-size: 0.95rem;">SUI.css</strong>
+    </a>
+    
+    <div class="nav-desktop-menu">
+      <a href="../index.html" class="nav-pill-link">Home</a>
+      <a href="../docs/index.html" class="nav-pill-link">Docs</a>
+      <a href="buttons.html" class="nav-pill-link">Components</a>
+      <a href="utilities.html" class="nav-pill-link">Utilities</a>
+      <a href="animations.html" class="nav-pill-link active">Animations</a>
+      <a href="advanced.html" class="nav-pill-link">Examples</a>
+    </div>
+    
+    <div class="nav-actions">
+      <a href="https://github.com/Suman-11-web" class="sui-btn sui-btn-primary sui-btn-sm sui-rounded-full nav-github-btn" style="padding: 0.4rem 1rem; font-size: 0.85rem;">GitHub &rarr;</a>
+      <button id="globalMenuBtn" class="nav-mobile-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- GLOBAL MOBILE DRAWER -->
+  <div id="globalMobileDrawer" class="mobile-drawer">
+    <div class="drawer-backdrop" id="globalCloseBackdrop"></div>
+    <div class="drawer-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong style="font-size: 1.1rem; color: var(--sui-text);">SUI.css</strong>
+        <button id="globalCloseBtn" class="nav-mobile-btn" style="border: none; background: transparent;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <a href="../index.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Home</a>
+        <a href="../docs/index.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Docs</a>
+        <a href="buttons.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Components</a>
+        <a href="utilities.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Utilities</a>
+        <a href="animations.html" class="sui-btn sui-btn-primary sui-w-full sui-justify-start">Animations</a>
+        <a href="advanced.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Examples</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       HERO SECTION
+       ======================================================================= -->
+  <header class="hero-section">
+    <div class="hero-mesh-bg"></div>
+    
+    <!-- Floating Ultra Pro Max Elements -->
+    <div class="hero-floating-elements" style="position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;">
+      <div class="sui-animate-float" style="position: absolute; top: 20%; left: 15%; width: 100px; height: 100px; background: linear-gradient(135deg, var(--sui-color-accent-500), transparent); border-radius: 20px; opacity: 0.4; filter: blur(8px); transform: rotate(-15deg);"></div>
+      <div class="sui-animate-float" style="position: absolute; bottom: 25%; right: 15%; width: 140px; height: 140px; background: linear-gradient(135deg, var(--sui-color-primary-500), transparent); border-radius: 50%; opacity: 0.2; filter: blur(16px); animation-delay: 1s;"></div>
+      <div class="sui-animate-pulse-glow" style="position: absolute; top: 40%; right: 30%; width: 16px; height: 16px; background: var(--sui-color-warning-500); border-radius: 50%; opacity: 0.6;"></div>
+    </div>
+
+    <div class="hero-content sui-animate-blur-in">
+      <div class="sui-flex sui-justify-center sui-flex-wrap sui-gap-2 sui-mb-4">
+        <span class="sui-badge sui-badge-primary">GPU Accelerated (60fps)</span>
+        <span class="sui-badge sui-badge-success">30+ Motion &amp; Interaction Primitives</span>
+        <span class="sui-badge sui-badge-accent">SUI v2.1.0 Enhanced</span>
+      </div>
+      <h1 class="sui-text-hero sui-mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Animation & Motion Engine</h1>
+      <p class="sui-text-lg sui-text-muted sui-max-w-2xl sui-mx-auto">
+        Zero-dependency, composite-layer CSS animations with cubic-bezier spring physics. Click <strong>Replay</strong> to re-trigger entry states or <strong>View Code</strong> to inspect and copy snippets.
+      </p>
+    </div>
+  </header>
+
+  <!-- =======================================================================
+       ANIMATION SHOWCASE
+       ======================================================================= -->
+  <main class="anim-showcase-grid">
+
+    <!-- 1. Blur Reveal -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-blur-in" data-anim="sui-animate-blur-in">
+          <h3 class="sui-text-base">Blur Reveal</h3>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-blur-in</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Entry</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Smooth lens focus simulation transitioning from 12px blur to crystal clarity.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-1', this)">Copy</button>
+        </div>
+<pre id="code-anim-1" class="code-block"><code>&lt;!-- Smooth lens blur entry --&gt;
+&lt;div class="sui-animate-blur-in"&gt;
+  &lt;h3&gt;Blur Reveal&lt;/h3&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 2. Spring Up -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar sui-shadow-md js-anim-target sui-animate-spring-up" data-anim="sui-animate-spring-up" style="width: 4rem; height: 4rem; background: var(--sui-color-primary-500); color: white;">SM</div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-spring-up</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Spring Physics</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Natural physical overshoot curve using custom cubic-bezier spring values.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-2', this)">Copy</button>
+        </div>
+<pre id="code-anim-2" class="code-block"><code>&lt;!-- Pops up with spring overshoot --&gt;
+&lt;div class="sui-avatar sui-animate-spring-up"&gt;
+  SM
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 3. Scale Fade -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-scale-fade" data-anim="sui-animate-scale-fade">
+          <span class="sui-text-sm">Dialog Window</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-scale-fade</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Modal / Card</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Subtle zoom from 92% to 100% scale. Standard for dialog modals and alerts.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-3', this)">Copy</button>
+        </div>
+<pre id="code-anim-3" class="code-block"><code>&lt;!-- Zoom-fade for dialogs and popovers --&gt;
+&lt;div class="sui-animate-scale-fade"&gt;
+  &lt;p&gt;Dialog Window&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 4. Hover Lift & Push -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <button class="sui-btn sui-btn-primary sui-btn-lg sui-hover-lift sui-active-push">
+          Click & Hover
+        </button>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-hover-lift & push</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Interactive</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Lifts -6px on hover with deep shadow; compresses to 95% scale on active click.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-4', this)">Copy</button>
+        </div>
+<pre id="code-anim-4" class="code-block"><code>&lt;!-- Tactile interactive button --&gt;
+&lt;button class="sui-btn sui-btn-primary sui-hover-lift sui-active-push"&gt;
+  Click &amp; Hover
+&lt;/button&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 5. Pulse Glow Ring -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar sui-animate-pulse-glow" style="width: 3.5rem; height: 3.5rem; background: var(--sui-color-accent-500); color: white;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-pulse-glow</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Continuous</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Continuous breathing ring aura. Designed for live alerts, status dots, and recordings.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-5', this)">Copy</button>
+        </div>
+<pre id="code-anim-5" class="code-block"><code>&lt;!-- Pulsating radar ring indicator --&gt;
+&lt;div class="sui-avatar sui-animate-pulse-glow"&gt;
+  &lt;!-- SVG Icon --&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 6. Shimmer Skeleton -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box sui-flex sui-flex-col sui-items-start sui-p-6 sui-gap-3 sui-w-full">
+        <div class="sui-skeleton sui-rounded-full" style="width: 2.75rem; height: 2.75rem;"></div>
+        <div class="sui-skeleton sui-w-3/4" style="height: 0.9rem;"></div>
+        <div class="sui-skeleton sui-w-1/2" style="height: 0.9rem;"></div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-skeleton</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Loading State</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Dynamic gradient sweep across placeholder geometry during async API fetch calls.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-6', this)">Copy</button>
+        </div>
+<pre id="code-anim-6" class="code-block"><code>&lt;!-- Skeleton shimmer placeholder --&gt;
+&lt;div class="sui-skeleton sui-rounded-full" style="width: 2.5rem; height: 2.5rem;"&gt;&lt;/div&gt;
+&lt;div class="sui-skeleton sui-w-3/4" style="height: 1rem;"&gt;&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 7. Float Levitation -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar sui-animate-float sui-shadow-lg" style="width: 3.5rem; height: 3.5rem; background: var(--sui-color-primary-500); color: white;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-float</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Idle Levitation</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">3-second harmonic vertical oscillation. Ideal for hero visuals, badges, and FABs.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-7', this)">Copy</button>
+        </div>
+<pre id="code-anim-7" class="code-block"><code>&lt;!-- Idle levitating element --&gt;
+&lt;div class="sui-avatar sui-animate-float"&gt;
+  &lt;!-- Content --&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 8. Slide In Right (Drawer entry) -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-slide-right" data-anim="sui-animate-slide-right">
+          <span class="sui-text-sm">Drawer Entry &rarr;</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-slide-right</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Drawer / Slide</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Enters smoothly from the horizontal axis. Used for side drawers and toast alerts.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-8', this)">Copy</button>
+        </div>
+<pre id="code-anim-8" class="code-block"><code>&lt;!-- Side navigation drawer entry --&gt;
+&lt;aside class="sui-animate-slide-right"&gt;
+  &lt;p&gt;Drawer Content&lt;/p&gt;
+&lt;/aside&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 9. Slide Up Fade (Toast / Bottom Sheet) -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-slide-up" data-anim="sui-animate-slide-up">
+          <span class="sui-text-sm">&uarr; Toast Notification</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-slide-up</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Toast / Sheet</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Rises up from +30px with smooth opacity transition. Built for bottom sheets.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-9', this)">Copy</button>
+        </div>
+<pre id="code-anim-9" class="code-block"><code>&lt;!-- Toast alert / Mobile bottom sheet --&gt;
+&lt;div class="sui-toast sui-animate-slide-up"&gt;
+  &lt;p&gt;Notification message&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 10. Jelly Squash & Stretch -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <button class="sui-btn sui-btn-primary js-anim-target sui-animate-jelly" data-anim="sui-animate-jelly">
+          Rubber Jelly Pop
+        </button>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-jelly</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Elastic Pop</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Multi-stage squash and stretch keyframes mimicking organic rubber elasticity.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-10', this)">Copy</button>
+        </div>
+<pre id="code-anim-10" class="code-block"><code>&lt;!-- Playful squash &amp; stretch button --&gt;
+&lt;button class="sui-btn sui-animate-jelly"&gt;
+  Rubber Jelly Pop
+&lt;/button&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 11. Shake Warning -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-sm js-anim-target sui-animate-shake" data-anim="sui-animate-shake" style="border-color: var(--sui-color-danger-500);">
+          <span class="sui-text-sm" style="color: var(--sui-color-danger-500);">Incorrect Password</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-shake</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Form Validation</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Immediate horizontal shake feedback triggered upon rejected input or 401 response.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-11', this)">Copy</button>
+        </div>
+<pre id="code-anim-11" class="code-block"><code>&lt;!-- Form field rejection error shake --&gt;
+&lt;input class="sui-input sui-animate-shake" type="password" /&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 12. Heartbeat Reaction Burst -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar js-anim-target sui-animate-heartbeat" data-anim="sui-animate-heartbeat" style="width: 3.5rem; height: 3.5rem; background: #ec4899; color: white;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-heartbeat</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Social Feed</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Dual scale-burst curve designed specifically for like reactions and post favorites.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-12', this)">Copy</button>
+        </div>
+<pre id="code-anim-12" class="code-block"><code>&lt;!-- Social post like / favorite reaction --&gt;
+&lt;button class="sui-btn-icon sui-animate-heartbeat"&gt;
+  &lt;svg&gt;&lt;!-- Heart SVG --&gt;&lt;/svg&gt;
+&lt;/button&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 13. 3D Perspective Card Flip -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box" style="perspective: 800px;">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-flip-3d" data-anim="sui-animate-flip-3d" style="background: var(--sui-surface);">
+          <span class="sui-text-sm">3D Card Flip</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-flip-3d</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">3D Perspective</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Rotates on the Y-axis using perspective projection. Ideal for profile flips and badge reveals.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-13', this)">Copy</button>
+        </div>
+<pre id="code-anim-13" class="code-block"><code>&lt;!-- 3D perspective flip entry --&gt;
+&lt;div class="sui-card sui-animate-flip-3d"&gt;
+  &lt;p&gt;Front of Card&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 14. Rotating Border Glow -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-p-6 sui-rounded-xl sui-animate-border-glow">
+          <span class="sui-text-sm sui-font-medium">Conic Border Glow</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-border-glow</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">CSS @property</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Uses modern `@property` angle interpolation to continuously rotate a conic gradient ring.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-14', this)">Copy</button>
+        </div>
+<pre id="code-anim-14" class="code-block"><code>&lt;!-- Rotating neon gradient border --&gt;
+&lt;div class="sui-card sui-animate-border-glow"&gt;
+  &lt;p&gt;Pro Feature Badge&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 15. Aurora Gradient Flow -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-animate-gradient-flow sui-p-4 sui-rounded-xl sui-text-inverse sui-shadow-md">
+          <strong class="sui-text-base">Aurora Canvas</strong>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-gradient-flow</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Dynamic Canvas</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Slow 6-second diagonal mesh gradient shift. Perfect for hero banners and story rings.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-15', this)">Copy</button>
+        </div>
+<pre id="code-anim-15" class="code-block"><code>&lt;!-- Shifting multi-color aurora flow --&gt;
+&lt;div class="sui-animate-gradient-flow sui-p-6"&gt;
+  &lt;h2&gt;Hero Gradient&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 16. Ripple Click Aura -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar sui-animate-ripple" style="width: 3.5rem; height: 3.5rem; background: var(--sui-color-primary-500); color: white;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-ripple</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Radar Ripple</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Continuous pseudo-element expanding ring. Excellent for play buttons and active calls.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-16', this)">Copy</button>
+        </div>
+<pre id="code-anim-16" class="code-block"><code>&lt;!-- Radar ripple broadcast ring --&gt;
+&lt;button class="sui-avatar sui-animate-ripple"&gt;
+  &lt;!-- Play Icon --&gt;
+&lt;/button&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 17. Wiggle / Notification Bell Shake -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar js-anim-target sui-animate-wiggle" data-anim="sui-animate-wiggle" style="width: 3.5rem; height: 3.5rem; background: var(--sui-color-warning-500); color: black;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-wiggle</strong>
+          <span class="sui-badge sui-badge-warning sui-text-xs">Attention Bell</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Pendulum vibration anchored from top center. Perfect for bell alerts and nudges.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-17', this)">Copy</button>
+        </div>
+<pre id="code-anim-17" class="code-block"><code>&lt;!-- Bell alert vibration --&gt;
+&lt;div class="sui-avatar sui-animate-wiggle"&gt;
+  &lt;!-- Bell Icon --&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 18. Rubber Band Elasticity -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <button class="sui-btn sui-btn-primary js-anim-target sui-animate-rubber" data-anim="sui-animate-rubber">
+          Rubber Band Pop
+        </button>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-rubber</strong>
+          <span class="sui-badge sui-badge-primary sui-text-xs">Elastic 3D</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Multi-phase rubber elasticity stretching horizontally and compressing vertically.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-18', this)">Copy</button>
+        </div>
+<pre id="code-anim-18" class="code-block"><code>&lt;!-- Elastic rubber band animation --&gt;
+&lt;button class="sui-btn sui-animate-rubber"&gt;
+  Rubber Band Pop
+&lt;/button&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 19. Bounce In Pop -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-bounce-in" data-anim="sui-animate-bounce-in" style="background: var(--sui-surface-hover); border-color: var(--sui-color-accent-500);">
+          <strong class="sui-text-sm" style="color: var(--sui-color-accent-500);">🎉 Success Modal</strong>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-bounce-in</strong>
+          <span class="sui-badge sui-badge-accent sui-text-xs">Entry Bounce</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Organic bounce entry zooming from 30% scale with gentle dampening oscillation.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-19', this)">Copy</button>
+        </div>
+<pre id="code-anim-19" class="code-block"><code>&lt;!-- Bounce in entry popup --&gt;
+&lt;div class="sui-card sui-animate-bounce-in"&gt;
+  &lt;h4&gt;Action Completed!&lt;/h4&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 20. Zoom In Focus -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar js-anim-target sui-animate-zoom-in" data-anim="sui-animate-zoom-in" style="width: 3.75rem; height: 3.75rem; background: var(--sui-color-info-500); color: white;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-zoom-in</strong>
+          <span class="sui-badge sui-badge-info sui-text-xs">Spring Zoom</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Zoom in from 60% scale with cubic spring velocity. Ideal for lightbox and dialog opens.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-20', this)">Copy</button>
+        </div>
+<pre id="code-anim-20" class="code-block"><code>&lt;!-- Lightbox zoom in --&gt;
+&lt;div class="sui-animate-zoom-in"&gt;
+  &lt;img src="image.jpg" alt="Preview" /&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 21. Swing Pendulum -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-swing" data-anim="sui-animate-swing" style="padding: 0.75rem 1.5rem; transform-origin: top center;">
+          <span class="sui-text-sm">📌 Hanging Sign</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-swing</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">3D Pendulum</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Rotates 15deg &rarr; -10deg &rarr; 5deg hanging from top center. Great for pricing tags.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-21', this)">Copy</button>
+        </div>
+<pre id="code-anim-21" class="code-block"><code>&lt;!-- Pendulum swinging badge --&gt;
+&lt;div class="sui-animate-swing"&gt;
+  &lt;span class="sui-badge sui-badge-danger"&gt;Sale 50% Off&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 22. Rotate In Spiral -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar js-anim-target sui-animate-rotate-in" data-anim="sui-animate-rotate-in" style="width: 3.5rem; height: 3.5rem; background: var(--sui-color-success-500); color: white;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-rotate-in</strong>
+          <span class="sui-badge sui-badge-success sui-text-xs">Spiral Pop</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Rotates from -200 degrees while scaling up from 40%. Fantastic for completed badges.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-22', this)">Copy</button>
+        </div>
+<pre id="code-anim-22" class="code-block"><code>&lt;!-- Spiral entry badge --&gt;
+&lt;div class="sui-avatar sui-animate-rotate-in"&gt;
+  &lt;svg&gt;&lt;!-- Check SVG --&gt;&lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 23. Slide Down Curtain -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-slide-down" data-anim="sui-animate-slide-down">
+          <span class="sui-text-sm">&darr; Banner Dropdown</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-slide-down</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Dropdown</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Drops down from -40px on the vertical axis. Ideal for notification banners and navbars.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-23', this)">Copy</button>
+        </div>
+<pre id="code-anim-23" class="code-block"><code>&lt;!-- Slide down alert banner --&gt;
+&lt;div class="sui-alert sui-animate-slide-down"&gt;
+  &lt;p&gt;New update available!&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 24. Lateral Slide Left -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-card sui-shadow-md js-anim-target sui-animate-slide-left" data-anim="sui-animate-slide-left">
+          <span class="sui-text-sm">&larr; Left Entrance</span>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-slide-left</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Lateral</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Glides from right (+40px) to natural origin. Used in carousel slides and wizards.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-24', this)">Copy</button>
+        </div>
+<pre id="code-anim-24" class="code-block"><code>&lt;!-- Lateral slider entry --&gt;
+&lt;div class="sui-card sui-animate-slide-left"&gt;
+  &lt;p&gt;Wizard Step 2&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 25. Shimmer Gradient Text -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <h2 class="sui-text-2xl sui-font-bold sui-animate-shimmer-text">
+          Luxury Shimmer
+        </h2>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-shimmer-text</strong>
+          <span class="sui-badge sui-badge-accent sui-text-xs">Typography</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Continuous horizontal gradient wave clipped directly to typographic letterforms.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-25', this)">Copy</button>
+        </div>
+<pre id="code-anim-25" class="code-block"><code>&lt;!-- Continuous shimmering headline --&gt;
+&lt;h1 class="sui-animate-shimmer-text"&gt;
+  Luxury Shimmer
+&lt;/h1&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 26. Continuous Slow Spin -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <div class="sui-avatar sui-animate-spin-slow" style="width: 3.75rem; height: 3.75rem; background: linear-gradient(135deg, var(--sui-color-primary-500), var(--sui-color-accent-500)); color: white;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </div>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-spin-slow</strong>
+          <span class="sui-badge sui-badge-outline sui-text-xs">Continuous</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">12-second linear continuous 360-degree rotation. Ideal for gears, loader icons, and auras.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-26', this)">Copy</button>
+        </div>
+<pre id="code-anim-26" class="code-block"><code>&lt;!-- 12s slow rotating gear --&gt;
+&lt;div class="sui-avatar sui-animate-spin-slow"&gt;
+  &lt;!-- SVG Gear --&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 27. Cyberpunk Glitch Snap -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <button class="sui-btn sui-btn-danger js-anim-target sui-animate-glitch" data-anim="sui-animate-glitch" style="font-family: monospace; letter-spacing: 0.1em;">
+          SYSTEM_ERROR//
+        </button>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-animate-glitch</strong>
+          <span class="sui-badge sui-badge-danger sui-text-xs">Cyberpunk</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Micro-jitter translate offsets simulating screen distortion and digital malfunction.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-secondary sui-btn-sm sui-w-full btn-replay">Replay</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-27', this)">Copy</button>
+        </div>
+<pre id="code-anim-27" class="code-block"><code>&lt;!-- Cyberpunk glitch effect --&gt;
+&lt;button class="sui-btn sui-animate-glitch"&gt;
+  SYSTEM_ERROR//
+&lt;/button&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 28. Micro-Interactions: Grow & Rotate -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box sui-flex sui-gap-4">
+        <button class="sui-btn sui-btn-primary sui-hover-grow">
+          Hover Grow
+        </button>
+        <button class="sui-btn sui-btn-secondary sui-hover-rotate">
+          Hover Tilt
+        </button>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">sui-hover-grow &amp; rotate</strong>
+          <span class="sui-badge sui-badge-primary sui-text-xs">Micro-Interactions</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Pure CSS utility classes for tactile mouse cursor responsiveness and spring tilts.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-28', this)">Copy</button>
+        </div>
+<pre id="code-anim-28" class="code-block"><code>&lt;!-- Micro-interaction hover states --&gt;
+&lt;button class="sui-btn sui-hover-grow"&gt;Hover Grow&lt;/button&gt;
+&lt;button class="sui-btn sui-hover-rotate"&gt;Hover Tilt&lt;/button&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 29. Interactive Confetti Cannon Blast -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box">
+        <button class="sui-btn sui-btn-accent sui-btn-lg sui-hover-lift sui-active-push" data-sui-confetti>
+          🎊 Launch Confetti!
+        </button>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">data-sui-confetti</strong>
+          <span class="sui-badge sui-badge-accent sui-text-xs">JS Physics Engine</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Zero-dependency confetti burst calculation with parabolic gravity and angular rotation.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-accent sui-btn-sm sui-w-full" data-sui-confetti>Fire Blast</button>
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-29', this)">Copy</button>
+        </div>
+<pre id="code-anim-29" class="code-block"><code>&lt;!-- Click anywhere to blast particles --&gt;
+&lt;button class="sui-btn sui-btn-accent" data-sui-confetti&gt;
+  Launch Confetti!
+&lt;/button&gt;
+
+&lt;!-- Programmatic JS API --&gt;
+&lt;script&gt;
+  SUI.confetti.trigger({ count: 50, x: 200, y: 300 });
+&lt;/script&gt;</code></pre>
+      </div>
+    </article>
+
+    <!-- 30. Dynamic Viewport Tooltip -->
+    <article class="sui-card sui-p-0 sui-hover-lift">
+      <div class="anim-demo-box sui-flex sui-flex-wrap sui-gap-2 sui-p-4">
+        <button class="sui-btn sui-btn-secondary sui-btn-sm" data-tooltip="Top oriented tooltip" data-tooltip-pos="top">Hover Top</button>
+        <button class="sui-btn sui-btn-secondary sui-btn-sm" data-tooltip="Bottom oriented tooltip" data-tooltip-pos="bottom">Hover Bottom</button>
+        <button class="sui-btn sui-btn-secondary sui-btn-sm" data-tooltip="Right tooltip" data-tooltip-pos="right">Hover Right</button>
+      </div>
+      <div class="sui-p-6">
+        <div class="sui-flex sui-items-center sui-justify-between sui-mb-3">
+          <strong class="sui-block">Dynamic Tooltips</strong>
+          <span class="sui-badge sui-badge-primary sui-text-xs">Viewport Aware</span>
+        </div>
+        <p class="sui-text-sm sui-text-muted sui-mb-4">Multi-directional tooltips with screen edge clamping and spring reveal motion.</p>
+        <div class="sui-flex sui-gap-2">
+          <button class="sui-btn sui-btn-outline sui-btn-sm sui-w-full btn-code">View Code</button>
+        </div>
+      </div>
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots"><div class="macos-dot red"></div><div class="macos-dot yellow"></div><div class="macos-dot green"></div></div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-anim-30', this)">Copy</button>
+        </div>
+<pre id="code-anim-30" class="code-block"><code>&lt;!-- Dynamic tooltips --&gt;
+&lt;button data-tooltip="Save to Cloud" data-tooltip-pos="top"&gt;Top&lt;/button&gt;
+&lt;button data-tooltip="View Settings" data-tooltip-pos="bottom"&gt;Bottom&lt;/button&gt;</code></pre>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- =======================================================================
+       GLOBAL ULTRA PRO MAX FOOTER
+       ======================================================================= -->
+  <footer class="sui-bg-surface sui-border-t sui-border-subtle sui-py-12">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 0 var(--sui-space-6);">
+      <div class="sui-grid sui-gap-8 sui-text-left" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        
+        <div class="sui-flex sui-flex-col sui-gap-4">
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <div class="sui-avatar" style="width: 2rem; height: 2rem; background: var(--sui-color-primary-500); color: white;">S</div>
+            <strong class="sui-text-lg">Sui.css</strong>
+          </div>
+          <p class="sui-text-sm sui-text-muted">The ultra pro max CSS architecture for modern web applications.</p>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Modules</strong>
+          <a href="buttons.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Buttons & Badges</a>
+          <a href="cards.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Cards & Matrices</a>
+          <a href="forms.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Form Controls</a>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Architecture</strong>
+          <a href="layout.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Layout Engine</a>
+          <a href="animations.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Motion & Spring</a>
+          <a href="advanced.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Advanced Engine</a>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Resources</strong>
+          <a href="../how-to-use.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Setup Guide</a>
+          <a href="../docs/index.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Documentation</a>
+          <a href="https://github.com/Suman-11-web" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">GitHub Repository</a>
+        </div>
+
+      </div>
+      
+      <div class="sui-border-t sui-border-subtle sui-mt-12 sui-pt-8 sui-flex sui-justify-between sui-items-center sui-flex-wrap sui-gap-4">
+        <p class="sui-text-sm sui-text-muted">&copy; 2026 Sui.css Framework. Built for developers. Free and open source.</p>
+        <span class="sui-badge sui-badge-outline">SUI.css v2.1.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for Syntax, Replay, Code Toggle, and Mobile Drawer -->
+  <script src="../dist/sui.min.js"></script>
+  <script>
+    // Global Safe Copy Code Function
+    function copyCodeBlock(elementId, btnElement) {
+      const textToCopy = document.getElementById(elementId).innerText;
+      
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        btnElement.style.color = '#7ee787';
+        btnElement.style.borderColor = '#7ee787';
+        
+        setTimeout(() => {
+          btnElement.innerText = originalText;
+          btnElement.style.color = '#ccc';
+          btnElement.style.borderColor = '#555';
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy code: ', err);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. GLOBAL MOBILE DRAWER LOGIC
+      const globalMenuBtn = document.getElementById('globalMenuBtn');
+      const globalDrawer = document.getElementById('globalMobileDrawer');
+      
+      function closeGlobal() {
+        if(globalDrawer) globalDrawer.classList.remove('is-open');
+      }
+      if (globalMenuBtn) {
+        globalMenuBtn.addEventListener('click', () => globalDrawer.classList.add('is-open'));
+      }
+      document.getElementById('globalCloseBtn')?.addEventListener('click', closeGlobal);
+      document.getElementById('globalCloseBackdrop')?.addEventListener('click', closeGlobal);
+
+      // 2. Replay Animation Logic
+      const replayButtons = document.querySelectorAll('.btn-replay');
+      replayButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          const card = e.target.closest('.sui-card');
+          const target = card.querySelector('.js-anim-target');
+          if (!target) return;
+          const animClass = target.getAttribute('data-anim');
+          
+          target.classList.remove(animClass);
+          void target.offsetWidth; // Force reflow
+          target.classList.add(animClass);
+        });
+      });
+
+      // 3. Code Panel Toggle (View/Hide)
+      const codeButtons = document.querySelectorAll('.btn-code');
+      codeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          const card = e.target.closest('.sui-card');
+          const codePanel = card.querySelector('.code-reveal-panel');
+          const isOpen = codePanel.classList.contains('is-open');
+          
+          if (isOpen) {
+            codePanel.classList.remove('is-open');
+            e.target.textContent = 'View Code';
+            e.target.classList.remove('sui-btn-primary');
+            e.target.classList.add('sui-btn-outline');
+          } else {
+            codePanel.classList.add('is-open');
+            e.target.textContent = 'Hide Code';
+            e.target.classList.remove('sui-btn-outline');
+            e.target.classList.add('sui-btn-primary');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

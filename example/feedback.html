@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SUI.css Feedback — Toasts, Alerts, Tooltips &amp; Popovers</title>
+
+  <meta name="description" content="Explore feedback components in SUI.css including status toasts, dismissible alerts, directional tooltips, popovers, stat blocks, and kbd tags.">
+  <meta name="keywords" content="SUI.css feedback, CSS toast notification, dismissible alert, CSS tooltips, popovers, stat metrics">
+  <meta name="author" content="SUI.css">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://suman-11-web.github.io/SUI-FRAMEWORK.CSS/example/feedback.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SUI.css Feedback — Toasts, Alerts &amp; Metrics">
+  <meta property="og:description" content="Explore feedback components in SUI.css.">
+  <meta property="og:url" content="https://suman-11-web.github.io/SUI-FRAMEWORK.CSS/example/feedback.html">
+  <meta property="og:site_name" content="SUI.css">
+  <meta property="og:image" content="../logosui.png">
+  
+  <!-- Core Framework -->
+  <link rel="stylesheet" href="../dist/sui.min.css">
+  
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background-color: var(--sui-bg);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    /* Floating Island Navbar */
+    .sui-floating-nav {
+      position: fixed;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      margin-inline: auto; 
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-sizing: border-box;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+      background: oklch(from var(--sui-surface) l c h / 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--sui-border);
+      border-radius: 9999px;
+      box-shadow: 0 20px 40px -10px oklch(0% 0 0 / 0.15);
+    }
+
+    .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--sui-text); flex-shrink: 0; }
+    .nav-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .nav-pill-link { position: relative; padding: 0.4rem 0.9rem; font-size: 0.85rem; font-weight: 500; color: var(--sui-text-muted); text-decoration: none; border-radius: 999px; transition: color 0.3s ease; z-index: 1; white-space: nowrap; }
+    .nav-pill-link:hover { color: var(--sui-text); background: var(--sui-surface-hover); }
+    .nav-pill-link.active { color: var(--sui-text); background: var(--sui-border-subtle); }
+
+    .nav-desktop-menu { display: none; }
+    .nav-mobile-btn { display: flex; align-items: center; justify-content: center; background: var(--sui-surface-hover); border: 1px solid var(--sui-border); padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--sui-text); transition: background 0.2s ease; }
+    .nav-mobile-btn:hover { background: var(--sui-border); }
+    
+    @media (min-width: 992px) {
+      .nav-desktop-menu { display: flex; align-items: center; gap: 0.25rem; }
+      .nav-mobile-btn { display: none !important; }
+    }
+
+    .mobile-drawer { position: fixed; inset: 0; z-index: 9999; display: flex; justify-content: flex-end; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .mobile-drawer.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
+    .drawer-backdrop { position: absolute; inset: 0; background: oklch(0% 0 0 / 0.5); backdrop-filter: blur(4px); cursor: pointer; }
+    .drawer-panel { position: relative; width: 280px; height: 100%; background: var(--sui-surface); border-left: 1px solid var(--sui-border); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; box-shadow: -10px 0 30px oklch(0% 0 0 / 0.2); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
+    .mobile-drawer.is-open .drawer-panel { transform: translateX(0); }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 10rem var(--sui-space-6) 6rem;
+      position: relative;
+      text-align: center;
+      border-bottom: 1px solid var(--sui-border-subtle);
+    }
+    
+    .hero-mesh-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: 
+        radial-gradient(circle at 80% 20%, oklch(from var(--sui-color-primary-500) l c h / 0.1), transparent 30%),
+        radial-gradient(circle at 20% 80%, oklch(from var(--sui-color-accent-500) l c h / 0.1), transparent 30%);
+      filter: blur(60px);
+    }
+
+    .hero-content { position: relative; z-index: 10; max-width: 900px; margin: 0 auto; }
+
+    .macos-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      height: 40px;
+      background: #2d2d2d;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+    }
+    .macos-dots { display: flex; gap: 8px; }
+    .macos-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .macos-dot.red { background-color: #ff5f56; }
+    .macos-dot.yellow { background-color: #ffbd2e; }
+    .macos-dot.green { background-color: #27c93f; }
+
+    .showcase-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--sui-space-12) var(--sui-space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sui-space-12);
+    }
+    
+    .demo-section {
+      background: var(--sui-surface);
+      border: 1px solid var(--sui-border);
+      border-radius: var(--sui-radius-xl);
+      overflow: hidden;
+    }
+
+    .demo-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--sui-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .demo-canvas {
+      padding: var(--sui-space-8) var(--sui-space-6);
+      background: var(--sui-bg);
+      background-image: radial-gradient(var(--sui-border-subtle) 1px, transparent 1px);
+      background-size: 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .code-reveal-panel {
+      display: none;
+      border-top: 1px solid var(--sui-border);
+      background: #1e1e1e;
+    }
+    
+    .code-reveal-panel.is-open {
+      display: block;
+      animation: sui-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="sui-bg">
+
+  <!-- =======================================================================
+       GLOBAL NAVBAR
+       ======================================================================= -->
+  <nav class="sui-floating-nav sui-animate-slide-up">
+    <a href="../index.html" class="nav-brand">
+      <div class="sui-avatar sui-animate-glow" style="width: 2rem; height: 2rem; background: var(--sui-color-primary-500); color: white;">S</div>
+      <strong style="font-size: 0.95rem;">SUI.css</strong>
+    </a>
+    
+    <div class="nav-desktop-menu">
+      <a href="../index.html" class="nav-pill-link">Home</a>
+      <a href="../docs/index.html" class="nav-pill-link">Docs</a>
+      <a href="buttons.html" class="nav-pill-link active">Components</a>
+      <a href="utilities.html" class="nav-pill-link">Utilities</a>
+      <a href="animations.html" class="nav-pill-link">Animations</a>
+      <a href="advanced.html" class="nav-pill-link">Examples</a>
+    </div>
+    
+    <div class="nav-actions">
+      <a href="https://github.com/Suman-11-web" class="sui-btn sui-btn-primary sui-btn-sm sui-rounded-full nav-github-btn" style="padding: 0.4rem 1rem; font-size: 0.85rem;">GitHub &rarr;</a>
+      <button id="globalMenuBtn" class="nav-mobile-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- GLOBAL MOBILE DRAWER -->
+  <div id="globalMobileDrawer" class="mobile-drawer">
+    <div class="drawer-backdrop" id="globalCloseBackdrop"></div>
+    <div class="drawer-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong style="font-size: 1.1rem; color: var(--sui-text);">SUI.css</strong>
+        <button id="globalCloseBtn" class="nav-mobile-btn" style="border: none; background: transparent;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <a href="../index.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Home</a>
+        <a href="../docs/index.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Docs</a>
+        <a href="buttons.html" class="sui-btn sui-btn-primary sui-w-full sui-justify-start">Components</a>
+        <a href="utilities.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Utilities</a>
+        <a href="animations.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Animations</a>
+        <a href="advanced.html" class="sui-btn sui-btn-outline sui-w-full sui-justify-start" style="border: none;">Examples</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       HERO SECTION
+       ======================================================================= -->
+  <header class="hero-section">
+    <div class="hero-mesh-bg"></div>
+    <div class="hero-content sui-animate-blur-in">
+      <span class="sui-badge sui-badge-primary sui-mb-4">v2.1.0 Feedback Engine</span>
+      <h1 class="sui-text-hero sui-mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Feedback &amp; Metrics</h1>
+      <p class="sui-text-lg sui-text-muted sui-max-w-2xl sui-mx-auto">
+        Live status toasts, dismissible alerts, directional tooltips, contextual popovers, keyboard badges, and dashboard metric stat blocks.
+      </p>
+    </div>
+  </header>
+
+  <!-- =======================================================================
+       COMPONENT SHOWCASE
+       ======================================================================= -->
+  <main class="showcase-container">
+
+    <!-- 1. Live Toast Engine -->
+    <section class="demo-section sui-animate-spring-up sui-delay-1">
+      <div class="demo-header">
+        <div>
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <h2 class="sui-text-xl" style="margin: 0;">Interactive Toast Notifications</h2>
+            <span class="sui-badge sui-badge-success" style="font-size: 0.65rem;">SUI.toast.show()</span>
+          </div>
+          <p class="sui-text-sm sui-text-muted" style="margin: 0.25rem 0 0;">Click below to trigger typed notifications with status badges and auto-dismissal.</p>
+        </div>
+        <button class="sui-btn sui-btn-outline sui-btn-sm btn-code">View Code</button>
+      </div>
+
+      <div class="demo-canvas" style="flex-direction: row; flex-wrap: wrap;">
+        <button class="sui-btn sui-btn-success" onclick="SUI.toast.show({ title: 'Success!', message: 'File uploaded and deployed to edge CDN nodes.', type: 'success' })">
+          ✓ Trigger Success Toast
+        </button>
+
+        <button class="sui-btn sui-btn-danger" onclick="SUI.toast.show({ title: 'Build Error', message: 'Failed to parse JSON configuration file.', type: 'danger' })">
+          ✕ Trigger Danger Toast
+        </button>
+
+        <button class="sui-btn sui-btn-warning" onclick="SUI.toast.show({ title: 'Rate Limit Warning', message: 'Approaching 80% of monthly API quota.', type: 'warning' })">
+          ⚠ Trigger Warning Toast
+        </button>
+
+        <button class="sui-btn sui-btn-primary" onclick="SUI.toast.show({ title: 'Update Available', message: 'SUI.css v2.1.0 is ready to install.', type: 'info' })">
+          ℹ Trigger Info Toast
+        </button>
+      </div>
+
+      <!-- Code Reveal Panel -->
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots">
+            <div class="macos-dot red"></div>
+            <div class="macos-dot yellow"></div>
+            <div class="macos-dot green"></div>
+          </div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-toast-1', this)">Copy</button>
+        </div>
+<pre id="code-toast-1" style="margin: 0; padding: 1.5rem; color: #a5d6ff; font-family: monospace; font-size: 0.85rem; overflow-x: auto;"><code>// JavaScript Toast API
+SUI.toast.show({
+  title: 'Payment Successful',
+  message: 'Receipt sent to your email address.',
+  type: 'success', // 'success' | 'danger' | 'warning' | 'info'
+  duration: 4000
+});</code></pre>
+      </div>
+    </section>
+
+    <!-- 2. Dismissible Alerts -->
+    <section class="demo-section sui-animate-spring-up sui-delay-2">
+      <div class="demo-header">
+        <div>
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <h2 class="sui-text-xl" style="margin: 0;">Dismissible Alerts</h2>
+            <span class="sui-badge sui-badge-primary" style="font-size: 0.65rem;">data-sui-dismiss="alert"</span>
+          </div>
+          <p class="sui-text-sm sui-text-muted" style="margin: 0.25rem 0 0;">Inline feedback banners with smooth fade-out collapse animations.</p>
+        </div>
+        <button class="sui-btn sui-btn-outline sui-btn-sm btn-code">View Code</button>
+      </div>
+
+      <div class="demo-canvas">
+        <div class="sui-alert sui-alert-success">
+          <span class="sui-alert-icon">✓</span>
+          <div class="sui-alert-content">
+            <strong class="sui-alert-title">Profile Synchronized</strong>
+            <span class="sui-alert-desc">All user preferences have been saved to Cloud Firestore.</span>
+          </div>
+          <button class="sui-alert-close" data-sui-dismiss="alert">&times;</button>
+        </div>
+
+        <div class="sui-alert sui-alert-warning">
+          <span class="sui-alert-icon">⚠</span>
+          <div class="sui-alert-content">
+            <strong class="sui-alert-title">Scheduled Maintenance</strong>
+            <span class="sui-alert-desc">Database maintenance scheduled for Sunday at 02:00 UTC.</span>
+          </div>
+          <button class="sui-alert-close" data-sui-dismiss="alert">&times;</button>
+        </div>
+
+        <div class="sui-alert sui-alert-danger">
+          <span class="sui-alert-icon">✕</span>
+          <div class="sui-alert-content">
+            <strong class="sui-alert-title">Connection Timeout</strong>
+            <span class="sui-alert-desc">Could not connect to Redis socket on port 6379.</span>
+          </div>
+          <button class="sui-alert-close" data-sui-dismiss="alert">&times;</button>
+        </div>
+      </div>
+
+      <!-- Code Reveal Panel -->
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots">
+            <div class="macos-dot red"></div>
+            <div class="macos-dot yellow"></div>
+            <div class="macos-dot green"></div>
+          </div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-alert-1', this)">Copy</button>
+        </div>
+<pre id="code-alert-1" style="margin: 0; padding: 1.5rem; color: #a5d6ff; font-family: monospace; font-size: 0.85rem; overflow-x: auto;"><code>&lt;div class="sui-alert sui-alert-success"&gt;
+  &lt;span class="sui-alert-icon"&gt;✓&lt;/span&gt;
+  &lt;div class="sui-alert-content"&gt;
+    &lt;strong class="sui-alert-title"&gt;Title&lt;/strong&gt;
+    &lt;span class="sui-alert-desc"&gt;Message body goes here.&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;button class="sui-alert-close" data-sui-dismiss="alert"&gt;&amp;times;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- 3. Tooltips & Popovers -->
+    <section class="demo-section sui-animate-spring-up sui-delay-3">
+      <div class="demo-header">
+        <div>
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <h2 class="sui-text-xl" style="margin: 0;">Multi-Directional Tooltips &amp; Popovers</h2>
+            <span class="sui-badge sui-badge-primary" style="font-size: 0.65rem;">data-tooltip-pos</span>
+            <span class="sui-badge sui-badge-accent" style="font-size: 0.65rem;">.sui-popover</span>
+          </div>
+          <p class="sui-text-sm sui-text-muted" style="margin: 0.25rem 0 0;">Hover tooltips positioned Top, Bottom, Left, and Right, plus click popovers.</p>
+        </div>
+        <button class="sui-btn sui-btn-outline sui-btn-sm btn-code">View Code</button>
+      </div>
+
+      <div class="demo-canvas" style="flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 2rem; padding: 3rem 1.5rem;">
+        <button class="sui-btn sui-btn-outline" data-tooltip="Tooltip above element" data-tooltip-pos="top">
+          Tooltip Top ↑
+        </button>
+
+        <button class="sui-btn sui-btn-outline" data-tooltip="Tooltip below element" data-tooltip-pos="bottom">
+          Tooltip Bottom ↓
+        </button>
+
+        <button class="sui-btn sui-btn-outline" data-tooltip="Tooltip to the left" data-tooltip-pos="left">
+          Tooltip Left ←
+        </button>
+
+        <button class="sui-btn sui-btn-outline" data-tooltip="Tooltip to the right" data-tooltip-pos="right">
+          Tooltip Right →
+        </button>
+
+        <!-- Popover -->
+        <div class="sui-popover" id="popover-demo">
+          <button class="sui-btn sui-btn-primary" data-sui-popover-trigger="popover-demo">
+            Click Popover ✦
+          </button>
+          <div class="sui-popover-content">
+            <div class="sui-popover-header">Quick Insights</div>
+            <p class="sui-popover-body">Popovers can host rich formatting, buttons, and links without writing boilerplate JS.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Reveal Panel -->
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots">
+            <div class="macos-dot red"></div>
+            <div class="macos-dot yellow"></div>
+            <div class="macos-dot green"></div>
+          </div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-tooltip-1', this)">Copy</button>
+        </div>
+<pre id="code-tooltip-1" style="margin: 0; padding: 1.5rem; color: #a5d6ff; font-family: monospace; font-size: 0.85rem; overflow-x: auto;"><code>&lt;!-- Tooltip with Direction --&gt;
+&lt;button class="sui-btn" data-tooltip="Settings" data-tooltip-pos="bottom"&gt;
+  Hover Me
+&lt;/button&gt;
+
+&lt;!-- Interactive Popover --&gt;
+&lt;div class="sui-popover" id="myPopover"&gt;
+  &lt;button class="sui-btn sui-btn-primary" data-sui-popover-trigger="myPopover"&gt;Click Me&lt;/button&gt;
+  &lt;div class="sui-popover-content"&gt;
+    &lt;div class="sui-popover-header"&gt;Popover Title&lt;/div&gt;
+    &lt;p class="sui-popover-body"&gt;Rich HTML content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- 4. Stat Metric Blocks & Kbd Keys -->
+    <section class="demo-section sui-animate-spring-up sui-delay-4">
+      <div class="demo-header">
+        <div>
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <h2 class="sui-text-xl" style="margin: 0;">Metric Stat Blocks &amp; Keyboard Keys</h2>
+            <span class="sui-badge sui-badge-primary" style="font-size: 0.65rem;">.sui-stat</span>
+            <span class="sui-badge sui-badge-success" style="font-size: 0.65rem;">.sui-kbd</span>
+          </div>
+          <p class="sui-text-sm sui-text-muted" style="margin: 0.25rem 0 0;">Dashboard KPI metrics with trend indicators, plus keyboard key styling.</p>
+        </div>
+        <button class="sui-btn sui-btn-outline sui-btn-sm btn-code">View Code</button>
+      </div>
+
+      <div class="demo-canvas">
+        <!-- Stat Grid -->
+        <div class="sui-grid sui-gap-4" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); width: 100%;">
+          
+          <div class="sui-stat">
+            <span class="sui-stat-label">Total Revenue</span>
+            <div class="sui-stat-value">$142,850</div>
+            <span class="sui-stat-trend up">&uarr; +18.4% vs last month</span>
+          </div>
+
+          <div class="sui-stat">
+            <span class="sui-stat-label">Active Workspaces</span>
+            <div class="sui-stat-value">3,420</div>
+            <span class="sui-stat-trend up">&uarr; +12.1% this week</span>
+          </div>
+
+          <div class="sui-stat">
+            <span class="sui-stat-label">Server Latency</span>
+            <div class="sui-stat-value">24 ms</div>
+            <span class="sui-stat-trend down">&darr; -6.2% optimized</span>
+          </div>
+
+        </div>
+
+        <!-- Divider with Text -->
+        <div class="sui-divider sui-divider-text">OR QUICK SHORTCUTS</div>
+
+        <!-- Keyboard Keys -->
+        <div class="sui-flex sui-items-center sui-justify-center sui-gap-3 sui-flex-wrap">
+          <span class="sui-text-sm sui-text-muted">Press</span>
+          <kbd class="sui-kbd">⌘ + K</kbd>
+          <span class="sui-text-sm sui-text-muted">to open Command Palette, or</span>
+          <kbd class="sui-kbd">Esc</kbd>
+          <span class="sui-text-sm sui-text-muted">to close modal.</span>
+        </div>
+
+      </div>
+
+      <!-- Code Reveal Panel -->
+      <div class="code-reveal-panel">
+        <div class="macos-header">
+          <div class="macos-dots">
+            <div class="macos-dot red"></div>
+            <div class="macos-dot yellow"></div>
+            <div class="macos-dot green"></div>
+          </div>
+          <button class="sui-btn sui-btn-sm sui-btn-outline" style="border-color: #555; color: #ccc; padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="copyCodeBlock('code-stat-1', this)">Copy</button>
+        </div>
+<pre id="code-stat-1" style="margin: 0; padding: 1.5rem; color: #a5d6ff; font-family: monospace; font-size: 0.85rem; overflow-x: auto;"><code>&lt;!-- Metric Stat Block --&gt;
+&lt;div class="sui-stat"&gt;
+  &lt;span class="sui-stat-label"&gt;Monthly Revenue&lt;/span&gt;
+  &lt;div class="sui-stat-value"&gt;$142,850&lt;/div&gt;
+  &lt;span class="sui-stat-trend up"&gt;&uarr; +18.4%&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Keyboard Keys &amp; Text Divider --&gt;
+&lt;div class="sui-divider sui-divider-text"&gt;OR&lt;/div&gt;
+&lt;kbd class="sui-kbd"&gt;⌘ + K&lt;/kbd&gt;</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =======================================================================
+       GLOBAL FOOTER
+       ======================================================================= -->
+  <footer class="sui-bg-surface sui-border-t sui-border-subtle sui-py-12">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 0 var(--sui-space-6);">
+      <div class="sui-grid sui-gap-8 sui-text-left" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        
+        <div class="sui-flex sui-flex-col sui-gap-4">
+          <div class="sui-flex sui-items-center sui-gap-2">
+            <div class="sui-avatar" style="width: 2rem; height: 2rem; background: var(--sui-color-primary-500); color: white;">S</div>
+            <strong class="sui-text-lg">Sui.css</strong>
+          </div>
+          <p class="sui-text-sm sui-text-muted">The ultra pro max CSS architecture for modern web applications.</p>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Modules</strong>
+          <a href="buttons.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Buttons &amp; Badges</a>
+          <a href="tables.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Tables &amp; Grids</a>
+          <a href="modals.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Modals &amp; Drawers</a>
+          <a href="navigation.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Navigation &amp; Tabs</a>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Architecture</strong>
+          <a href="layout.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Layout Engine</a>
+          <a href="utilities.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Utility Classes</a>
+          <a href="animations.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Motion &amp; Spring</a>
+        </div>
+
+        <div class="sui-flex sui-flex-col sui-gap-3">
+          <strong class="sui-text-sm">Resources</strong>
+          <a href="../how-to-use.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Setup Guide</a>
+          <a href="../docs/index.html" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">Documentation</a>
+          <a href="https://github.com/Suman-11-web" class="sui-text-sm sui-text-muted hover:sui-text-primary sui-no-underline">GitHub Repository</a>
+        </div>
+
+      </div>
+      
+      <div class="sui-border-t sui-border-subtle sui-mt-12 sui-pt-8 sui-flex sui-justify-between sui-items-center sui-flex-wrap sui-gap-4">
+        <p class="sui-text-sm sui-text-muted">&copy; 2026 Sui.css Framework. Built for developers. Free and open source.</p>
+        <span class="sui-badge sui-badge-outline">SUI.css v2.1.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../dist/sui.min.js"></script>
+  <script>
+    function copyCodeBlock(elementId, btnElement) {
+      const textToCopy = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        btnElement.style.color = '#7ee787';
+        btnElement.style.borderColor = '#7ee787';
+        setTimeout(() => {
+          btnElement.innerText = originalText;
+          btnElement.style.color = '#ccc';
+          btnElement.style.borderColor = '#555';
+        }, 2000);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const globalMenuBtn = document.getElementById('globalMenuBtn');
+      const globalDrawer = document.getElementById('globalMobileDrawer');
+      function closeGlobal() { if(globalDrawer) globalDrawer.classList.remove('is-open'); }
+      if (globalMenuBtn) globalMenuBtn.addEventListener('click', () => globalDrawer.classList.add('is-open'));
+      document.getElementById('globalCloseBtn')?.addEventListener('click', closeGlobal);
+      document.getElementById('globalCloseBackdrop')?.addEventListener('click', closeGlobal);
+
+      const codeButtons = document.querySelectorAll('.btn-code');
+      codeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          const section = e.target.closest('.demo-section');
+          const codePanel = section.querySelector('.code-reveal-panel');
+          const isOpen = codePanel.classList.contains('is-open');
+          if (isOpen) {
+            codePanel.classList.remove('is-open');
+            e.target.textContent = 'View Code';
+          } else {
+            codePanel.classList.add('is-open');
+            e.target.textContent = 'Hide Code';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

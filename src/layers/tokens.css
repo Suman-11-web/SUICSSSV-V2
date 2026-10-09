@@ -1,0 +1,414 @@
+:root {
+  /* Change this Hue (0-360) to instantly rebrand the framework */
+  --sui-brand-hue: 250; 
+  
+  /* Base OKLCH Palette */
+  --sui-primary-50: oklch(95% 0.05 var(--sui-brand-hue));
+  --sui-primary-500: oklch(60% 0.2 var(--sui-brand-hue));
+  --sui-primary-600: oklch(50% 0.2 var(--sui-brand-hue));
+  --sui-primary-900: oklch(25% 0.1 var(--sui-brand-hue));
+  
+  --sui-surface: oklch(100% 0 0);
+  --sui-surface-hover: oklch(98% 0.01 var(--sui-brand-hue));
+  --sui-border: oklch(90% 0.02 var(--sui-brand-hue));
+  
+  /* Light Mode */
+  --sui-bg: oklch(98% 0.01 var(--sui-brand-hue));
+  --sui-text: oklch(20% 0.05 var(--sui-brand-hue));
+  --sui-text-muted: oklch(45% 0.05 var(--sui-brand-hue));
+
+  /* Fluid Typography (Scales automatically) */
+  --sui-text-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
+  --sui-text-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
+  --sui-text-lg: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
+  --sui-text-xl: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
+
+  /* Spacing */
+  --sui-radius-md: 0.5rem;
+  --sui-radius-lg: 1rem;
+  --sui-space-2: 0.5rem;
+  --sui-space-4: 1rem;
+  --sui-space-6: 1.5rem;
+  
+  /* Shadows */
+  --sui-shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.05);
+  --sui-shadow-md: 0 4px 6px -1px oklch(0% 0 0 / 0.1);
+}
+
+/* Automatic Dark Mode Toggle */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sui-surface: oklch(20% 0.02 var(--sui-brand-hue));
+    --sui-surface-hover: oklch(25% 0.02 var(--sui-brand-hue));
+    --sui-border: oklch(30% 0.02 var(--sui-brand-hue));
+    --sui-bg: oklch(15% 0.02 var(--sui-brand-hue));
+    --sui-text: oklch(98% 0.01 var(--sui-brand-hue));
+    --sui-text-muted: oklch(75% 0.02 var(--sui-brand-hue));
+  }
+}
+
+/* ==========================================================================
+   SUI.CSS - DESIGN TOKENS ARCHITECTURE (ULTRA PRO MAX)
+   Perceptual OKLCH Color Engine, Fluid Mathematical Scales & Semantic Tokens
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     1. MASTER HARMONIC SEEDS (Change these 5 values to rebrand the entire OS)
+     ------------------------------------------------------------------------ */
+  --sui-hue-brand: 255;       /* Dynamic Royal Indigo/Violet (0 - 360) */
+  --sui-hue-accent: 310;      /* Vibrant Magenta/Pink Accent */
+  --sui-hue-success: 145;     /* Emerald Green */
+  --sui-hue-warning: 75;      /* Amber Gold */
+  --sui-hue-danger: 25;       /* Crimson Red */
+  --sui-hue-info: 215;        /* Cerulean Blue */
+
+  /* Base Chroma Saturation Tuning */
+  --sui-chroma-base: 0.18;
+  --sui-chroma-neutral: 0.015;
+
+  /* ------------------------------------------------------------------------
+     2. PERCEPTUALLY UNIFORM COLOR SCALES (OKLCH Native Model)
+     ------------------------------------------------------------------------ */
+  /* Primary Brand Scale */
+  --sui-color-primary-50:  oklch(97.5% calc(var(--sui-chroma-base) * 0.15) var(--sui-hue-brand));
+  --sui-color-primary-100: oklch(93.5% calc(var(--sui-chroma-base) * 0.30) var(--sui-hue-brand));
+  --sui-color-primary-200: oklch(87.0% calc(var(--sui-chroma-base) * 0.50) var(--sui-hue-brand));
+  --sui-color-primary-300: oklch(78.0% calc(var(--sui-chroma-base) * 0.75) var(--sui-hue-brand));
+  --sui-color-primary-400: oklch(69.0% calc(var(--sui-chroma-base) * 0.90) var(--sui-hue-brand));
+  --sui-color-primary-500: oklch(60.0% var(--sui-chroma-base) var(--sui-hue-brand)); /* Core Brand */
+  --sui-color-primary-600: oklch(52.0% calc(var(--sui-chroma-base) * 0.95) var(--sui-hue-brand));
+  --sui-color-primary-700: oklch(43.0% calc(var(--sui-chroma-base) * 0.85) var(--sui-hue-brand));
+  --sui-color-primary-800: oklch(34.0% calc(var(--sui-chroma-base) * 0.70) var(--sui-hue-brand));
+  --sui-color-primary-900: oklch(25.0% calc(var(--sui-chroma-base) * 0.55) var(--sui-hue-brand));
+  --sui-color-primary-950: oklch(17.0% calc(var(--sui-chroma-base) * 0.40) var(--sui-hue-brand));
+
+  /* Secondary Accent Scale */
+  --sui-color-accent-50:  oklch(97.5% 0.03 var(--sui-hue-accent));
+  --sui-color-accent-100: oklch(93.0% 0.06 var(--sui-hue-accent));
+  --sui-color-accent-300: oklch(77.0% 0.15 var(--sui-hue-accent));
+  --sui-color-accent-500: oklch(62.0% 0.22 var(--sui-hue-accent));
+  --sui-color-accent-700: oklch(44.0% 0.18 var(--sui-hue-accent));
+  --sui-color-accent-900: oklch(26.0% 0.12 var(--sui-hue-accent));
+
+  /* Success Semantic Scale */
+  --sui-color-success-50:  oklch(98.0% 0.03 var(--sui-hue-success));
+  --sui-color-success-100: oklch(94.0% 0.07 var(--sui-hue-success));
+  --sui-color-success-300: oklch(80.0% 0.14 var(--sui-hue-success));
+  --sui-color-success-500: oklch(62.0% 0.19 var(--sui-hue-success));
+  --sui-color-success-600: oklch(53.0% 0.18 var(--sui-hue-success));
+  --sui-color-success-700: oklch(43.0% 0.15 var(--sui-hue-success));
+  --sui-color-success-900: oklch(24.0% 0.08 var(--sui-hue-success));
+
+  /* Warning Semantic Scale */
+  --sui-color-warning-50:  oklch(98.0% 0.04 var(--sui-hue-warning));
+  --sui-color-warning-100: oklch(94.0% 0.09 var(--sui-hue-warning));
+  --sui-color-warning-300: oklch(84.0% 0.17 var(--sui-hue-warning));
+  --sui-color-warning-500: oklch(72.0% 0.20 var(--sui-hue-warning));
+  --sui-color-warning-600: oklch(61.0% 0.18 var(--sui-hue-warning));
+  --sui-color-warning-700: oklch(48.0% 0.15 var(--sui-hue-warning));
+  --sui-color-warning-900: oklch(28.0% 0.09 var(--sui-hue-warning));
+
+  /* Danger / Error Semantic Scale */
+  --sui-color-danger-50:  oklch(97.5% 0.03 var(--sui-hue-danger));
+  --sui-color-danger-100: oklch(93.0% 0.07 var(--sui-hue-danger));
+  --sui-color-danger-300: oklch(78.0% 0.15 var(--sui-hue-danger));
+  --sui-color-danger-500: oklch(60.0% 0.22 var(--sui-hue-danger));
+  --sui-color-danger-600: oklch(52.0% 0.21 var(--sui-hue-danger));
+  --sui-color-danger-700: oklch(42.0% 0.18 var(--sui-hue-danger));
+  --sui-color-danger-900: oklch(25.0% 0.11 var(--sui-hue-danger));
+
+  /* Neutral Tone Scale (Harmonized to Brand Hue) */
+  --sui-color-neutral-0:   oklch(100% 0 0);
+  --sui-color-neutral-50:  oklch(98.5% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-100: oklch(95.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-200: oklch(90.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-300: oklch(82.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-400: oklch(70.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-500: oklch(56.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-600: oklch(44.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-700: oklch(32.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-800: oklch(22.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-900: oklch(14.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-950: oklch(8.5%  var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-1000:oklch(0% 0 0);
+
+  /* ------------------------------------------------------------------------
+     3. LIGHT MODE CONTEXTUAL TOKENS (Default Root)
+     ------------------------------------------------------------------------ */
+  --sui-bg: var(--sui-color-neutral-50);
+  --sui-bg-subtle: var(--sui-color-neutral-100);
+  --sui-bg-canvas: var(--sui-color-neutral-0);
+
+  /* Surfaces */
+  --sui-surface: var(--sui-color-neutral-0);
+  --sui-surface-hover: var(--sui-color-neutral-50);
+  --sui-surface-active: var(--sui-color-neutral-100);
+  --sui-surface-raised: var(--sui-color-neutral-0);
+  --sui-surface-overlay: oklch(100% 0 0 / 0.85);
+
+  /* Borders & Dividers */
+  --sui-border: var(--sui-color-neutral-200);
+  --sui-border-subtle: var(--sui-color-neutral-100);
+  --sui-border-strong: var(--sui-color-neutral-300);
+  --sui-border-interactive: var(--sui-color-primary-300);
+
+  /* Text & Typography Contrast */
+  --sui-text: var(--sui-color-neutral-950);
+  --sui-text-strong: var(--sui-color-neutral-1000);
+  --sui-text-muted: var(--sui-color-neutral-600);
+  --sui-text-faint: var(--sui-color-neutral-400);
+  --sui-text-inverse: var(--sui-color-neutral-0);
+  --sui-text-link: var(--sui-color-primary-600);
+
+  /* Interaction States */
+  --sui-ring: oklch(from var(--sui-color-primary-500) l c h / 0.35);
+  --sui-overlay-backdrop: oklch(0% 0 0 / 0.45);
+
+  /* Primary Semantic Shorthands */
+  --sui-primary-50: var(--sui-color-primary-50);
+  --sui-primary-100: var(--sui-color-primary-100);
+  --sui-primary-500: var(--sui-color-primary-500);
+  --sui-primary-600: var(--sui-color-primary-600);
+  --sui-primary-900: var(--sui-color-primary-900);
+
+  /* ------------------------------------------------------------------------
+     4. ATMOSPHERIC GLASS & FROST TOKENS
+     ------------------------------------------------------------------------ */
+  --sui-glass-bg: oklch(100% 0 0 / 0.68);
+  --sui-glass-border: oklch(100% 0 0 / 0.35);
+  --sui-glass-blur: 16px;
+  --sui-glass-saturate: 180%;
+
+  /* ------------------------------------------------------------------------
+     5. FLUID MATHEMATICAL TYPOGRAPHY (Continuous Viewport Interpolation)
+     ------------------------------------------------------------------------ */
+  /* Type Scale Ratio ~ 1.25 (Major Third) to 1.333 (Perfect Fourth) */
+  --sui-text-2xs: clamp(0.68rem, 0.64rem + 0.18vw, 0.75rem);
+  --sui-text-xs:  clamp(0.78rem, 0.73rem + 0.24vw, 0.875rem);
+  --sui-text-sm:  clamp(0.88rem, 0.83rem + 0.28vw, 0.975rem);
+  --sui-text-base:clamp(1.00rem, 0.94rem + 0.32vw, 1.125rem);
+  --sui-text-md:  clamp(1.15rem, 1.07rem + 0.41vw, 1.31rem);
+  --sui-text-lg:  clamp(1.32rem, 1.21rem + 0.55vw, 1.55rem);
+  --sui-text-xl:  clamp(1.52rem, 1.37rem + 0.74vw, 1.85rem);
+  --sui-text-2xl: clamp(1.75rem, 1.55rem + 1.02vw, 2.22rem);
+  --sui-text-3xl: clamp(2.05rem, 1.76rem + 1.45vw, 2.75rem);
+  --sui-text-4xl: clamp(2.45rem, 2.02rem + 2.15vw, 3.50rem);
+  --sui-text-hero:clamp(3.00rem, 2.35rem + 3.25vw, 4.75rem);
+
+  /* Font Families */
+  --sui-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --sui-font-heading: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  --sui-font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+
+  /* Line Heights */
+  --sui-leading-none: 1.0;
+  --sui-leading-tight: 1.15;
+  --sui-leading-snug: 1.3;
+  --sui-leading-normal: 1.5;
+  --sui-leading-relaxed: 1.7;
+  --sui-leading-loose: 2.0;
+
+  /* Letter Spacing */
+  --sui-tracking-tighter: -0.04em;
+  --sui-tracking-tight: -0.02em;
+  --sui-tracking-normal: -0.01em;
+  --sui-tracking-wide: 0.03em;
+  --sui-tracking-widest: 0.08em;
+
+  /* ------------------------------------------------------------------------
+     6. SPACING SCALE (Harmonic 4px Baseline)
+     ------------------------------------------------------------------------ */
+  --sui-space-0: 0px;
+  --sui-space-px: 1px;
+  --sui-space-0-5: 0.125rem;  /* 2px */
+  --sui-space-1: 0.25rem;     /* 4px */
+  --sui-space-1-5: 0.375rem;  /* 6px */
+  --sui-space-2: 0.5rem;      /* 8px */
+  --sui-space-2-5: 0.625rem;  /* 10px */
+  --sui-space-3: 0.75rem;     /* 12px */
+  --sui-space-4: 1.0rem;      /* 16px */
+  --sui-space-5: 1.25rem;     /* 20px */
+  --sui-space-6: 1.5rem;      /* 24px */
+  --sui-space-8: 2.0rem;      /* 32px */
+  --sui-space-10: 2.5rem;     /* 40px */
+  --sui-space-12: 3.0rem;     /* 48px */
+  --sui-space-16: 4.0rem;     /* 64px */
+  --sui-space-20: 5.0rem;     /* 80px */
+  --sui-space-24: 6.0rem;     /* 96px */
+
+  /* ------------------------------------------------------------------------
+     7. RADII & GEOMETRY TOKENS
+     ------------------------------------------------------------------------ */
+  --sui-radius-none: 0px;
+  --sui-radius-xs: 0.25rem;   /* 4px */
+  --sui-radius-sm: 0.375rem;  /* 6px */
+  --sui-radius-md: 0.5rem;    /* 8px */
+  --sui-radius-lg: 0.75rem;   /* 12px */
+  --sui-radius-xl: 1.0rem;    /* 16px */
+  --sui-radius-2xl: 1.5rem;   /* 24px */
+  --sui-radius-3xl: 2.0rem;   /* 32px */
+  --sui-radius-full: 9999px;
+
+  /* ------------------------------------------------------------------------
+     8. ELEVATION, PHYSICAL SHADOWS & VOLUMETRIC GLOWS
+     ------------------------------------------------------------------------ */
+  --sui-shadow-xs: 0 1px 2px 0 oklch(0% 0 0 / 0.04);
+  --sui-shadow-sm: 0 1px 3px 0 oklch(0% 0 0 / 0.08), 0 1px 2px -1px oklch(0% 0 0 / 0.08);
+  --sui-shadow-md: 0 4px 8px -2px oklch(0% 0 0 / 0.08), 0 2px 4px -2px oklch(0% 0 0 / 0.06);
+  --sui-shadow-lg: 0 12px 18px -4px oklch(0% 0 0 / 0.10), 0 4px 7px -2px oklch(0% 0 0 / 0.06);
+  --sui-shadow-xl: 0 20px 30px -8px oklch(0% 0 0 / 0.12), 0 8px 12px -4px oklch(0% 0 0 / 0.06);
+  --sui-shadow-2xl:0 30px 60px -15px oklch(0% 0 0 / 0.22);
+  --sui-shadow-inner: inset 0 2px 4px 0 oklch(0% 0 0 / 0.06);
+
+  /* Color-Bleed Aura Glows */
+  --sui-glow-primary: 0 0 24px -4px oklch(from var(--sui-color-primary-500) l c h / 0.45);
+  --sui-glow-accent:  0 0 24px -4px oklch(from var(--sui-color-accent-500) l c h / 0.45);
+  --sui-glow-danger:  0 0 24px -4px oklch(from var(--sui-color-danger-500) l c h / 0.45);
+
+  /* ------------------------------------------------------------------------
+     9. MOTION ARCHITECTURE & SPRING EASINGS
+     ------------------------------------------------------------------------ */
+  --sui-ease-standard: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --sui-ease-smooth:   cubic-bezier(0.16, 1, 0.3, 1);
+  --sui-ease-spring:   cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --sui-ease-snappy:   cubic-bezier(0.4, 0, 0.2, 1);
+  --sui-ease-in:       cubic-bezier(0.4, 0, 1, 1);
+  --sui-ease-out:      cubic-bezier(0, 0, 0.2, 1);
+
+  --sui-duration-instant: 75ms;
+  --sui-duration-fast:    150ms;
+  --sui-duration-normal:  250ms;
+  --sui-duration-slow:    400ms;
+  --sui-duration-deliberate: 700ms;
+
+  /* ------------------------------------------------------------------------
+     10. Z-INDEX SYSTEM HIERARCHY
+     ------------------------------------------------------------------------ */
+  --sui-z-sink: -1;
+  --sui-z-base: 0;
+  --sui-z-dock: 10;
+  --sui-z-sticky: 100;
+  --sui-z-banner: 200;
+  --sui-z-overlay: 300;
+  --sui-z-modal: 500;
+  --sui-z-popover: 700;
+  --sui-z-tooltip: 900;
+  --sui-z-toast: 1000;
+  --sui-z-maximum: 9999;
+}
+
+/* ==========================================================================
+   DARK MODE CONTEXTUAL TOKENS (Automatic media query & Manual data-theme)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --sui-bg: var(--sui-color-neutral-950);
+    --sui-bg-subtle: var(--sui-color-neutral-900);
+    --sui-bg-canvas: var(--sui-color-neutral-1000);
+
+    /* Dark Surfaces */
+    --sui-surface: var(--sui-color-neutral-900);
+    --sui-surface-hover: var(--sui-color-neutral-800);
+    --sui-surface-active: var(--sui-color-neutral-700);
+    --sui-surface-raised: var(--sui-color-neutral-800);
+    --sui-surface-overlay: oklch(14% var(--sui-chroma-neutral) var(--sui-hue-brand) / 0.88);
+
+    /* Dark Borders */
+    --sui-border: var(--sui-color-neutral-800);
+    --sui-border-subtle: var(--sui-color-neutral-900);
+    --sui-border-strong: var(--sui-color-neutral-700);
+    --sui-border-interactive: var(--sui-color-primary-600);
+
+    /* Dark Text */
+    --sui-text: var(--sui-color-neutral-100);
+    --sui-text-strong: var(--sui-color-neutral-0);
+    --sui-text-muted: var(--sui-color-neutral-400);
+    --sui-text-faint: var(--sui-color-neutral-600);
+    --sui-text-inverse: var(--sui-color-neutral-950);
+    --sui-text-link: var(--sui-color-primary-400);
+
+    /* Dark States & Overlays */
+    --sui-ring: oklch(from var(--sui-color-primary-500) l c h / 0.45);
+    --sui-overlay-backdrop: oklch(0% 0 0 / 0.75);
+
+    /* Dark Mode Glass */
+    --sui-glass-bg: oklch(14% var(--sui-chroma-neutral) var(--sui-hue-brand) / 0.65);
+    --sui-glass-border: oklch(100% 0 0 / 0.12);
+
+    /* Shadows in Dark (Deeper with ambient occlusion) */
+    --sui-shadow-xs: 0 1px 2px 0 oklch(0% 0 0 / 0.35);
+    --sui-shadow-sm: 0 1px 3px 0 oklch(0% 0 0 / 0.45), 0 1px 2px -1px oklch(0% 0 0 / 0.45);
+    --sui-shadow-md: 0 4px 8px -2px oklch(0% 0 0 / 0.55), 0 2px 4px -2px oklch(0% 0 0 / 0.4);
+    --sui-shadow-lg: 0 12px 20px -4px oklch(0% 0 0 / 0.65), 0 4px 8px -2px oklch(0% 0 0 / 0.45);
+    --sui-shadow-xl: 0 22px 35px -8px oklch(0% 0 0 / 0.75), 0 8px 14px -4px oklch(0% 0 0 / 0.55);
+    --sui-shadow-2xl:0 35px 70px -15px oklch(0% 0 0 / 0.90);
+  }
+}
+
+/* Explicit Runtime Override [data-theme='dark'] */
+[data-theme='dark'] {
+  --sui-bg: var(--sui-color-neutral-950);
+  --sui-bg-subtle: var(--sui-color-neutral-900);
+  --sui-bg-canvas: var(--sui-color-neutral-1000);
+  --sui-surface: var(--sui-color-neutral-900);
+  --sui-surface-hover: var(--sui-color-neutral-800);
+  --sui-surface-active: var(--sui-color-neutral-700);
+  --sui-surface-raised: var(--sui-color-neutral-800);
+  --sui-surface-overlay: oklch(14% var(--sui-chroma-neutral) var(--sui-hue-brand) / 0.88);
+  --sui-border: var(--sui-color-neutral-800);
+  --sui-border-subtle: var(--sui-color-neutral-900);
+  --sui-border-strong: var(--sui-color-neutral-700);
+  --sui-border-interactive: var(--sui-color-primary-600);
+  --sui-text: var(--sui-color-neutral-100);
+  --sui-text-strong: var(--sui-color-neutral-0);
+  --sui-text-muted: var(--sui-color-neutral-400);
+  --sui-text-faint: var(--sui-color-neutral-600);
+  --sui-text-inverse: var(--sui-color-neutral-950);
+  --sui-text-link: var(--sui-color-primary-400);
+  --sui-ring: oklch(from var(--sui-color-primary-500) l c h / 0.45);
+  --sui-overlay-backdrop: oklch(0% 0 0 / 0.75);
+  --sui-glass-bg: oklch(14% var(--sui-chroma-neutral) var(--sui-hue-brand) / 0.65);
+  --sui-glass-border: oklch(100% 0 0 / 0.12);
+}
+
+/* Explicit Runtime Override [data-theme='oled'] (True Pure Black) */
+[data-theme='oled'] {
+  --sui-bg: #000000;
+  --sui-bg-subtle: #09090b;
+  --sui-bg-canvas: #000000;
+  --sui-surface: #0a0a0c;
+  --sui-surface-hover: #16161a;
+  --sui-surface-active: #232328;
+  --sui-surface-raised: #121215;
+  --sui-border: #222228;
+  --sui-border-subtle: #141418;
+  --sui-border-strong: #33333e;
+  --sui-text: #ededed;
+  --sui-text-strong: #ffffff;
+  --sui-text-muted: #8a8a93;
+}
+
+:root {
+  /* Master Brand Color */
+  --sui-brand-hue: 250;
+  --sui-color-primary-500: oklch(60% 0.2 var(--sui-brand-hue));
+  --sui-color-accent-500: oklch(65% 0.22 calc(var(--sui-brand-hue) + 60));
+
+  /* Dynamic Color Mixing Tokens */
+  --sui-primary-hover: color-mix(in oklch, var(--sui-color-primary-500) 85%, black);
+  --sui-primary-active: color-mix(in oklch, var(--sui-color-primary-500) 75%, black);
+  --sui-primary-subtle: color-mix(in oklch, var(--sui-color-primary-500) 12%, transparent);
+  --sui-primary-border: color-mix(in oklch, var(--sui-color-primary-500) 30%, transparent);
+
+  /* Dynamic Contrast Inversion */
+  --sui-text-contrast: color-mix(in oklch, var(--sui-color-primary-500) 5%, white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sui-primary-hover: color-mix(in oklch, var(--sui-color-primary-500) 85%, white);
+    --sui-primary-active: color-mix(in oklch, var(--sui-color-primary-500) 70%, white);
+    --sui-primary-subtle: color-mix(in oklch, var(--sui-color-primary-500) 18%, transparent);
+  }
+}

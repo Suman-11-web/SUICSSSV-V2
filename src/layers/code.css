@@ -1,0 +1,285 @@
+/* ==========================================================================
+   SUI.CSS - NATIVE CODE & SYNTAX HIGHLIGHTING (ULTRA PRO MAX)
+   ========================================================================== */
+
+/* 1. Base Code Block Styling with macOS-style Header */
+pre[class*="language-"] {
+  position: relative;
+  background: var(--sui-bg-subtle);
+  color: var(--sui-text);
+  margin: 0;
+  padding: var(--sui-space-12) var(--sui-space-6) var(--sui-space-6);
+  border-radius: var(--sui-radius-xl);
+  border: 1px solid var(--sui-border);
+  overflow: auto;
+  box-shadow: inset 0 2px 4px 0 oklch(0% 0 0 / 0.02);
+  font-family: var(--sui-font-mono);
+  font-size: var(--sui-text-sm);
+  line-height: var(--sui-leading-relaxed);
+  tab-size: 2;
+}
+
+/* The Premium macOS Window Controls */
+pre[class*="language-"]::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  left: 1.25rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: oklch(70% 0.15 25); /* Close (Red) */
+  box-shadow: 
+    20px 0 0 oklch(80% 0.15 75), /* Minimize (Yellow) */
+    40px 0 0 oklch(75% 0.15 140); /* Maximize (Green) */
+}
+
+/* 2. Inline Code */
+:not(pre) > code[class*="language-"],
+.sui-code-inline {
+  background: var(--sui-surface-hover);
+  color: var(--sui-color-primary-600);
+  padding: 0.2em 0.4em;
+  border-radius: var(--sui-radius-sm);
+  border: 1px solid var(--sui-border-subtle);
+  font-family: var(--sui-font-mono);
+  font-size: 0.85em;
+}
+
+/* 3. Dynamic OKLCH Token Mapping */
+/* Comments & Punctuation */
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--sui-text-faint);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--sui-text-muted);
+}
+
+/* Tags, Attributes & Booleans */
+.token.tag,
+.token.namespace,
+.token.deleted {
+  color: var(--sui-color-danger-500);
+}
+
+.token.attr-name,
+.token.property,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: var(--sui-color-warning-600);
+}
+
+/* Classes, Functions & Keywords */
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: var(--sui-color-primary-500);
+  font-weight: 500;
+}
+
+.token.function,
+.token.class-name {
+  color: var(--sui-color-accent-500);
+}
+
+/* Strings & Values */
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable,
+.token.inserted {
+  color: var(--sui-color-success-600);
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: var(--sui-color-primary-400);
+}
+
+/* Selection Highlighting inside Code Blocks */
+pre[class*="language-"] ::selection,
+pre[class*="language-"]::selection,
+code[class*="language-"] ::selection,
+code[class*="language-"]::selection {
+  background: oklch(from var(--sui-color-primary-500) l c h / 0.2);
+  text-shadow: none;
+}
+
+ *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background-color: var(--sui-bg);
+      font-family: system-ui, -apple-system, sans-serif;
+      width: 100vw;
+      max-width: 100%;
+    }
+
+    .hero-section {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem var(--sui-space-6) 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-mesh-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: 
+        radial-gradient(circle at 15% 50%, oklch(from var(--sui-color-primary-500) l c h / 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, oklch(from var(--sui-color-accent-500) l c h / 0.15), transparent 25%);
+      filter: blur(60px);
+      animation: sui-pulse-glow 8s infinite alternate;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-image: radial-gradient(var(--sui-border-strong) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.4;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    }
+
+    .hero-content { position: relative; z-index: 10; width: 100%; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+
+    /* --------------------------------------------------------------------------
+       BULLETPROOF FLOATING ISLAND NAVBAR
+       -------------------------------------------------------------------------- */
+    .sui-floating-nav {
+      position: fixed;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      margin-inline: auto; 
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-sizing: border-box;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+      background: oklch(from var(--sui-surface) l c h / 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--sui-border);
+      border-radius: 9999px;
+      box-shadow: 0 20px 40px -10px oklch(0% 0 0 / 0.15);
+    }
+
+    .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--sui-text); flex-shrink: 0; }
+    .nav-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .nav-pill-link { position: relative; padding: 0.4rem 0.9rem; font-size: 0.85rem; font-weight: 500; color: var(--sui-text-muted); text-decoration: none; border-radius: 999px; transition: color 0.3s ease; z-index: 1; white-space: nowrap; }
+    .nav-pill-link:hover { color: var(--sui-text); background: var(--sui-surface-hover); }
+    .nav-pill-link.active { color: var(--sui-text); background: var(--sui-border-subtle); }
+
+    .nav-desktop-menu { display: none; }
+    .nav-mobile-btn { display: flex; align-items: center; justify-content: center; background: var(--sui-surface-hover); border: 1px solid var(--sui-border); padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--sui-text); transition: background 0.2s ease; }
+    .nav-mobile-btn:hover { background: var(--sui-border); }
+    
+    @media (min-width: 992px) {
+      .nav-desktop-menu { display: flex; align-items: center; gap: 0.25rem; }
+      .nav-mobile-btn { display: none !important; }
+    }
+
+    /* Mobile Drawer Engine */
+    .mobile-drawer { position: fixed; inset: 0; z-index: 9999; display: flex; justify-content: flex-end; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .mobile-drawer.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
+    .drawer-backdrop { position: absolute; inset: 0; background: oklch(0% 0 0 / 0.5); backdrop-filter: blur(4px); cursor: pointer; }
+    .drawer-panel { position: relative; width: 280px; height: 100%; background: var(--sui-surface); border-left: 1px solid var(--sui-border); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; box-shadow: -10px 0 30px oklch(0% 0 0 / 0.2); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
+    .mobile-drawer.is-open .drawer-panel { transform: translateX(0); }
+
+    /* Bento Box Grid */
+    .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sui-space-6); max-width: 1200px; margin: 0 auto; padding: var(--sui-space-6) 0; position: relative; z-index: 10; }
+    .bento-item { background: var(--sui-surface); border: 1px solid var(--sui-border); border-radius: var(--sui-radius-2xl); padding: var(--sui-space-8); display: flex; flex-direction: column; overflow: hidden; position: relative; box-shadow: var(--sui-shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; --mouse-x: 50%; --mouse-y: 50%; }
+    .bento-item::before { content: ""; position: absolute; inset: 0; background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), oklch(from var(--sui-color-primary-500) l c h / 0.08), transparent 40%); z-index: 0; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    .bento-item:hover { transform: translateY(-4px); box-shadow: var(--sui-shadow-lg); border-color: var(--sui-border-strong); }
+    .bento-item:hover::before { opacity: 1; }
+    .bento-item > * { position: relative; z-index: 1; }
+    
+    @media (max-width: 992px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .bento-grid { grid-template-columns: 1fr; } }
+
+    /* Section Spacing */
+    .section-wrapper { padding: var(--sui-space-20) var(--sui-space-6); border-top: 1px solid var(--sui-border-subtle); position: relative; width: 100%; box-sizing: border-box; }
+    .section-container { max-width: 1200px; margin: 0 auto; width: 100%; padding-inline: var(--sui-space-6); box-sizing: border-box; } 
+
+    /* Live Playground Desktop Only */
+    .playground-wrapper { display: flex; height: 500px; border: 1px solid var(--sui-border); border-radius: var(--sui-radius-xl); overflow: hidden; }
+    .playground-editor, .playground-preview { flex: 1; padding: var(--sui-space-6); }
+    .playground-editor { background: #1e1e1e; color: #d4d4d4; font-family: monospace; border-right: 1px solid var(--sui-border); resize: none; border: none; outline: none; font-size: 14px; }
+    .playground-preview { background: var(--sui-bg); display: flex; align-items: center; justify-content: center; }
+    @media (max-width: 992px) { .section-playground { display: none !important; } }
+
+    /* Code Blocks & Forms */
+    .code-block { background: #1e1e1e; color: #d4d4d4; padding: 2rem; margin: 0; font-family: monospace; overflow-x: auto; font-size: 0.9rem; border-radius: 0 0 var(--sui-radius-lg) var(--sui-radius-lg); }
+    .code-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; background: #2d2d2d; border-bottom: 1px solid #444; border-radius: var(--sui-radius-lg) var(--sui-radius-lg) 0 0; }
+    .sui-input { width: 100%; box-sizing: border-box; }
+
+    /* SUI Syntax Highlighting Tokens (VS Code Dark Theme Inspired) */
+    .token.comment { color: #6a9955; font-style: italic; }
+    .token.tag { color: #569cd6; }
+    .token.attr-name { color: #9cdcfe; }
+    .token.attr-value { color: #ce9178; }
+    .token.punctuation { color: #808080; }
+    .token.property { color: #9cdcfe; }
+    .token.selector { color: #d7ba7d; }
+    .token.function { color: #dcdcaa; }
+    .token.value { color: #b5cea8; }
+    pre code { display: block; }
+
+    /* Scroll Reveal Engine */
+    .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* --------------------------------------------------------------------------
+       MOBILE & RESPONSIVE OPTIMIZATIONS
+       -------------------------------------------------------------------------- */
+    .responsive-button-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; width: 100%; }
+    
+    @media (max-width: 768px) {
+      .section-wrapper { padding: 4rem 1.5rem; }
+      .hero-section { padding-top: 7rem; padding-bottom: 4rem; }
+      
+      /* Typography Scaling */
+      .sui-text-hero { font-size: clamp(2.5rem, 8vw, 4rem) !important; line-height: 1.1; }
+      .sui-text-3xl { font-size: 2rem !important; }
+      .sui-text-4xl { font-size: 2.5rem !important; }
+      
+      /* Interactive Element Wrapping */
+      .responsive-button-group { flex-direction: column; }
+      .responsive-button-group .sui-btn { width: 100%; text-align: center; justify-content: center; }
+      
+      /* Code Blocks */
+      .code-block { padding: 1.25rem; font-size: 0.8rem; }
+      .code-header { padding: 0.5rem 1rem; }
+      
+      /* Component Showcase Grid */
+      .showcase-header { flex-direction: column; align-items: flex-start !important; gap: 1.5rem; text-align: left; }
+      .showcase-header .sui-btn { width: 100%; }
+    }
