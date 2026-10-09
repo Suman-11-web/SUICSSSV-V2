@@ -1146,7 +1146,7 @@
   </footer>
 
   <!-- SUI Javascript Core -->
-  <script src="dist/sui.min.js"></script>
+  <script src="dist/sui.min.js" onerror="if(!this.dataset.failed){this.dataset.failed='1';this.src='/sui.min.js';}"></script>
 
   <!-- =======================================================================
        JAVASCRIPT HELPERS (COPY BUTTONS & PLAYGROUND)
@@ -1494,16 +1494,23 @@
     }
 
     // Safe immediate or deferred execution
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
+    function initLandingPage() {
+      try {
         updatePlayground();
-        const storedHue = localStorage.getItem('sui-brand-hue') || 295;
-        syncBrandHueUI(storedHue);
-      });
-    } else {
-      updatePlayground();
-      const storedHue = localStorage.getItem('sui-brand-hue') || 295;
+      } catch (e) {
+        console.warn('Playground init:', e);
+      }
+      let storedHue = 295;
+      try {
+        storedHue = localStorage.getItem('sui-brand-hue') || 295;
+      } catch (e) {}
       syncBrandHueUI(storedHue);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLandingPage);
+    } else {
+      initLandingPage();
     }
   </script>
 

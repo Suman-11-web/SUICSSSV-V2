@@ -1,0 +1,4603 @@
+@layer reset, tokens, layout, code, components, utilities, animations;
+
+/* Layer: reset.css */
+:where(*, *::before, *::after) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:where(html) {
+  block-size: 100%;
+  text-size-adjust: none;
+  interpolate-size: allow-keywords; 
+}
+
+body {
+  min-block-size: 100vh;
+  line-height: 1.5;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--sui-bg);
+  color: var(--sui-text);
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p { text-wrap: pretty; }
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; overflow-wrap: break-word; }
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+
+/* ==========================================================================
+   SUI.CSS - LUXURY SYSTEM RESET & NORMALIZE (ULTRA PRO MAX)
+   Zero-Specificity Base Layer (:where) with Native Engine Calibration
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. UNIVERSAL BOX-SIZING & BASE STRIPPING
+   -------------------------------------------------------------------------- */
+:where(*, *::before, *::after) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+}
+
+:where(*::before, *::after) {
+  text-decoration: inherit;
+  vertical-align: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   2. ROOT & HTML ENVIRONMENT ENGINE
+   -------------------------------------------------------------------------- */
+:where(html) {
+  /* Dynamic sizing and viewport adaptation */
+  block-size: 100%;
+  inline-size: 100%;
+  
+  /* Modern text adjustments */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  
+  /* Smooth scrolling with sticky header offset prevention */
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--sui-scroll-padding, 5rem);
+  
+  /* Prevent horizontal screen jiggle on scrollbar mount */
+  scrollbar-gutter: stable;
+  
+  /* Disable pull-to-refresh bounce on root if desired */
+  overscroll-behavior-y: none;
+  
+  /* Fluid interpolation across keyword heights (0 to auto animation support) */
+  interpolate-size: allow-keywords;
+  
+  /* Color scheme integration for browser native UI controls */
+  color-scheme: light dark;
+  
+  /* Font smoothing and typography rendering engines */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* --------------------------------------------------------------------------
+   3. BODY CALIBRATION & FOUNDATION
+   -------------------------------------------------------------------------- */
+body {
+  min-block-size: 100%;
+  min-block-size: 100dvh;
+  min-inline-size: 320px;
+  
+  font-family: var(
+    --sui-font-sans,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji'
+  );
+  
+  font-size: var(--sui-text-base, 1rem);
+  font-weight: 400;
+  line-height: var(--sui-leading-normal, 1.5);
+  letter-spacing: -0.011em;
+  
+  background-color: var(--sui-bg, #ffffff);
+  color: var(--sui-text, #111827);
+  
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   4. ADVANCED TYPOGRAPHY & TEXT BALANCING
+   -------------------------------------------------------------------------- */
+/* Modern line wrapping */
+:where(p, li, dd, figcaption, blockquote) {
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+/* Balanced Headings */
+:where(h1, h2, h3, h4, h5, h6) {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  font-family: var(--sui-font-heading, inherit);
+  font-weight: 700;
+  line-height: var(--sui-leading-tight, 1.2);
+  letter-spacing: -0.025em;
+  color: var(--sui-heading-color, inherit);
+}
+
+:where(h1) { font-size: var(--sui-text-4xl, 2.25rem); }
+:where(h2) { font-size: var(--sui-text-3xl, 1.875rem); }
+:where(h3) { font-size: var(--sui-text-2xl, 1.5rem); }
+:where(h4) { font-size: var(--sui-text-xl, 1.25rem); }
+:where(h5) { font-size: var(--sui-text-lg, 1.125rem); }
+:where(h6) { font-size: var(--sui-text-base, 1rem); }
+
+/* Paragraphs & Text Content */
+:where(p) {
+  margin-block-end: var(--sui-space-3, 0.75rem);
+}
+
+:where(b, strong) {
+  font-weight: 600;
+  color: var(--sui-text-strong, inherit);
+}
+
+:where(small) {
+  font-size: var(--sui-text-xs, 0.75rem);
+}
+
+:where(mark) {
+  background-color: oklch(90% 0.15 95);
+  color: oklch(20% 0.1 95);
+  padding-inline: 0.25em;
+  border-radius: 0.2em;
+}
+
+:where(sub, sup) {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+:where(sub) { bottom: -0.25em; }
+:where(sup) { top: -0.5em; }
+
+/* Quotes */
+:where(blockquote, q) {
+  quotes: none;
+}
+:where(blockquote::before, blockquote::after, q::before, q::after) {
+  content: '';
+  content: none;
+}
+:where(blockquote) {
+  border-inline-start: 3px solid var(--sui-primary-500, currentColor);
+  padding-inline-start: var(--sui-space-4, 1rem);
+  font-style: italic;
+  color: var(--sui-text-muted, inherit);
+}
+
+:where(cite) {
+  font-style: normal;
+}
+
+/* Horizontal Rule */
+:where(hr) {
+  border-top-width: 1px;
+  border-color: var(--sui-border, oklch(0% 0 0 / 0.1));
+  margin-block: var(--sui-space-6, 1.5rem);
+  height: 0;
+  color: inherit;
+  overflow: visible;
+}
+
+/* --------------------------------------------------------------------------
+   5. LISTS & NAVIGATION SEMANTICS
+   -------------------------------------------------------------------------- */
+:where(ul, ol) {
+  list-style: none;
+}
+
+:where(menu) {
+  list-style: none;
+}
+
+:where(dl) {
+  display: grid;
+  gap: var(--sui-space-2, 0.5rem);
+}
+
+:where(dt) {
+  font-weight: 600;
+}
+
+:where(dd) {
+  margin-inline-start: 0;
+}
+
+/* --------------------------------------------------------------------------
+   6. ANCHORS & HYPERLINKS
+   -------------------------------------------------------------------------- */
+:where(a) {
+  color: inherit;
+  text-decoration: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a:not([class])) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--sui-primary-300, currentColor);
+  transition: text-decoration-color 0.2s ease;
+}
+
+:where(a:not([class]):hover) {
+  text-decoration-color: var(--sui-primary-500, currentColor);
+}
+
+/* --------------------------------------------------------------------------
+   7. EMBEDDED MEDIA & GRAPHICS
+   -------------------------------------------------------------------------- */
+:where(img, picture, video, canvas, svg, embed, iframe, object) {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+  vertical-align: middle;
+}
+
+:where(img, video) {
+  height: auto;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
+  shape-margin: 0.75rem;
+}
+
+/* Prevent layout shifts from broken images */
+:where(img[alt]:not([src])) {
+  visibility: hidden;
+}
+
+:where(svg) {
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+:where(iframe) {
+  border: 0;
+}
+
+:where(figure) {
+  margin: 0;
+}
+
+:where(figcaption) {
+  font-size: var(--sui-text-sm, 0.875rem);
+  color: var(--sui-text-muted, inherit);
+  margin-block-start: var(--sui-space-2, 0.5rem);
+}
+
+/* --------------------------------------------------------------------------
+   8. CODE & PREFORMATTED TEXT
+   -------------------------------------------------------------------------- */
+:where(code, kbd, samp, pre) {
+  font-family: var(
+    --sui-font-mono,
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace
+  );
+  font-size: 0.875em;
+  font-feature-settings: "liga" 0;
+}
+
+:where(pre) {
+  overflow-x: auto;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 2;
+  hyphens: none;
+}
+
+:where(kbd) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15em 0.4em;
+  font-size: 0.75em;
+  font-family: inherit;
+  background-color: var(--sui-surface-hover, #f3f4f6);
+  border: 1px solid var(--sui-border, #d1d5db);
+  border-radius: 0.3em;
+  box-shadow: 0 1px 0 1px var(--sui-border, #d1d5db);
+}
+
+/* --------------------------------------------------------------------------
+   9. INTERACTIVE FORMS & FIELD NORMALIZATION
+   -------------------------------------------------------------------------- */
+:where(input, button, textarea, select) {
+  font: inherit;
+  font-size: 100%;
+  line-height: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Button Normalization */
+:where(button, [type='button'], [type='reset'], [type='submit']) {
+  appearance: button;
+  -webkit-appearance: button;
+  cursor: pointer;
+  text-transform: none;
+  user-select: none;
+}
+
+:where(button::-moz-focus-inner, [type='button']::-moz-focus-inner, [type='reset']::-moz-focus-inner, [type='submit']::-moz-focus-inner) {
+  border-style: none;
+  padding: 0;
+}
+
+:where(button:-moz-focusring, [type='button']:-moz-focusring, [type='reset']:-moz-focusring, [type='submit']:-moz-focusring) {
+  outline: 1px dotted ButtonText;
+}
+
+/* Input & Form Cleanups */
+:where(input) {
+  overflow: visible;
+}
+
+:where(input[type='text'], input[type='email'], input[type='url'], input[type='password'], input[type='number'], input[type='date'], input[type='datetime-local'], input[type='month'], input[type='search'], input[type='tel'], input[type='time'], input[type='week'], textarea, select) {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+:where(textarea) {
+  overflow: auto;
+  resize: vertical;
+  vertical-align: top;
+}
+
+/* Search input decoration stripping */
+:where(input[type='search']) {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+:where(input[type='search']::-webkit-search-decoration, input[type='search']::-webkit-search-cancel-button) {
+  -webkit-appearance: none;
+}
+
+/* Number input spinner removal for ultra clean UI */
+:where(input[type='number']::-webkit-inner-spin-button, input[type='number']::-webkit-outer-spin-button) {
+  height: auto;
+  margin: 0;
+  -webkit-appearance: none;
+}
+:where(input[type='number']) {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Color input normalization */
+:where(input[type='color']) {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  padding: 0;
+  border-radius: var(--sui-radius-md, 0.5rem);
+  border: 1px solid var(--sui-border, #e5e7eb);
+  cursor: pointer;
+}
+:where(input[type='color']::-webkit-color-swatch-wrapper) {
+  padding: 0;
+}
+:where(input[type='color']::-webkit-color-swatch) {
+  border: none;
+  border-radius: inherit;
+}
+
+/* File input button reset */
+:where(input[type='file']) {
+  cursor: pointer;
+}
+:where(input[type='file']::file-selector-button) {
+  font: inherit;
+  font-weight: 500;
+  background: var(--sui-surface-hover, #f3f4f6);
+  border: 1px solid var(--sui-border, #d1d5db);
+  border-radius: var(--sui-radius-md, 0.375rem);
+  padding: 0.375rem 0.75rem;
+  margin-inline-end: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+:where(input[type='file']::file-selector-button:hover) {
+  background: var(--sui-border, #e5e7eb);
+}
+
+/* Range input base normalize */
+:where(input[type='range']) {
+  appearance: none;
+  -webkit-appearance: none;
+  inline-size: 100%;
+  background: transparent;
+  cursor: pointer;
+}
+:where(input[type='range']:focus) {
+  outline: none;
+}
+
+/* Native Select Normalization */
+:where(select) {
+  word-wrap: normal;
+  cursor: pointer;
+}
+:where(select::-ms-expand) {
+  display: none;
+}
+
+/* Fieldset & Legend */
+:where(fieldset) {
+  min-inline-size: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+:where(legend) {
+  color: inherit;
+  display: table;
+  max-inline-size: 100%;
+  padding: 0;
+  white-space: normal;
+}
+
+/* Progress & Meter elements */
+:where(progress, meter) {
+  vertical-align: baseline;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Form Placeholders */
+:where(input::placeholder, textarea::placeholder) {
+  color: var(--sui-text-muted, oklch(50% 0.02 var(--sui-brand-hue, 250)));
+  opacity: 0.7;
+}
+
+/* --------------------------------------------------------------------------
+   10. TABLES & DATA MATRICES
+   -------------------------------------------------------------------------- */
+:where(table) {
+  text-indent: 0;
+  border-color: inherit;
+  border-collapse: collapse;
+  border-spacing: 0;
+  inline-size: 100%;
+  caption-side: bottom;
+}
+
+:where(th) {
+  text-align: inherit;
+  font-weight: 600;
+}
+
+:where(td, th) {
+  padding: 0;
+  vertical-align: middle;
+}
+
+:where(caption) {
+  text-align: left;
+  padding-block: var(--sui-space-2, 0.5rem);
+  font-size: var(--sui-text-sm, 0.875rem);
+  color: var(--sui-text-muted, inherit);
+}
+
+/* --------------------------------------------------------------------------
+   11. ACCORDIONS, DIALOGS & OVERLAYS
+   -------------------------------------------------------------------------- */
+:where(details) {
+  display: block;
+}
+
+:where(summary) {
+  display: list-item;
+  cursor: pointer;
+  user-select: none;
+}
+
+:where(summary::-webkit-details-marker) {
+  display: none;
+}
+
+:where(dialog) {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  border: none;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
+:where(dialog:not([open])) {
+  display: none;
+}
+
+:where(dialog::backdrop) {
+  background: oklch(0% 0 0 / 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* --------------------------------------------------------------------------
+   12. LUXURY SELECTION & NATIVE SCROLLBARS
+   -------------------------------------------------------------------------- */
+/* High-End Selection Highlighter using OKLCH */
+::selection {
+  background-color: oklch(from var(--sui-primary-500, #3b82f6) l c h / 0.25);
+  color: inherit;
+}
+
+/* WebKit Custom Modern Scrollbar */
+::-webkit-scrollbar {
+  inline-size: 8px;
+  block-size: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--sui-border, oklch(0% 0 0 / 0.15));
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--sui-text-muted, oklch(0% 0 0 / 0.3));
+}
+
+/* Firefox standard scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sui-border, oklch(0% 0 0 / 0.15)) transparent;
+}
+
+/* --------------------------------------------------------------------------
+   13. ACCESSIBILITY, FOCUS & INERT ENGINE
+   -------------------------------------------------------------------------- */
+/* Focus-Visible Glow Ring with Zero Mouse Intrusion */
+:where(:focus) {
+  outline: none;
+}
+
+:where(:focus-visible) {
+  outline: 2px solid var(--sui-primary-500, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* Hide content reliably for screen readers */
+.sui-sr-only,
+:where([hidden]) {
+  position: absolute !important;
+  inline-size: 1px !important;
+  block-size: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+:where([hidden]:not([hidden='until-found'])) {
+  display: none !important;
+}
+
+:where([inert], [inert] *) {
+  pointer-events: none !important;
+  cursor: default !important;
+  user-select: none !important;
+  opacity: 0.5;
+}
+
+/* Disable drag ghosts for images */
+:where(img) {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   14. SYSTEM ADAPTATION & PREFERENCE OVERRIDES
+   -------------------------------------------------------------------------- */
+/* High Contrast Mode (Windows High Contrast / forced-colors) */
+@media (forced-colors: active) {
+  :where(:focus-visible) {
+    outline: 2px solid Highlight;
+  }
+  
+  :where(button, input, select, textarea) {
+    border: 1px solid ButtonText;
+  }
+}
+
+/* Reduced Motion Calibration */
+@media (prefers-reduced-motion: reduce) {
+  :where(html:focus-within) {
+    scroll-behavior: auto;
+  }
+  
+  :where(*, *::before, *::after) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   15. PRINT ENVIRONMENT NORMALIZATION
+   -------------------------------------------------------------------------- */
+@media print {
+  :where(*, *::before, *::after) {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  :where(html) {
+    font-size: 12pt;
+    line-height: 1.3;
+  }
+  
+  :where(body) {
+    min-block-size: auto;
+  }
+  
+  :where(a, a:visited) {
+    text-decoration: underline;
+  }
+  
+  :where(a[href]::after) {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    font-weight: normal;
+  }
+  
+  /* Suppress links that point to internal anchors */
+  :where(a[href^="#"]::after, a[href^="javascript:"]::after) {
+    content: "";
+  }
+  
+  :where(pre, blockquote) {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  :where(thead) {
+    display: table-header-group;
+  }
+  
+  :where(tr, img) {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  :where(p, h2, h3) {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  :where(h2, h3) {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+}
+
+/* Layer: tokens.css */
+:root {
+  /* Change this Hue (0-360) to instantly rebrand the framework */
+  --sui-brand-hue: 250; 
+  
+  /* Base OKLCH Palette */
+  --sui-primary-50: oklch(95% 0.05 var(--sui-brand-hue));
+  --sui-primary-500: oklch(60% 0.2 var(--sui-brand-hue));
+  --sui-primary-600: oklch(50% 0.2 var(--sui-brand-hue));
+  --sui-primary-900: oklch(25% 0.1 var(--sui-brand-hue));
+  
+  --sui-surface: oklch(100% 0 0);
+  --sui-surface-hover: oklch(98% 0.01 var(--sui-brand-hue));
+  --sui-border: oklch(90% 0.02 var(--sui-brand-hue));
+  
+  /* Light Mode */
+  --sui-bg: oklch(98% 0.01 var(--sui-brand-hue));
+  --sui-text: oklch(20% 0.05 var(--sui-brand-hue));
+  --sui-text-muted: oklch(45% 0.05 var(--sui-brand-hue));
+
+  /* Fluid Typography (Scales automatically) */
+  --sui-text-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
+  --sui-text-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
+  --sui-text-lg: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
+  --sui-text-xl: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
+
+  /* Spacing */
+  --sui-radius-md: 0.5rem;
+  --sui-radius-lg: 1rem;
+  --sui-space-2: 0.5rem;
+  --sui-space-4: 1rem;
+  --sui-space-6: 1.5rem;
+  
+  /* Shadows */
+  --sui-shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.05);
+  --sui-shadow-md: 0 4px 6px -1px oklch(0% 0 0 / 0.1);
+}
+
+/* Automatic Dark Mode Toggle */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sui-surface: oklch(20% 0.02 var(--sui-brand-hue));
+    --sui-surface-hover: oklch(25% 0.02 var(--sui-brand-hue));
+    --sui-border: oklch(30% 0.02 var(--sui-brand-hue));
+    --sui-bg: oklch(15% 0.02 var(--sui-brand-hue));
+    --sui-text: oklch(98% 0.01 var(--sui-brand-hue));
+    --sui-text-muted: oklch(75% 0.02 var(--sui-brand-hue));
+  }
+}
+
+/* ==========================================================================
+   SUI.CSS - DESIGN TOKENS ARCHITECTURE (ULTRA PRO MAX)
+   Perceptual OKLCH Color Engine, Fluid Mathematical Scales & Semantic Tokens
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     1. MASTER HARMONIC SEEDS (Change these 5 values to rebrand the entire OS)
+     ------------------------------------------------------------------------ */
+  --sui-hue-brand: 255;       /* Dynamic Royal Indigo/Violet (0 - 360) */
+  --sui-hue-accent: 310;      /* Vibrant Magenta/Pink Accent */
+  --sui-hue-success: 145;     /* Emerald Green */
+  --sui-hue-warning: 75;      /* Amber Gold */
+  --sui-hue-danger: 25;       /* Crimson Red */
+  --sui-hue-info: 215;        /* Cerulean Blue */
+
+  /* Base Chroma Saturation Tuning */
+  --sui-chroma-base: 0.18;
+  --sui-chroma-neutral: 0.015;
+
+  /* ------------------------------------------------------------------------
+     2. PERCEPTUALLY UNIFORM COLOR SCALES (OKLCH Native Model)
+     ------------------------------------------------------------------------ */
+  /* Primary Brand Scale */
+  --sui-color-primary-50:  oklch(97.5% calc(var(--sui-chroma-base) * 0.15) var(--sui-hue-brand));
+  --sui-color-primary-100: oklch(93.5% calc(var(--sui-chroma-base) * 0.30) var(--sui-hue-brand));
+  --sui-color-primary-200: oklch(87.0% calc(var(--sui-chroma-base) * 0.50) var(--sui-hue-brand));
+  --sui-color-primary-300: oklch(78.0% calc(var(--sui-chroma-base) * 0.75) var(--sui-hue-brand));
+  --sui-color-primary-400: oklch(69.0% calc(var(--sui-chroma-base) * 0.90) var(--sui-hue-brand));
+  --sui-color-primary-500: oklch(60.0% var(--sui-chroma-base) var(--sui-hue-brand)); /* Core Brand */
+  --sui-color-primary-600: oklch(52.0% calc(var(--sui-chroma-base) * 0.95) var(--sui-hue-brand));
+  --sui-color-primary-700: oklch(43.0% calc(var(--sui-chroma-base) * 0.85) var(--sui-hue-brand));
+  --sui-color-primary-800: oklch(34.0% calc(var(--sui-chroma-base) * 0.70) var(--sui-hue-brand));
+  --sui-color-primary-900: oklch(25.0% calc(var(--sui-chroma-base) * 0.55) var(--sui-hue-brand));
+  --sui-color-primary-950: oklch(17.0% calc(var(--sui-chroma-base) * 0.40) var(--sui-hue-brand));
+
+  /* Secondary Accent Scale */
+  --sui-color-accent-50:  oklch(97.5% 0.03 var(--sui-hue-accent));
+  --sui-color-accent-100: oklch(93.0% 0.06 var(--sui-hue-accent));
+  --sui-color-accent-300: oklch(77.0% 0.15 var(--sui-hue-accent));
+  --sui-color-accent-500: oklch(62.0% 0.22 var(--sui-hue-accent));
+  --sui-color-accent-700: oklch(44.0% 0.18 var(--sui-hue-accent));
+  --sui-color-accent-900: oklch(26.0% 0.12 var(--sui-hue-accent));
+
+  /* Success Semantic Scale */
+  --sui-color-success-50:  oklch(98.0% 0.03 var(--sui-hue-success));
+  --sui-color-success-100: oklch(94.0% 0.07 var(--sui-hue-success));
+  --sui-color-success-300: oklch(80.0% 0.14 var(--sui-hue-success));
+  --sui-color-success-500: oklch(62.0% 0.19 var(--sui-hue-success));
+  --sui-color-success-600: oklch(53.0% 0.18 var(--sui-hue-success));
+  --sui-color-success-700: oklch(43.0% 0.15 var(--sui-hue-success));
+  --sui-color-success-900: oklch(24.0% 0.08 var(--sui-hue-success));
+
+  /* Warning Semantic Scale */
+  --sui-color-warning-50:  oklch(98.0% 0.04 var(--sui-hue-warning));
+  --sui-color-warning-100: oklch(94.0% 0.09 var(--sui-hue-warning));
+  --sui-color-warning-300: oklch(84.0% 0.17 var(--sui-hue-warning));
+  --sui-color-warning-500: oklch(72.0% 0.20 var(--sui-hue-warning));
+  --sui-color-warning-600: oklch(61.0% 0.18 var(--sui-hue-warning));
+  --sui-color-warning-700: oklch(48.0% 0.15 var(--sui-hue-warning));
+  --sui-color-warning-900: oklch(28.0% 0.09 var(--sui-hue-warning));
+
+  /* Danger / Error Semantic Scale */
+  --sui-color-danger-50:  oklch(97.5% 0.03 var(--sui-hue-danger));
+  --sui-color-danger-100: oklch(93.0% 0.07 var(--sui-hue-danger));
+  --sui-color-danger-300: oklch(78.0% 0.15 var(--sui-hue-danger));
+  --sui-color-danger-500: oklch(60.0% 0.22 var(--sui-hue-danger));
+  --sui-color-danger-600: oklch(52.0% 0.21 var(--sui-hue-danger));
+  --sui-color-danger-700: oklch(42.0% 0.18 var(--sui-hue-danger));
+  --sui-color-danger-900: oklch(25.0% 0.11 var(--sui-hue-danger));
+
+  /* Neutral Tone Scale (Harmonized to Brand Hue) */
+  --sui-color-neutral-0:   oklch(100% 0 0);
+  --sui-color-neutral-50:  oklch(98.5% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-100: oklch(95.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-200: oklch(90.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-300: oklch(82.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-400: oklch(70.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-500: oklch(56.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-600: oklch(44.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-700: oklch(32.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-800: oklch(22.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-900: oklch(14.0% var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-950: oklch(8.5%  var(--sui-chroma-neutral) var(--sui-hue-brand));
+  --sui-color-neutral-1000:oklch(0% 0 0);
+
+  /* ------------------------------------------------------------------------
+     3. LIGHT MODE CONTEXTUAL TOKENS (Default Root)
+     ------------------------------------------------------------------------ */
+  --sui-bg: var(--sui-color-neutral-50);
+  --sui-bg-subtle: var(--sui-color-neutral-100);
+  --sui-bg-canvas: var(--sui-color-neutral-0);
+
+  /* Surfaces */
+  --sui-surface: var(--sui-color-neutral-0);
+  --sui-surface-hover: var(--sui-color-neutral-50);
+  --sui-surface-active: var(--sui-color-neutral-100);
+  --sui-surface-raised: var(--sui-color-neutral-0);
+  --sui-surface-overlay: oklch(100% 0 0 / 0.85);
+
+  /* Borders & Dividers */
+  --sui-border: var(--sui-color-neutral-200);
+  --sui-border-subtle: var(--sui-color-neutral-100);
+  --sui-border-strong: var(--sui-color-neutral-300);
+  --sui-border-interactive: var(--sui-color-primary-300);
+
+  /* Text & Typography Contrast */
+  --sui-text: var(--sui-color-neutral-950);
+  --sui-text-strong: var(--sui-color-neutral-1000);
+  --sui-text-muted: var(--sui-color-neutral-600);
+  --sui-text-faint: var(--sui-color-neutral-400);
+  --sui-text-inverse: var(--sui-color-neutral-0);
+  --sui-text-link: var(--sui-color-primary-600);
+
+  /* Interaction States */
+  --sui-ring: oklch(from var(--sui-color-primary-500) l c h / 0.35);
+  --sui-overlay-backdrop: oklch(0% 0 0 / 0.45);
+
+  /* Primary Semantic Shorthands */
+  --sui-primary-50: var(--sui-color-primary-50);
+  --sui-primary-100: var(--sui-color-primary-100);
+  --sui-primary-500: var(--sui-color-primary-500);
+  --sui-primary-600: var(--sui-color-primary-600);
+  --sui-primary-900: var(--sui-color-primary-900);
+
+  /* ------------------------------------------------------------------------
+     4. ATMOSPHERIC GLASS & FROST TOKENS
+     ------------------------------------------------------------------------ */
+  --sui-glass-bg: oklch(100% 0 0 / 0.68);
+  --sui-glass-border: oklch(100% 0 0 / 0.35);
+  --sui-glass-blur: 16px;
+  --sui-glass-saturate: 180%;
+
+  /* ------------------------------------------------------------------------
+     5. FLUID MATHEMATICAL TYPOGRAPHY (Continuous Viewport Interpolation)
+     ------------------------------------------------------------------------ */
+  /* Type Scale Ratio ~ 1.25 (Major Third) to 1.333 (Perfect Fourth) */
+  --sui-text-2xs: clamp(0.68rem, 0.64rem + 0.18vw, 0.75rem);
+  --sui-text-xs:  clamp(0.78rem, 0.73rem + 0.24vw, 0.875rem);
+  --sui-text-sm:  clamp(0.88rem, 0.83rem + 0.28vw, 0.975rem);
+  --sui-text-base:clamp(1.00rem, 0.94rem + 0.32vw, 1.125rem);
+  --sui-text-md:  clamp(1.15rem, 1.07rem + 0.41vw, 1.31rem);
+  --sui-text-lg:  clamp(1.32rem, 1.21rem + 0.55vw, 1.55rem);
+  --sui-text-xl:  clamp(1.52rem, 1.37rem + 0.74vw, 1.85rem);
+  --sui-text-2xl: clamp(1.75rem, 1.55rem + 1.02vw, 2.22rem);
+  --sui-text-3xl: clamp(2.05rem, 1.76rem + 1.45vw, 2.75rem);
+  --sui-text-4xl: clamp(2.45rem, 2.02rem + 2.15vw, 3.50rem);
+  --sui-text-hero:clamp(3.00rem, 2.35rem + 3.25vw, 4.75rem);
+
+  /* Font Families */
+  --sui-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --sui-font-heading: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  --sui-font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+
+  /* Line Heights */
+  --sui-leading-none: 1.0;
+  --sui-leading-tight: 1.15;
+  --sui-leading-snug: 1.3;
+  --sui-leading-normal: 1.5;
+  --sui-leading-relaxed: 1.7;
+  --sui-leading-loose: 2.0;
+
+  /* Letter Spacing */
+  --sui-tracking-tighter: -0.04em;
+  --sui-tracking-tight: -0.02em;
+  --sui-tracking-normal: -0.01em;
+  --sui-tracking-wide: 0.03em;
+  --sui-tracking-widest: 0.08em;
+
+  /* ------------------------------------------------------------------------
+     6. SPACING SCALE (Harmonic 4px Baseline)
+     ------------------------------------------------------------------------ */
+  --sui-space-0: 0px;
+  --sui-space-px: 1px;
+  --sui-space-0-5: 0.125rem;  /* 2px */
+  --sui-space-1: 0.25rem;     /* 4px */
+  --sui-space-1-5: 0.375rem;  /* 6px */
+  --sui-space-2: 0.5rem;      /* 8px */
+  --sui-space-2-5: 0.625rem;  /* 10px */
+  --sui-space-3: 0.75rem;     /* 12px */
+  --sui-space-4: 1.0rem;      /* 16px */
+  --sui-space-5: 1.25rem;     /* 20px */
+  --sui-space-6: 1.5rem;      /* 24px */
+  --sui-space-8: 2.0rem;      /* 32px */
+  --sui-space-10: 2.5rem;     /* 40px */
+  --sui-space-12: 3.0rem;     /* 48px */
+  --sui-space-16: 4.0rem;     /* 64px */
+  --sui-space-20: 5.0rem;     /* 80px */
+  --sui-space-24: 6.0rem;     /* 96px */
+
+  /* ------------------------------------------------------------------------
+     7. RADII & GEOMETRY TOKENS
+     ------------------------------------------------------------------------ */
+  --sui-radius-none: 0px;
+  --sui-radius-xs: 0.25rem;   /* 4px */
+  --sui-radius-sm: 0.375rem;  /* 6px */
+  --sui-radius-md: 0.5rem;    /* 8px */
+  --sui-radius-lg: 0.75rem;   /* 12px */
+  --sui-radius-xl: 1.0rem;    /* 16px */
+  --sui-radius-2xl: 1.5rem;   /* 24px */
+  --sui-radius-3xl: 2.0rem;   /* 32px */
+  --sui-radius-full: 9999px;
+
+  /* ------------------------------------------------------------------------
+     8. ELEVATION, PHYSICAL SHADOWS & VOLUMETRIC GLOWS
+     ------------------------------------------------------------------------ */
+  --sui-shadow-xs: 0 1px 2px 0 oklch(0% 0 0 / 0.04);
+  --sui-shadow-sm: 0 1px 3px 0 oklch(0% 0 0 / 0.08), 0 1px 2px -1px oklch(0% 0 0 / 0.08);
+  --sui-shadow-md: 0 4px 8px -2px oklch(0% 0 0 / 0.08), 0 2px 4px -2px oklch(0% 0 0 / 0.06);
+  --sui-shadow-lg: 0 12px 18px -4px oklch(0% 0 0 / 0.10), 0 4px 7px -2px oklch(0% 0 0 / 0.06);
+  --sui-shadow-xl: 0 20px 30px -8px oklch(0% 0 0 / 0.12), 0 8px 12px -4px oklch(0% 0 0 / 0.06);
+  --sui-shadow-2xl:0 30px 60px -15px oklch(0% 0 0 / 0.22);
+  --sui-shadow-inner: inset 0 2px 4px 0 oklch(0% 0 0 / 0.06);
+
+  /* Color-Bleed Aura Glows */
+  --sui-glow-primary: 0 0 24px -4px oklch(from var(--sui-color-primary-500) l c h / 0.45);
+  --sui-glow-accent:  0 0 24px -4px oklch(from var(--sui-color-accent-500) l c h / 0.45);
+  --sui-glow-danger:  0 0 24px -4px oklch(from var(--sui-color-danger-500) l c h / 0.45);
+
+  /* ------------------------------------------------------------------------
+     9. MOTION ARCHITECTURE & SPRING EASINGS
+     ------------------------------------------------------------------------ */
+  --sui-ease-standard: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --sui-ease-smooth:   cubic-bezier(0.16, 1, 0.3, 1);
+  --sui-ease-spring:   cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --sui-ease-snappy:   cubic-bezier(0.4, 0, 0.2, 1);
+  --sui-ease-in:       cubic-bezier(0.4, 0, 1, 1);
+  --sui-ease-out:      cubic-bezier(0, 0, 0.2, 1);
+
+  --sui-duration-instant: 75ms;
+  --sui-duration-fast:    150ms;
+  --sui-duration-normal:  250ms;
+  --sui-duration-slow:    400ms;
+  --sui-duration-deliberate: 700ms;
+
+  /* ------------------------------------------------------------------------
+     10. Z-INDEX SYSTEM HIERARCHY
+     ------------------------------------------------------------------------ */
+  --sui-z-sink: -1;
+  --sui-z-base: 0;
+  --sui-z-dock: 10;
+  --sui-z-sticky: 100;
+  --sui-z-banner: 200;
+  --sui-z-overlay: 300;
+  --sui-z-modal: 500;
+  --sui-z-popover: 700;
+  --sui-z-tooltip: 900;
+  --sui-z-toast: 1000;
+  --sui-z-maximum: 9999;
+}
+
+/* ==========================================================================
+   DARK MODE CONTEXTUAL TOKENS (Automatic media query & Manual data-theme)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --sui-bg: var(--sui-color-neutral-950);
+    --sui-bg-subtle: var(--sui-color-neutral-900);
+    --sui-bg-canvas: var(--sui-color-neutral-1000);
+
+    /* Dark Surfaces */
+    --sui-surface: var(--sui-color-neutral-900);
+    --sui-surface-hover: var(--sui-color-neutral-800);
+    --sui-surface-active: var(--sui-color-neutral-700);
+    --sui-surface-raised: var(--sui-color-neutral-800);
+    --sui-surface-overlay: oklch(14% var(--sui-chroma-neutral) var(--sui-hue-brand) / 0.88);
+
+    /* Dark Borders */
+    --sui-border: var(--sui-color-neutral-800);
+    --sui-border-subtle: var(--sui-color-neutral-900);
+    --sui-border-strong: var(--sui-color-neutral-700);
+    --sui-border-interactive: var(--sui-color-primary-600);
+
+    /* Dark Text */
+    --sui-text: var(--sui-color-neutral-100);
+    --sui-text-strong: var(--sui-color-neutral-0);
+    --sui-text-muted: var(--sui-color-neutral-400);
+    --sui-text-faint: var(--sui-color-neutral-600);
+    --sui-text-inverse: var(--sui-color-neutral-950);
+    --sui-text-link: var(--sui-color-primary-400);
+
+    /* Dark States & Overlays */
+    --sui-ring: oklch(from var(--sui-color-primary-500) l c h / 0.45);
+    --sui-overlay-backdrop: oklch(0% 0 0 / 0.75);
+
+    /* Dark Mode Glass */
+    --sui-glass-bg: oklch(14% var(--sui-chroma-neutral) var(--sui-hue-brand) / 0.65);
+    --sui-glass-border: oklch(100% 0 0 / 0.12);
+
+    /* Shadows in Dark (Deeper with ambient occlusion) */
+    --sui-shadow-xs: 0 1px 2px 0 oklch(0% 0 0 / 0.35);
+    --sui-shadow-sm: 0 1px 3px 0 oklch(0% 0 0 / 0.45), 0 1px 2px -1px oklch(0% 0 0 / 0.45);
+    --sui-shadow-md: 0 4px 8px -2px oklch(0% 0 0 / 0.55), 0 2px 4px -2px oklch(0% 0 0 / 0.4);
+    --sui-shadow-lg: 0 12px 20px -4px oklch(0% 0 0 / 0.65), 0 4px 8px -2px oklch(0% 0 0 / 0.45);
+    --sui-shadow-xl: 0 22px 35px -8px oklch(0% 0 0 / 0.75), 0 8px 14px -4px oklch(0% 0 0 / 0.55);
+    --sui-shadow-2xl:0 35px 70px -15px oklch(0% 0 0 / 0.90);
+  }
+}
+
+/* Explicit Runtime Override [data-theme='dark'] */
+[data-theme='dark'] {
+  --sui-bg: var(--sui-color-neutral-950);
+  --sui-bg-subtle: var(--sui-color-neutral-900);
+  --sui-bg-canvas: var(--sui-color-neutral-1000);
+  --sui-surface: var(--sui-color-neutral-900);
+  --sui-surface-hover: var(--sui-color-neutral-800);
+  --sui-surface-active: var(--sui-color-neutral-700);
+  --sui-surface-raised: var(--sui-color-neutral-800);
+  --sui-surface-overlay: oklch(14% var(--sui-chroma-neutral) var(--sui-hue-brand) / 0.88);
+  --sui-border: var(--sui-color-neutral-800);
+  --sui-border-subtle: var(--sui-color-neutral-900);
+  --sui-border-strong: var(--sui-color-neutral-700);
+  --sui-border-interactive: var(--sui-color-primary-600);
+  --sui-text: var(--sui-color-neutral-100);
+  --sui-text-strong: var(--sui-color-neutral-0);
+  --sui-text-muted: var(--sui-color-neutral-400);
+  --sui-text-faint: var(--sui-color-neutral-600);
+  --sui-text-inverse: var(--sui-color-neutral-950);
+  --sui-text-link: var(--sui-color-primary-400);
+  --sui-ring: oklch(from var(--sui-color-primary-500) l c h / 0.45);
+  --sui-overlay-backdrop: oklch(0% 0 0 / 0.75);
+  --sui-glass-bg: oklch(14% var(--sui-chroma-neutral) var(--sui-hue-brand) / 0.65);
+  --sui-glass-border: oklch(100% 0 0 / 0.12);
+}
+
+/* Explicit Runtime Override [data-theme='oled'] (True Pure Black) */
+[data-theme='oled'] {
+  --sui-bg: #000000;
+  --sui-bg-subtle: #09090b;
+  --sui-bg-canvas: #000000;
+  --sui-surface: #0a0a0c;
+  --sui-surface-hover: #16161a;
+  --sui-surface-active: #232328;
+  --sui-surface-raised: #121215;
+  --sui-border: #222228;
+  --sui-border-subtle: #141418;
+  --sui-border-strong: #33333e;
+  --sui-text: #ededed;
+  --sui-text-strong: #ffffff;
+  --sui-text-muted: #8a8a93;
+}
+
+:root {
+  /* Master Brand Color */
+  --sui-brand-hue: 250;
+  --sui-color-primary-500: oklch(60% 0.2 var(--sui-brand-hue));
+  --sui-color-accent-500: oklch(65% 0.22 calc(var(--sui-brand-hue) + 60));
+
+  /* Dynamic Color Mixing Tokens */
+  --sui-primary-hover: color-mix(in oklch, var(--sui-color-primary-500) 85%, black);
+  --sui-primary-active: color-mix(in oklch, var(--sui-color-primary-500) 75%, black);
+  --sui-primary-subtle: color-mix(in oklch, var(--sui-color-primary-500) 12%, transparent);
+  --sui-primary-border: color-mix(in oklch, var(--sui-color-primary-500) 30%, transparent);
+
+  /* Dynamic Contrast Inversion */
+  --sui-text-contrast: color-mix(in oklch, var(--sui-color-primary-500) 5%, white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sui-primary-hover: color-mix(in oklch, var(--sui-color-primary-500) 85%, white);
+    --sui-primary-active: color-mix(in oklch, var(--sui-color-primary-500) 70%, white);
+    --sui-primary-subtle: color-mix(in oklch, var(--sui-color-primary-500) 18%, transparent);
+  }
+}
+
+/* Layer: layout.css */
+/* ==========================================================================
+   SUI.CSS - LUXURY LAYOUT ARCHITECTURE (ULTRA PRO MAX)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VIEWPORT & FLUID CONTAINERS
+   -------------------------------------------------------------------------- */
+.sui-container {
+  /* Logical properties adapt automatically to LTR/RTL reading modes */
+  inline-size: 100%;
+  max-inline-size: var(--sui-max-width, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--sui-space-6);
+  position: relative;
+}
+
+.sui-container-fluid {
+  inline-size: 100%;
+  padding-inline: var(--sui-space-6);
+  position: relative;
+}
+
+.sui-container-reading {
+  inline-size: 100%;
+  max-inline-size: 65ch; /* Optimal reading width for typography */
+  margin-inline: auto;
+  padding-inline: var(--sui-space-6);
+}
+
+/* Container Queries Registration - The modern replacement for Media Queries */
+.sui-cq { container-type: inline-size; }
+.sui-cq-normal { container-type: normal; }
+
+/* --------------------------------------------------------------------------
+   2. THE GRID ENGINE (Subgrid + Intrinsic Sizing)
+   -------------------------------------------------------------------------- */
+.sui-grid { display: grid; }
+.sui-inline-grid { display: inline-grid; }
+
+/* Auto-fitting fluid grid (No media queries required) */
+.sui-grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--sui-min-col, 300px)), 1fr));
+  gap: var(--sui-space-6);
+}
+
+.sui-grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--sui-min-col, 300px)), 1fr));
+  gap: var(--sui-space-6);
+}
+
+/* 12-Column Main Layout Grid */
+.sui-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--sui-space-4);
+  align-items: start;
+}
+
+/* CSS Subgrid - Inherit parent's grid tracks */
+.sui-subgrid {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+  gap: inherit;
+}
+
+/* Spanning System */
+.sui-col-1 { grid-column: span 1 / span 1; }
+.sui-col-2 { grid-column: span 2 / span 2; }
+.sui-col-3 { grid-column: span 3 / span 3; }
+.sui-col-4 { grid-column: span 4 / span 4; }
+.sui-col-5 { grid-column: span 5 / span 5; }
+.sui-col-6 { grid-column: span 6 / span 6; }
+.sui-col-7 { grid-column: span 7 / span 7; }
+.sui-col-8 { grid-column: span 8 / span 8; }
+.sui-col-9 { grid-column: span 9 / span 9; }
+.sui-col-10 { grid-column: span 10 / span 10; }
+.sui-col-11 { grid-column: span 11 / span 11; }
+.sui-col-12 { grid-column: 1 / -1; }
+
+/* Column Starting Positions */
+.sui-start-1 { grid-column-start: 1; }
+.sui-start-2 { grid-column-start: 2; }
+.sui-start-3 { grid-column-start: 3; }
+.sui-start-4 { grid-column-start: 4; }
+.sui-start-auto { grid-column-start: auto; }
+
+/* Fixed & Content-based Grid Columns */
+.sui-grid-sidebar {
+  display: grid;
+  grid-template-columns: var(--sui-sidebar-w, 280px) minmax(0, 1fr);
+  gap: var(--sui-space-6);
+}
+
+.sui-grid-content-first {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  gap: var(--sui-space-4);
+}
+
+.sui-grid-content-last {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  gap: var(--sui-space-4);
+}
+
+/* --------------------------------------------------------------------------
+   3. RESPONSIVE GRID BEHAVIORS (Container Query Driven)
+   -------------------------------------------------------------------------- */
+/* When placed inside a .sui-cq, these columns collapse if the container is tight */
+@container (max-width: 768px) {
+  .sui-col-4, .sui-col-6, .sui-col-8, .sui-col-9 {
+    grid-column: 1 / -1; /* Full width */
+  }
+  .sui-grid-sidebar {
+    grid-template-columns: 1fr; /* Stacks vertically */
+  }
+}
+
+@container (max-width: 480px) {
+  .sui-col-3, .sui-col-2 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Standard Media Query Fallbacks (Viewport Level) */
+@media (max-width: 992px) {
+  .sui-col-lg-12 { grid-column: 1 / -1; }
+  .sui-grid-sidebar { grid-template-columns: var(--sui-sidebar-w, 240px) minmax(0, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .sui-col-md-12 { grid-column: 1 / -1; }
+  .sui-row { gap: var(--sui-space-6); }
+  .sui-grid-sidebar { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 576px) {
+  .sui-col-sm-12 { grid-column: 1 / -1; }
+}
+
+/* --------------------------------------------------------------------------
+   4. FLEXBOX & ALIGNMENT PRIMITIVES (One-Dimensional Engine)
+   -------------------------------------------------------------------------- */
+.sui-flex { display: flex; }
+.sui-inline-flex { display: inline-flex; }
+
+/* Directions */
+.sui-flex-row { flex-direction: row; }
+.sui-flex-row-rev { flex-direction: row-reverse; }
+.sui-flex-col { flex-direction: column; }
+.sui-flex-col-rev { flex-direction: column-reverse; }
+
+/* Wrapping */
+.sui-flex-wrap { flex-wrap: wrap; }
+.sui-flex-wrap-rev { flex-wrap: wrap-reverse; }
+.sui-flex-nowrap { flex-wrap: nowrap; }
+
+/* The fix for Flexbox content overflow */
+.sui-min-w-0 { min-width: 0; }
+.sui-min-h-0 { min-height: 0; }
+
+/* Flex Sizing */
+.sui-flex-1 { flex: 1 1 0%; min-width: 0; } /* Standard flex fill */
+.sui-flex-auto { flex: 1 1 auto; }
+.sui-flex-none { flex: 0 0 auto; } /* Rigid size */
+.sui-grow { flex-grow: 1; min-width: 0; }
+.sui-grow-0 { flex-grow: 0; }
+.sui-shrink { flex-shrink: 1; }
+.sui-shrink-0 { flex-shrink: 0; }
+
+/* Main Axis Alignment (Justify) */
+.sui-justify-start { justify-content: flex-start; }
+.sui-justify-end { justify-content: flex-end; }
+.sui-justify-center { justify-content: center; }
+.sui-justify-between { justify-content: space-between; }
+.sui-justify-around { justify-content: space-around; }
+.sui-justify-evenly { justify-content: space-evenly; }
+
+/* Cross Axis Alignment (Items) */
+.sui-items-start { align-items: flex-start; }
+.sui-items-end { align-items: flex-end; }
+.sui-items-center { align-items: center; }
+.sui-items-baseline { align-items: baseline; }
+.sui-items-stretch { align-items: stretch; }
+
+/* Individual Cross Axis Alignment (Self) */
+.sui-self-auto { align-self: auto; }
+.sui-self-start { align-self: flex-start; }
+.sui-self-end { align-self: flex-end; }
+.sui-self-center { align-self: center; }
+.sui-self-stretch { align-self: stretch; }
+.sui-self-baseline { align-self: baseline; }
+
+/* Absolute Center Helper */
+.sui-place-center {
+  display: grid;
+  place-content: center;
+}
+.sui-place-items-center {
+  display: grid;
+  place-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   5. MACRO APP LAYOUTS (Pre-built complex page structures)
+   -------------------------------------------------------------------------- */
+/* Holy Grail Layout - Header, Nav, Main, Sidebar, Footer */
+.sui-layout-app {
+  display: grid;
+  min-height: 100dvh; /* Modern viewport unit */
+  grid-template-rows: auto 1fr auto;
+}
+
+.sui-layout-app-body {
+  display: grid;
+  grid-template-columns: 240px 1fr 300px;
+  grid-template-areas: "nav main aside";
+}
+
+@media (max-width: 1024px) {
+  .sui-layout-app-body {
+    grid-template-columns: 200px 1fr;
+    grid-template-areas: "nav main";
+  }
+  .sui-layout-app-aside { display: none; } /* Hide secondary sidebar on tablet */
+}
+
+@media (max-width: 768px) {
+  .sui-layout-app-body {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main";
+  }
+  .sui-layout-app-nav { display: none; } /* Off-canvas on mobile */
+}
+
+.sui-layout-nav { grid-area: nav; }
+.sui-layout-main { grid-area: main; min-width: 0; }
+.sui-layout-aside { grid-area: aside; }
+
+/* Split View Layout (Login pages, feature highlights) */
+.sui-layout-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100dvh;
+}
+.sui-layout-split-pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--sui-space-6);
+}
+@media (max-width: 768px) {
+  .sui-layout-split { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+}
+
+/* Masonry Fallback (Grid-based approximation) */
+.sui-masonry {
+  columns: 3;
+  column-gap: var(--sui-space-4);
+}
+.sui-masonry-item {
+  break-inside: avoid;
+  margin-bottom: var(--sui-space-4);
+}
+@media (max-width: 992px) { .sui-masonry { columns: 2; } }
+@media (max-width: 576px) { .sui-masonry { columns: 1; } }
+
+/* --------------------------------------------------------------------------
+   6. SPATIAL POSITIONING & SCROLLING
+   -------------------------------------------------------------------------- */
+.sui-static { position: static; }
+.sui-relative { position: relative; }
+.sui-absolute { position: absolute; }
+.sui-fixed { position: fixed; }
+.sui-sticky { position: sticky; }
+
+/* Positional Insets */
+.sui-inset-0 { inset: 0; }
+.sui-inset-x-0 { left: 0; right: 0; }
+.sui-inset-y-0 { top: 0; bottom: 0; }
+.sui-top-0 { top: 0; }
+.sui-right-0 { right: 0; }
+.sui-bottom-0 { bottom: 0; }
+.sui-left-0 { left: 0; }
+
+.sui-absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Modern Header Positioning */
+.sui-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--sui-bg); /* Fallback */
+}
+@supports (backdrop-filter: blur(10px)) {
+  .sui-sticky-header {
+    background-color: oklch(from var(--sui-bg) l c h / 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* Anchor Positioning API (New 2026 CSS Standard) */
+/* Allows popovers and tooltips to stick to targets without JavaScript */
+.sui-anchor-target {
+  anchor-name: --sui-popover-anchor;
+}
+.sui-anchor-popover {
+  position: absolute;
+  position-anchor: --sui-popover-anchor;
+  top: anchor(bottom);
+  left: anchor(center);
+  transform: translateX(-50%);
+  margin-top: var(--sui-space-2);
+}
+
+/* Overflow & Scrolling */
+.sui-overflow-auto { overflow: auto; }
+.sui-overflow-hidden { overflow: hidden; }
+.sui-overflow-visible { overflow: visible; }
+.sui-overflow-scroll { overflow: scroll; }
+.sui-overflow-x-auto { overflow-x: auto; }
+.sui-overflow-y-auto { overflow-y: auto; }
+
+/* Scroll Snapping */
+.sui-scroll-snap-x { scroll-snap-type: x mandatory; }
+.sui-scroll-snap-y { scroll-snap-type: y mandatory; }
+.sui-snap-center { scroll-snap-align: center; }
+.sui-snap-start { scroll-snap-align: start; }
+.sui-snap-end { scroll-snap-align: end; }
+
+/* --------------------------------------------------------------------------
+   7. Z-INDEX SCALE (Hardware Accelerated Tiers)
+   -------------------------------------------------------------------------- */
+.sui-z-under { z-index: -1; }
+.sui-z-0 { z-index: 0; }
+.sui-z-10 { z-index: 10; }
+.sui-z-20 { z-index: 20; }
+.sui-z-30 { z-index: 30; }
+.sui-z-40 { z-index: 40; }
+.sui-z-50 { z-index: 50; } /* Standard dropdowns/popovers */
+.sui-z-modal { z-index: 1000; }
+.sui-z-toast { z-index: 2000; }
+.sui-z-max { z-index: 9999; }
+
+/* --------------------------------------------------------------------------
+   8. SIZING & ASPECT RATIOS
+   -------------------------------------------------------------------------- */
+/* Widths */
+.sui-w-full { width: 100%; }
+.sui-w-screen { width: 100vw; }
+.sui-w-min { width: min-content; }
+.sui-w-max { width: max-content; }
+.sui-w-fit { width: fit-content; }
+
+/* Heights */
+.sui-h-full { height: 100%; }
+.sui-h-screen { height: 100vh; }
+.sui-h-dvh { height: 100dvh; } /* Dynamic viewport height (fixes iOS Safari bugs) */
+.sui-h-min { height: min-content; }
+.sui-h-max { height: max-content; }
+.sui-h-fit { height: fit-content; }
+
+/* Aspect Ratios (Native) */
+.sui-aspect-square { aspect-ratio: 1 / 1; }
+.sui-aspect-video { aspect-ratio: 16 / 9; }
+.sui-aspect-portrait { aspect-ratio: 3 / 4; }
+.sui-aspect-wide { aspect-ratio: 21 / 9; }
+
+/* Object Fit (Media/Images) */
+.sui-object-cover { object-fit: cover; }
+.sui-object-contain { object-fit: contain; }
+.sui-object-fill { object-fit: fill; }
+.sui-object-center { object-position: center; }
+
+/* --------------------------------------------------------------------------
+   9. GAP UTILITIES (For Flex & Grid)
+   -------------------------------------------------------------------------- */
+.sui-gap-0 { gap: 0; }
+.sui-gap-1 { gap: var(--sui-space-1, 0.25rem); }
+.sui-gap-2 { gap: var(--sui-space-2, 0.5rem); }
+.sui-gap-3 { gap: var(--sui-space-3, 0.75rem); }
+.sui-gap-4 { gap: var(--sui-space-4, 1rem); }
+.sui-gap-6 { gap: var(--sui-space-6, 1.5rem); }
+.sui-gap-8 { gap: var(--sui-space-8, 2rem); }
+.sui-gap-12 { gap: var(--sui-space-12, 3rem); }
+
+/* ==========================================================================
+   SUBGRID MATRICES
+   ========================================================================== */
+
+/* Matrix Container: 3-row grid per item (Header, Body, Actions) */
+.sui-subgrid-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: auto auto 1fr;
+  gap: var(--sui-space-6);
+}
+
+/* Matrix Card: Adopts the matrix's rows so titles & footers align across cards */
+.sui-subgrid-item {
+  grid-row: span 3;
+  display: grid;
+  grid-template-rows: subgrid;
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-xl);
+  padding: var(--sui-space-6);
+}
+
+/* Subgrid Form Layout: Keeps input labels & fields perfectly parallel */
+.sui-form-matrix {
+  display: grid;
+  grid-template-columns: minmax(120px, max-content) 1fr;
+  gap: var(--sui-space-4) var(--sui-space-6);
+  align-items: center;
+}
+
+.sui-form-row {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+
+/* Layer: code.css */
+/* ==========================================================================
+   SUI.CSS - NATIVE CODE & SYNTAX HIGHLIGHTING (ULTRA PRO MAX)
+   ========================================================================== */
+
+/* 1. Base Code Block Styling with macOS-style Header */
+pre[class*="language-"] {
+  position: relative;
+  background: var(--sui-bg-subtle);
+  color: var(--sui-text);
+  margin: 0;
+  padding: var(--sui-space-12) var(--sui-space-6) var(--sui-space-6);
+  border-radius: var(--sui-radius-xl);
+  border: 1px solid var(--sui-border);
+  overflow: auto;
+  box-shadow: inset 0 2px 4px 0 oklch(0% 0 0 / 0.02);
+  font-family: var(--sui-font-mono);
+  font-size: var(--sui-text-sm);
+  line-height: var(--sui-leading-relaxed);
+  tab-size: 2;
+}
+
+/* The Premium macOS Window Controls */
+pre[class*="language-"]::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  left: 1.25rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: oklch(70% 0.15 25); /* Close (Red) */
+  box-shadow: 
+    20px 0 0 oklch(80% 0.15 75), /* Minimize (Yellow) */
+    40px 0 0 oklch(75% 0.15 140); /* Maximize (Green) */
+}
+
+/* 2. Inline Code */
+:not(pre) > code[class*="language-"],
+.sui-code-inline {
+  background: var(--sui-surface-hover);
+  color: var(--sui-color-primary-600);
+  padding: 0.2em 0.4em;
+  border-radius: var(--sui-radius-sm);
+  border: 1px solid var(--sui-border-subtle);
+  font-family: var(--sui-font-mono);
+  font-size: 0.85em;
+}
+
+/* 3. Dynamic OKLCH Token Mapping */
+/* Comments & Punctuation */
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--sui-text-faint);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--sui-text-muted);
+}
+
+/* Tags, Attributes & Booleans */
+.token.tag,
+.token.namespace,
+.token.deleted {
+  color: var(--sui-color-danger-500);
+}
+
+.token.attr-name,
+.token.property,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: var(--sui-color-warning-600);
+}
+
+/* Classes, Functions & Keywords */
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: var(--sui-color-primary-500);
+  font-weight: 500;
+}
+
+.token.function,
+.token.class-name {
+  color: var(--sui-color-accent-500);
+}
+
+/* Strings & Values */
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable,
+.token.inserted {
+  color: var(--sui-color-success-600);
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: var(--sui-color-primary-400);
+}
+
+/* Selection Highlighting inside Code Blocks */
+pre[class*="language-"] ::selection,
+pre[class*="language-"]::selection,
+code[class*="language-"] ::selection,
+code[class*="language-"]::selection {
+  background: oklch(from var(--sui-color-primary-500) l c h / 0.2);
+  text-shadow: none;
+}
+
+ *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background-color: var(--sui-bg);
+      font-family: system-ui, -apple-system, sans-serif;
+      width: 100vw;
+      max-width: 100%;
+    }
+
+    .hero-section {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem var(--sui-space-6) 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-mesh-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: 
+        radial-gradient(circle at 15% 50%, oklch(from var(--sui-color-primary-500) l c h / 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, oklch(from var(--sui-color-accent-500) l c h / 0.15), transparent 25%);
+      filter: blur(60px);
+      animation: sui-pulse-glow 8s infinite alternate;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-image: radial-gradient(var(--sui-border-strong) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.4;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    }
+
+    .hero-content { position: relative; z-index: 10; width: 100%; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+
+    /* --------------------------------------------------------------------------
+       BULLETPROOF FLOATING ISLAND NAVBAR
+       -------------------------------------------------------------------------- */
+    .sui-floating-nav {
+      position: fixed;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      margin-inline: auto; 
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-sizing: border-box;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+      background: oklch(from var(--sui-surface) l c h / 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--sui-border);
+      border-radius: 9999px;
+      box-shadow: 0 20px 40px -10px oklch(0% 0 0 / 0.15);
+    }
+
+    .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--sui-text); flex-shrink: 0; }
+    .nav-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .nav-pill-link { position: relative; padding: 0.4rem 0.9rem; font-size: 0.85rem; font-weight: 500; color: var(--sui-text-muted); text-decoration: none; border-radius: 999px; transition: color 0.3s ease; z-index: 1; white-space: nowrap; }
+    .nav-pill-link:hover { color: var(--sui-text); background: var(--sui-surface-hover); }
+    .nav-pill-link.active { color: var(--sui-text); background: var(--sui-border-subtle); }
+
+    .nav-desktop-menu { display: none; }
+    .nav-mobile-btn { display: flex; align-items: center; justify-content: center; background: var(--sui-surface-hover); border: 1px solid var(--sui-border); padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--sui-text); transition: background 0.2s ease; }
+    .nav-mobile-btn:hover { background: var(--sui-border); }
+    
+    @media (min-width: 992px) {
+      .nav-desktop-menu { display: flex; align-items: center; gap: 0.25rem; }
+      .nav-mobile-btn { display: none !important; }
+    }
+
+    /* Mobile Drawer Engine */
+    .mobile-drawer { position: fixed; inset: 0; z-index: 9999; display: flex; justify-content: flex-end; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .mobile-drawer.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
+    .drawer-backdrop { position: absolute; inset: 0; background: oklch(0% 0 0 / 0.5); backdrop-filter: blur(4px); cursor: pointer; }
+    .drawer-panel { position: relative; width: 280px; height: 100%; background: var(--sui-surface); border-left: 1px solid var(--sui-border); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; box-shadow: -10px 0 30px oklch(0% 0 0 / 0.2); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; }
+    .mobile-drawer.is-open .drawer-panel { transform: translateX(0); }
+
+    /* Bento Box Grid */
+    .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sui-space-6); max-width: 1200px; margin: 0 auto; padding: var(--sui-space-6) 0; position: relative; z-index: 10; }
+    .bento-item { background: var(--sui-surface); border: 1px solid var(--sui-border); border-radius: var(--sui-radius-2xl); padding: var(--sui-space-8); display: flex; flex-direction: column; overflow: hidden; position: relative; box-shadow: var(--sui-shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; --mouse-x: 50%; --mouse-y: 50%; }
+    .bento-item::before { content: ""; position: absolute; inset: 0; background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), oklch(from var(--sui-color-primary-500) l c h / 0.08), transparent 40%); z-index: 0; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    .bento-item:hover { transform: translateY(-4px); box-shadow: var(--sui-shadow-lg); border-color: var(--sui-border-strong); }
+    .bento-item:hover::before { opacity: 1; }
+    .bento-item > * { position: relative; z-index: 1; }
+    
+    @media (max-width: 992px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .bento-grid { grid-template-columns: 1fr; } }
+
+    /* Section Spacing */
+    .section-wrapper { padding: var(--sui-space-20) var(--sui-space-6); border-top: 1px solid var(--sui-border-subtle); position: relative; width: 100%; box-sizing: border-box; }
+    .section-container { max-width: 1200px; margin: 0 auto; width: 100%; padding-inline: var(--sui-space-6); box-sizing: border-box; } 
+
+    /* Live Playground Desktop Only */
+    .playground-wrapper { display: flex; height: 500px; border: 1px solid var(--sui-border); border-radius: var(--sui-radius-xl); overflow: hidden; }
+    .playground-editor, .playground-preview { flex: 1; padding: var(--sui-space-6); }
+    .playground-editor { background: #1e1e1e; color: #d4d4d4; font-family: monospace; border-right: 1px solid var(--sui-border); resize: none; border: none; outline: none; font-size: 14px; }
+    .playground-preview { background: var(--sui-bg); display: flex; align-items: center; justify-content: center; }
+    @media (max-width: 992px) { .section-playground { display: none !important; } }
+
+    /* Code Blocks & Forms */
+    .code-block { background: #1e1e1e; color: #d4d4d4; padding: 2rem; margin: 0; font-family: monospace; overflow-x: auto; font-size: 0.9rem; border-radius: 0 0 var(--sui-radius-lg) var(--sui-radius-lg); }
+    .code-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; background: #2d2d2d; border-bottom: 1px solid #444; border-radius: var(--sui-radius-lg) var(--sui-radius-lg) 0 0; }
+    .sui-input { width: 100%; box-sizing: border-box; }
+
+    /* SUI Syntax Highlighting Tokens (VS Code Dark Theme Inspired) */
+    .token.comment { color: #6a9955; font-style: italic; }
+    .token.tag { color: #569cd6; }
+    .token.attr-name { color: #9cdcfe; }
+    .token.attr-value { color: #ce9178; }
+    .token.punctuation { color: #808080; }
+    .token.property { color: #9cdcfe; }
+    .token.selector { color: #d7ba7d; }
+    .token.function { color: #dcdcaa; }
+    .token.value { color: #b5cea8; }
+    pre code { display: block; }
+
+    /* Scroll Reveal Engine */
+    .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* --------------------------------------------------------------------------
+       MOBILE & RESPONSIVE OPTIMIZATIONS
+       -------------------------------------------------------------------------- */
+    .responsive-button-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; width: 100%; }
+    
+    @media (max-width: 768px) {
+      .section-wrapper { padding: 4rem 1.5rem; }
+      .hero-section { padding-top: 7rem; padding-bottom: 4rem; }
+      
+      /* Typography Scaling */
+      .sui-text-hero { font-size: clamp(2.5rem, 8vw, 4rem) !important; line-height: 1.1; }
+      .sui-text-3xl { font-size: 2rem !important; }
+      .sui-text-4xl { font-size: 2.5rem !important; }
+      
+      /* Interactive Element Wrapping */
+      .responsive-button-group { flex-direction: column; }
+      .responsive-button-group .sui-btn { width: 100%; text-align: center; justify-content: center; }
+      
+      /* Code Blocks */
+      .code-block { padding: 1.25rem; font-size: 0.8rem; }
+      .code-header { padding: 0.5rem 1rem; }
+      
+      /* Component Showcase Grid */
+      .showcase-header { flex-direction: column; align-items: flex-start !important; gap: 1.5rem; text-align: left; }
+      .showcase-header .sui-btn { width: 100%; }
+    }
+
+/* Layer: components.css */
+/* ==========================================================================
+   SUI.CSS - LUXURY COMPONENTS LAYER (ULTRA PRO MAX)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. BUTTONS (Advanced States, Sizes, & Variants)
+   -------------------------------------------------------------------------- */
+.sui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sui-space-2);
+  padding: 0.625rem 1.25rem;
+  font-size: var(--sui-text-base);
+  font-weight: 500;
+  border-radius: var(--sui-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.sui-btn:disabled, 
+.sui-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Variants */
+.sui-btn-primary {
+  background-color: var(--sui-color-primary-500);
+  color: var(--sui-text-contrast);
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.sui-btn-primary:hover {
+  background-color: var(--sui-primary-hover);
+  border-color: var(--sui-primary-border);
+}
+.sui-btn-primary:active {
+  background-color: var(--sui-primary-active);
+}
+
+.sui-btn-secondary {
+  background-color: var(--sui-surface-hover);
+  color: var(--sui-text);
+  border-color: var(--sui-border);
+}
+.sui-btn-secondary:hover {
+  background-color: var(--sui-border);
+}
+
+.sui-btn-outline {
+  background-color: transparent;
+  border-color: var(--sui-border);
+  color: var(--sui-text);
+}
+.sui-btn-outline:hover {
+  border-color: var(--sui-primary-500);
+  color: var(--sui-primary-500);
+  background-color: oklch(from var(--sui-primary-500) 0.95 c h / 0.1);
+}
+
+.sui-btn-ghost {
+  background-color: transparent;
+  color: var(--sui-text-muted);
+}
+.sui-btn-ghost:hover {
+  background-color: var(--sui-surface-hover);
+  color: var(--sui-text);
+}
+
+.sui-btn-danger {
+  background-color: oklch(60% 0.2 25);
+  color: white;
+}
+.sui-btn-danger:hover {
+  background-color: oklch(50% 0.2 25);
+  box-shadow: 0 8px 16px -4px oklch(60% 0.2 25 / 0.4);
+}
+
+/* Button Sizes */
+.sui-btn-sm { padding: 0.375rem 0.75rem; font-size: var(--sui-text-sm); border-radius: 0.375rem; }
+.sui-btn-lg { padding: 0.875rem 1.75rem; font-size: var(--sui-text-lg); border-radius: var(--sui-radius-lg); }
+.sui-btn-icon { padding: 0.625rem; border-radius: 50%; aspect-ratio: 1; }
+
+/* --------------------------------------------------------------------------
+   2. BADGES & PILLS
+   -------------------------------------------------------------------------- */
+.sui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
+  background-color: var(--sui-primary-50);
+  color: var(--sui-primary-900);
+  border: 1px solid oklch(from var(--sui-primary-500) l c h / 0.1);
+}
+
+.sui-badge-dot::before {
+  content: "";
+  display: inline-block;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.sui-badge-success { background-color: oklch(95% 0.05 140); color: oklch(30% 0.1 140); }
+.sui-badge-danger { background-color: oklch(95% 0.05 25); color: oklch(40% 0.1 25); }
+.sui-badge-warning { background-color: oklch(95% 0.1 75); color: oklch(40% 0.15 75); }
+
+@media (prefers-color-scheme: dark) {
+  .sui-badge { background-color: oklch(from var(--sui-primary-500) 0.2 c h); color: var(--sui-primary-50); }
+  .sui-badge-success { background-color: oklch(25% 0.05 140); color: oklch(85% 0.1 140); }
+  .sui-badge-danger { background-color: oklch(25% 0.05 25); color: oklch(85% 0.1 25); }
+  .sui-badge-warning { background-color: oklch(25% 0.1 75); color: oklch(85% 0.15 75); }
+}
+
+/* --------------------------------------------------------------------------
+   3. LUXURY CARDS & PANELS
+   -------------------------------------------------------------------------- */
+.sui-card {
+  background-color: var(--sui-surface);
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-lg);
+  padding: var(--sui-space-6);
+  box-shadow: 0 4px 6px -1px oklch(0% 0 0 / 0.05), 0 2px 4px -2px oklch(0% 0 0 / 0.05);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sui-space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.sui-card-interactive:hover,
+.sui-card:has(.sui-btn-primary):hover {
+  border-color: var(--sui-primary-500);
+  box-shadow: 0 20px 25px -5px oklch(0% 0 0 / 0.1), 0 8px 10px -6px oklch(0% 0 0 / 0.1);
+  transform: translateY(-4px);
+}
+
+.sui-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--sui-border);
+  padding-bottom: var(--sui-space-4);
+  margin-bottom: var(--sui-space-2);
+}
+
+/* Glassmorphism */
+.sui-glass {
+  background: oklch(100% 0 0 / 0.65);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid oklch(100% 0 0 / 0.4);
+  box-shadow: 0 8px 32px 0 oklch(0% 0 0 / 0.05);
+  border-radius: var(--sui-radius-lg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .sui-glass {
+    background: oklch(15% 0.02 var(--sui-brand-hue) / 0.5);
+    border: 1px solid oklch(100% 0 0 / 0.1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. ADVANCED FORM CONTROLS (Native Replacement)
+   -------------------------------------------------------------------------- */
+.sui-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sui-space-2);
+  margin-bottom: var(--sui-space-4);
+}
+
+.sui-label {
+  font-size: var(--sui-text-sm);
+  font-weight: 500;
+  color: var(--sui-text);
+}
+
+.sui-input, .sui-textarea, .sui-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: var(--sui-text-base);
+  border-radius: var(--sui-radius-md);
+  border: 1px solid var(--sui-border);
+  background-color: var(--sui-surface);
+  color: var(--sui-text);
+  transition: all 0.2s ease;
+  outline: none;
+  appearance: none;
+}
+
+.sui-textarea { resize: vertical; min-height: 100px; }
+
+.sui-input:hover, .sui-textarea:hover, .sui-select:hover {
+  border-color: oklch(from var(--sui-border) 0.7 c h);
+}
+
+.sui-input:focus, .sui-textarea:focus, .sui-select:focus {
+  border-color: var(--sui-primary-500);
+  box-shadow: 0 0 0 4px oklch(from var(--sui-primary-500) l c h / 0.15);
+  background-color: var(--sui-bg);
+}
+
+/* iOS Style Toggle Switch */
+.sui-toggle {
+  appearance: none;
+  width: 3rem;
+  height: 1.5rem;
+  background-color: var(--sui-border);
+  border-radius: 9999px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+.sui-toggle::after {
+  content: '';
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px oklch(0% 0 0 / 0.2);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.sui-toggle:checked { background-color: var(--sui-primary-500); }
+.sui-toggle:checked::after { transform: translateX(1.5rem); }
+
+/* Custom Checkbox */
+.sui-checkbox {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1.5px solid var(--sui-border);
+  border-radius: 0.25rem;
+  background-color: var(--sui-surface);
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: all 0.2s;
+}
+.sui-checkbox::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em white;
+  background-color: white;
+  transform-origin: center;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.sui-checkbox:checked {
+  background-color: var(--sui-primary-500);
+  border-color: var(--sui-primary-500);
+}
+.sui-checkbox:checked::before { transform: scale(1); }
+
+/* --------------------------------------------------------------------------
+   5. AVATARS & USER PROFILES
+   -------------------------------------------------------------------------- */
+.sui-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--sui-primary-50);
+  color: var(--sui-primary-900);
+  font-weight: 600;
+  font-size: 1rem;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  border: 2px solid var(--sui-surface);
+}
+
+.sui-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sui-avatar-group {
+  display: flex;
+  align-items: center;
+}
+.sui-avatar-group .sui-avatar {
+  margin-left: -0.75rem;
+  transition: transform 0.2s;
+}
+.sui-avatar-group .sui-avatar:hover {
+  transform: translateY(-4px);
+  z-index: 10;
+}
+
+/* Online Status Indicator */
+.sui-avatar-online::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: 25%;
+  background-color: oklch(95% 0.05 140);
+  border: 2px solid var(--sui-surface);
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   6. PURE CSS TOOLTIPS
+   -------------------------------------------------------------------------- */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -8px) scale(0.9);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--sui-radius-md);
+  background-color: oklch(20% 0.05 var(--sui-brand-hue));
+  color: white;
+  font-size: var(--sui-text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+[data-tooltip]::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-width: 6px;
+  border-style: solid;
+  border-color: oklch(20% 0.05 var(--sui-brand-hue)) transparent transparent transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+[data-tooltip]:hover::before { opacity: 1; transform: translate(-50%, -12px) scale(1); }
+[data-tooltip]:hover::after { opacity: 1; transform: translate(-50%, -6px); }
+
+/* --------------------------------------------------------------------------
+   7. ALERTS, TOASTS & FEEDBACK
+   -------------------------------------------------------------------------- */
+.sui-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sui-space-4);
+  padding: 1rem 1.25rem;
+  border-radius: var(--sui-radius-lg);
+  background-color: var(--sui-surface);
+  border: 1px solid var(--sui-border);
+  box-shadow: var(--sui-shadow-sm);
+}
+.sui-alert-icon { flex-shrink: 0; font-size: 1.25rem; }
+.sui-alert-title { font-weight: 600; margin-bottom: 0.25rem; color: var(--sui-text); }
+.sui-alert-desc { font-size: var(--sui-text-sm); color: var(--sui-text-muted); }
+
+.sui-toast {
+  position: fixed;
+  bottom: var(--sui-space-6);
+  right: var(--sui-space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--sui-space-4);
+  padding: 1rem 1.5rem;
+  border-radius: var(--sui-radius-lg);
+  background-color: var(--sui-surface);
+  border-left: 4px solid var(--sui-primary-500);
+  box-shadow: 0 10px 15px -3px oklch(0% 0 0 / 0.1);
+  z-index: 9999;
+  animation: sui-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Skeletons */
+.sui-skeleton {
+  background-color: var(--sui-surface-hover);
+  border-radius: var(--sui-radius-md);
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
+.sui-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, oklch(100% 0 0 / 0.4), transparent);
+  animation: sui-shimmer 1.5s infinite;
+  transform: translateX(-100%);
+}
+@media (prefers-color-scheme: dark) {
+  .sui-skeleton::after { background: linear-gradient(90deg, transparent, oklch(100% 0 0 / 0.05), transparent); }
+}
+
+/* Spinner */
+.sui-spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid var(--sui-surface-hover);
+  border-top-color: var(--sui-primary-500);
+  border-radius: 50%;
+  animation: sui-spin 0.8s linear infinite;
+}
+
+/* Progress Bar */
+.sui-progress-bg {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--sui-surface-hover);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.sui-progress-bar {
+  height: 100%;
+  background-color: var(--sui-primary-500);
+  border-radius: 9999px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   8. MODALS & SLIDE-OVERS (DRAWERS)
+   -------------------------------------------------------------------------- */
+.sui-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: oklch(0% 0 0 / 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  animation: sui-fade-in 0.2s ease;
+}
+
+.sui-dialog {
+  background-color: var(--sui-bg);
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-lg);
+  padding: var(--sui-space-6);
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 25px 50px -12px oklch(0% 0 0 / 0.25);
+  animation: sui-scale-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sui-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--sui-bg);
+  border-left: 1px solid var(--sui-border);
+  box-shadow: -10px 0 25px oklch(0% 0 0 / 0.1);
+  padding: var(--sui-space-6);
+  z-index: 5001;
+  animation: sui-slide-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   9. NAVIGATION & ACCORDIONS
+   -------------------------------------------------------------------------- */
+.sui-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sui-space-4) var(--sui-space-6);
+  background-color: var(--sui-bg);
+  border-bottom: 1px solid var(--sui-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Tabs */
+.sui-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--sui-border);
+  gap: var(--sui-space-6);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sui-tab {
+  padding: 0.75rem 0.25rem;
+  color: var(--sui-text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.sui-tab:hover { color: var(--sui-text); }
+.sui-tab.active {
+  color: var(--sui-primary-500);
+  border-bottom-color: var(--sui-primary-500);
+}
+
+/* Accordion using native <details> */
+.sui-accordion {
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-md);
+  background-color: var(--sui-surface);
+  overflow: hidden;
+}
+.sui-accordion summary {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+.sui-accordion summary:hover { background-color: var(--sui-surface-hover); }
+.sui-accordion summary::-webkit-details-marker { display: none; }
+.sui-accordion summary::after {
+  content: "+";
+  font-size: 1.25rem;
+  transition: transform 0.3s;
+}
+.sui-accordion[open] summary::after { transform: rotate(45deg); }
+.sui-accordion-content {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--sui-border);
+  color: var(--sui-text-muted);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   10. MEDIA & SOCIAL COMPONENTS
+   -------------------------------------------------------------------------- */
+/* Scroll Snapping Carousel (Great for images/reels) */
+.sui-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: var(--sui-space-4);
+  padding-block: var(--sui-space-2);
+  scrollbar-width: none; /* Firefox */
+}
+.sui-carousel::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+.sui-carousel-item {
+  scroll-snap-align: center;
+  flex: 0 0 80%;
+  border-radius: var(--sui-radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Chat Message Bubbles */
+.sui-chat-bubble {
+  max-width: 75%;
+  padding: 0.75rem 1rem;
+  border-radius: 1.25rem;
+  font-size: var(--sui-text-base);
+  line-height: 1.4;
+  margin-bottom: var(--sui-space-2);
+  position: relative;
+}
+.sui-chat-bubble-received {
+  background-color: var(--sui-surface);
+  color: var(--sui-text);
+  border-bottom-left-radius: 0.25rem;
+  align-self: flex-start;
+  border: 1px solid var(--sui-border);
+}
+.sui-chat-bubble-sent {
+  background-color: var(--sui-primary-500);
+  color: white;
+  border-bottom-right-radius: 0.25rem;
+  align-self: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   11. INTERNAL KEYFRAME ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes sui-slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes sui-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sui-scale-up {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes sui-slide-left {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes sui-shimmer {
+  100% { transform: translateX(100%); }
+}
+@keyframes sui-spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* =========================================================
+   SUI.CSS - NATIVE SYNTAX HIGHLIGHTING (Replaces Prism CSS)
+   ========================================================= */
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #e2e8f0;
+  background: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+  tab-size: 4;
+  hyphens: none;
+}
+
+/* Tokens */
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #64748b; /* Slate */
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #94a3b8; /* Muted */
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+  color: #fb7185; /* Soft Red/Pink */
+}
+
+.token.function-name {
+  color: #6196cc; /* Blue */
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+  color: #fb923c; /* Orange */
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+  color: #fbbf24; /* Yellow */
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: #c084fc; /* Purple */
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+  color: #34d399; /* Green */
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #22d3ee; /* Cyan */
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+.sui-btn-subtle {
+  background-color: var(--sui-primary-subtle);
+  color: var(--sui-color-primary-500);
+  border: 1px solid var(--sui-primary-border);
+}
+
+.sui-btn-subtle:hover {
+  background-color: color-mix(in oklch, var(--sui-color-primary-500) 22%, transparent);
+}
+
+/* ==========================================================================
+   12. NATIVE SYNTAX HIGHLIGHTER (Zero Dependency)
+   ========================================================================== */
+.sui-hl-comment { color: oklch(60% 0.05 var(--sui-brand-hue)); font-style: italic; }
+.sui-hl-tag { color: oklch(75% 0.15 340); font-weight: 500; } 
+.sui-hl-attr { color: oklch(80% 0.15 150); } 
+.sui-hl-string { color: oklch(85% 0.15 80); }
+
+/* --------------------------------------------------------------------------
+   13. SWITCH TOGGLE (Accessible iOS/Material Physics)
+   -------------------------------------------------------------------------- */
+.sui-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sui-space-3);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--sui-text-sm);
+  color: var(--sui-text);
+}
+.sui-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.sui-switch-track {
+  position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  background-color: var(--sui-border-strong);
+  border-radius: var(--sui-radius-full);
+  transition: background-color 0.25s var(--sui-ease-spring), box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+.sui-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s var(--sui-ease-spring);
+}
+.sui-switch input:checked + .sui-switch-track {
+  background-color: var(--sui-color-primary-500);
+}
+.sui-switch input:checked + .sui-switch-track .sui-switch-thumb {
+  transform: translateX(1.25rem);
+}
+.sui-switch input:focus-visible + .sui-switch-track {
+  outline: 2px solid var(--sui-color-primary-500);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   14. AVATAR GROUP & STATUS INDICATORS
+   -------------------------------------------------------------------------- */
+.sui-avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+.sui-avatar-group .sui-avatar {
+  margin-left: -0.75rem;
+  border: 2px solid var(--sui-surface);
+  transition: transform 0.2s ease, z-index 0.2s ease;
+}
+.sui-avatar-group .sui-avatar:first-child {
+  margin-left: 0;
+}
+.sui-avatar-group .sui-avatar:hover {
+  transform: translateY(-3px) scale(1.05);
+  z-index: 10;
+}
+.sui-avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: 2px solid var(--sui-surface);
+}
+.sui-avatar-status-online { background-color: var(--sui-color-success-500); }
+.sui-avatar-status-busy { background-color: var(--sui-color-danger-500); }
+.sui-avatar-status-away { background-color: var(--sui-color-warning-500); }
+
+/* --------------------------------------------------------------------------
+   15. KPI METRICS & STAT CARDS (Clean Editorial Architecture)
+   -------------------------------------------------------------------------- */
+.sui-stat {
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.sui-stat:hover {
+  border-color: var(--sui-border-strong);
+  box-shadow: var(--sui-shadow-md);
+}
+.sui-stat-label {
+  font-size: var(--sui-text-sm);
+  color: var(--sui-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.sui-stat-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--sui-text);
+  letter-spacing: -0.02em;
+}
+.sui-stat-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--sui-text-xs);
+  color: var(--sui-text-muted);
+  margin-top: 0.25rem;
+}
+.sui-stat-trend-up {
+  color: var(--sui-color-success-500);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.sui-stat-trend-down {
+  color: var(--sui-color-danger-500);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   16. SKELETON LOADERS
+   -------------------------------------------------------------------------- */
+.sui-skeleton {
+  background: linear-gradient(90deg, var(--sui-border-subtle) 25%, var(--sui-surface-hover) 37%, var(--sui-border-subtle) 63%);
+  background-size: 400% 100%;
+  animation: sui-skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--sui-radius-md);
+  display: block;
+}
+@keyframes sui-skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+.sui-skeleton-text {
+  height: 1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.sui-skeleton-title {
+  height: 1.75rem;
+  width: 60%;
+  margin-bottom: 0.75rem;
+}
+.sui-skeleton-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   17. BREADCRUMBS
+   -------------------------------------------------------------------------- */
+.sui-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sui-space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--sui-text-sm);
+}
+.sui-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sui-space-2);
+  color: var(--sui-text-muted);
+}
+.sui-breadcrumb-item a {
+  color: var(--sui-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.sui-breadcrumb-item a:hover {
+  color: var(--sui-color-primary-500);
+}
+.sui-breadcrumb-item.active {
+  color: var(--sui-text);
+  font-weight: 600;
+}
+.sui-breadcrumb-separator {
+  color: var(--sui-text-muted);
+  opacity: 0.5;
+  user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   18. LIVE PING & PULSE INDICATOR
+   -------------------------------------------------------------------------- */
+.sui-ping {
+  position: relative;
+  display: inline-flex;
+  width: 0.625rem;
+  height: 0.625rem;
+  vertical-align: middle;
+}
+.sui-ping-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--sui-color-success-500);
+}
+.sui-ping-wave {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--sui-color-success-500);
+  animation: sui-ping-anim 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes sui-ping-anim {
+  75%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   19. NEXT-GEN SPECTRUM RANGE SLIDER & COLOR CONTROLS
+   -------------------------------------------------------------------------- */
+.sui-hue-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 9999px;
+  background: linear-gradient(to right,
+    oklch(60% 0.25 0),
+    oklch(60% 0.25 45),
+    oklch(60% 0.25 90),
+    oklch(60% 0.25 135),
+    oklch(60% 0.25 180),
+    oklch(60% 0.25 225),
+    oklch(60% 0.25 270),
+    oklch(60% 0.25 315),
+    oklch(60% 0.25 360)
+  );
+  outline: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.sui-hue-slider:focus-visible {
+  outline: 2px solid var(--sui-color-primary-500);
+  outline-offset: 4px;
+}
+
+.sui-hue-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid oklch(60% 0.22 var(--sui-brand-hue, 255));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.sui-hue-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 0 6px oklch(60% 0.22 var(--sui-brand-hue, 255) / 0.35);
+}
+
+.sui-hue-slider::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid oklch(60% 0.22 var(--sui-brand-hue, 255));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   20. PREMIUM OKLCH GLOW CARD & TONAL MATRICES
+   -------------------------------------------------------------------------- */
+.sui-glow-card {
+  position: relative;
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border-strong);
+  border-radius: var(--sui-radius-xl);
+  box-shadow: 0 10px 30px -10px oklch(from var(--sui-color-primary-500) l c h / 0.15), var(--sui-shadow-lg);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sui-glow-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    oklch(60% 0.25 var(--sui-brand-hue, 255)), 
+    oklch(65% 0.22 calc(var(--sui-brand-hue, 255) + 60))
+  );
+  opacity: 0.9;
+}
+
+.sui-swatch-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+}
+
+.sui-swatch-chip:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sui-swatch-chip.active {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px oklch(from var(--sui-color-primary-500) l c h / 0.5), 0 4px 14px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px) scale(1.06);
+}
+
+.sui-tonal-strip {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  border-radius: var(--sui-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--sui-border);
+  box-shadow: var(--sui-shadow-sm);
+}
+
+.sui-tonal-cell {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-family: monospace;
+  font-weight: 600;
+  transition: transform 0.15s ease, z-index 0.15s ease;
+}
+
+.sui-tonal-cell:hover {
+  transform: scale(1.15);
+  z-index: 5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sui-badge-glow {
+  background: oklch(from var(--sui-color-primary-500) l c h / 0.15);
+  color: var(--sui-color-primary-500);
+  border: 1px solid oklch(from var(--sui-color-primary-500) l c h / 0.35);
+  box-shadow: 0 0 16px -2px oklch(from var(--sui-color-primary-500) l c h / 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   21. ARCHITECTURAL COMPARISON MATRIX & VERSION CONTROLS
+   -------------------------------------------------------------------------- */
+.sui-compare-card {
+  position: relative;
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border-strong);
+  border-radius: var(--sui-radius-xl);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.3), var(--sui-shadow-lg);
+  overflow: hidden;
+}
+
+.sui-compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+.sui-compare-table th,
+.sui-compare-table td {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--sui-border-subtle);
+  vertical-align: middle;
+  transition: background-color 0.2s ease;
+}
+
+.sui-compare-table tr:last-child td {
+  border-bottom: none;
+}
+
+.sui-compare-table tbody tr:hover td {
+  background-color: var(--sui-surface-hover);
+}
+
+.sui-col-highlight {
+  position: relative;
+  background: linear-gradient(180deg, oklch(from var(--sui-color-primary-500) l c h / 0.12) 0%, oklch(from var(--sui-color-primary-500) l c h / 0.04) 100%) !important;
+  border-left: 2px solid oklch(from var(--sui-color-primary-500) l c h / 0.35);
+  border-right: 2px solid oklch(from var(--sui-color-primary-500) l c h / 0.35);
+}
+
+.sui-col-highlight-header {
+  border-top: 3px solid var(--sui-color-primary-500);
+}
+
+.sui-metric-badge-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  color: var(--sui-color-success-500);
+  background: oklch(from var(--sui-color-success-500) l c h / 0.12);
+  border: 1px solid oklch(from var(--sui-color-success-500) l c h / 0.3);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--sui-radius-sm);
+  font-size: 0.8rem;
+}
+
+.sui-metric-badge-warn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--sui-text-muted);
+  font-size: 0.82rem;
+}
+
+.sui-version-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--sui-surface);
+  color: var(--sui-text);
+  border: 1px solid var(--sui-border-strong);
+  border-radius: 9999px;
+  padding: 0.35rem 2rem 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.65rem center;
+  transition: all 0.2s ease;
+}
+
+.sui-version-select:hover,
+.sui-version-select:focus {
+  border-color: var(--sui-color-primary-500);
+  outline: none;
+  box-shadow: 0 0 0 3px oklch(from var(--sui-color-primary-500) l c h / 0.2);
+}
+
+
+
+/* Layer: utilities.css */
+.sui-flex { display: flex; }
+.sui-grid { display: grid; }
+.sui-flex-col { flex-direction: column; }
+.sui-items-center { align-items: center; }
+.sui-justify-between { justify-content: space-between; }
+.sui-gap-2 { gap: var(--sui-space-2); }
+.sui-gap-4 { gap: var(--sui-space-4); }
+
+.sui-mt-4 { margin-top: var(--sui-space-4); }
+.sui-mb-6 { margin-bottom: var(--sui-space-6); }
+
+.sui-text-center { text-align: center; }
+.sui-text-muted { color: var(--sui-text-muted); }
+
+
+/* Add to existing utilities */
+.sui-w-full { width: 100%; }
+.sui-h-full { height: 100%; }
+
+.sui-p-6 { padding: var(--sui-space-6); }
+.sui-py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+
+.sui-mb-2 { margin-bottom: var(--sui-space-2); }
+.sui-mt-8 { margin-top: 2rem; }
+
+.sui-text-lg { font-size: var(--sui-text-lg); }
+.sui-text-hero { font-size: var(--sui-text-xl); font-weight: 800; letter-spacing: -0.02em; }
+
+
+
+
+
+
+/* ==========================================================================
+   SUI.CSS - LUXURY UTILITY ENGINE (ULTRA PRO MAX)
+   Comprehensive, Single-Responsibility Classes for Premium UI Engineering
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DISPLAY & VISIBILITY
+   -------------------------------------------------------------------------- */
+.sui-hidden { display: none !important; }
+.sui-block { display: block; }
+.sui-inline-block { display: inline-block; }
+.sui-inline { display: inline; }
+.sui-flex { display: flex; }
+.sui-inline-flex { display: inline-flex; }
+.sui-grid { display: grid; }
+.sui-inline-grid { display: inline-grid; }
+.sui-table { display: table; }
+.sui-table-row { display: table-row; }
+.sui-table-cell { display: table-cell; }
+.sui-contents { display: contents; }
+
+.sui-visible { visibility: visible; }
+.sui-invisible { visibility: hidden; }
+.sui-collapse { visibility: collapse; }
+
+.sui-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. POSITIONING & Z-INDEX
+   -------------------------------------------------------------------------- */
+.sui-static { position: static; }
+.sui-fixed { position: fixed; }
+.sui-absolute { position: absolute; }
+.sui-relative { position: relative; }
+.sui-sticky { position: sticky; }
+
+.sui-inset-0 { inset: 0px; }
+.sui-inset-auto { inset: auto; }
+.sui-inset-x-0 { left: 0px; right: 0px; }
+.sui-inset-y-0 { top: 0px; bottom: 0px; }
+
+.sui-top-0 { top: 0px; }
+.sui-top-1\/2 { top: 50%; }
+.sui-top-full { top: 100%; }
+.sui-top-auto { top: auto; }
+
+.sui-right-0 { right: 0px; }
+.sui-right-1\/2 { right: 50%; }
+.sui-right-full { right: 100%; }
+.sui-right-auto { right: auto; }
+
+.sui-bottom-0 { bottom: 0px; }
+.sui-bottom-1\/2 { bottom: 50%; }
+.sui-bottom-full { bottom: 100%; }
+.sui-bottom-auto { bottom: auto; }
+
+.sui-left-0 { left: 0px; }
+.sui-left-1\/2 { left: 50%; }
+.sui-left-full { left: 100%; }
+.sui-left-auto { left: auto; }
+
+.sui-z-0 { z-index: 0; }
+.sui-z-10 { z-index: 10; }
+.sui-z-20 { z-index: 20; }
+.sui-z-30 { z-index: 30; }
+.sui-z-40 { z-index: 40; }
+.sui-z-50 { z-index: 50; }
+.sui-z-auto { z-index: auto; }
+.sui-z-max { z-index: 9999; }
+
+/* --------------------------------------------------------------------------
+   3. SPACING: PADDING (Logical Properties Used Where Applicable)
+   -------------------------------------------------------------------------- */
+.sui-p-0 { padding: 0px; }
+.sui-p-1 { padding: var(--sui-space-1); }
+.sui-p-2 { padding: var(--sui-space-2); }
+.sui-p-3 { padding: var(--sui-space-3); }
+.sui-p-4 { padding: var(--sui-space-4); }
+.sui-p-5 { padding: var(--sui-space-5); }
+.sui-p-6 { padding: var(--sui-space-6); }
+.sui-p-8 { padding: var(--sui-space-8); }
+.sui-p-10 { padding: var(--sui-space-10); }
+.sui-p-12 { padding: var(--sui-space-12); }
+.sui-p-16 { padding: var(--sui-space-16); }
+
+.sui-px-0 { padding-inline: 0px; }
+.sui-px-1 { padding-inline: var(--sui-space-1); }
+.sui-px-2 { padding-inline: var(--sui-space-2); }
+.sui-px-3 { padding-inline: var(--sui-space-3); }
+.sui-px-4 { padding-inline: var(--sui-space-4); }
+.sui-px-5 { padding-inline: var(--sui-space-5); }
+.sui-px-6 { padding-inline: var(--sui-space-6); }
+.sui-px-8 { padding-inline: var(--sui-space-8); }
+.sui-px-10 { padding-inline: var(--sui-space-10); }
+.sui-px-12 { padding-inline: var(--sui-space-12); }
+
+.sui-py-0 { padding-block: 0px; }
+.sui-py-1 { padding-block: var(--sui-space-1); }
+.sui-py-2 { padding-block: var(--sui-space-2); }
+.sui-py-3 { padding-block: var(--sui-space-3); }
+.sui-py-4 { padding-block: var(--sui-space-4); }
+.sui-py-5 { padding-block: var(--sui-space-5); }
+.sui-py-6 { padding-block: var(--sui-space-6); }
+.sui-py-8 { padding-block: var(--sui-space-8); }
+.sui-py-10 { padding-block: var(--sui-space-10); }
+.sui-py-12 { padding-block: var(--sui-space-12); }
+
+.sui-pt-0 { padding-top: 0px; }
+.sui-pt-1 { padding-top: var(--sui-space-1); }
+.sui-pt-2 { padding-top: var(--sui-space-2); }
+.sui-pt-4 { padding-top: var(--sui-space-4); }
+.sui-pt-6 { padding-top: var(--sui-space-6); }
+.sui-pt-8 { padding-top: var(--sui-space-8); }
+
+.sui-pr-0 { padding-right: 0px; }
+.sui-pr-1 { padding-right: var(--sui-space-1); }
+.sui-pr-2 { padding-right: var(--sui-space-2); }
+.sui-pr-4 { padding-right: var(--sui-space-4); }
+.sui-pr-6 { padding-right: var(--sui-space-6); }
+.sui-pr-8 { padding-right: var(--sui-space-8); }
+
+.sui-pb-0 { padding-bottom: 0px; }
+.sui-pb-1 { padding-bottom: var(--sui-space-1); }
+.sui-pb-2 { padding-bottom: var(--sui-space-2); }
+.sui-pb-4 { padding-bottom: var(--sui-space-4); }
+.sui-pb-6 { padding-bottom: var(--sui-space-6); }
+.sui-pb-8 { padding-bottom: var(--sui-space-8); }
+
+.sui-pl-0 { padding-left: 0px; }
+.sui-pl-1 { padding-left: var(--sui-space-1); }
+.sui-pl-2 { padding-left: var(--sui-space-2); }
+.sui-pl-4 { padding-left: var(--sui-space-4); }
+.sui-pl-6 { padding-left: var(--sui-space-6); }
+.sui-pl-8 { padding-left: var(--sui-space-8); }
+
+/* --------------------------------------------------------------------------
+   4. SPACING: MARGIN (Logical Properties Used Where Applicable)
+   -------------------------------------------------------------------------- */
+.sui-m-0 { margin: 0px; }
+.sui-m-1 { margin: var(--sui-space-1); }
+.sui-m-2 { margin: var(--sui-space-2); }
+.sui-m-3 { margin: var(--sui-space-3); }
+.sui-m-4 { margin: var(--sui-space-4); }
+.sui-m-5 { margin: var(--sui-space-5); }
+.sui-m-6 { margin: var(--sui-space-6); }
+.sui-m-8 { margin: var(--sui-space-8); }
+.sui-m-10 { margin: var(--sui-space-10); }
+.sui-m-12 { margin: var(--sui-space-12); }
+.sui-m-auto { margin: auto; }
+
+.sui-mx-0 { margin-inline: 0px; }
+.sui-mx-1 { margin-inline: var(--sui-space-1); }
+.sui-mx-2 { margin-inline: var(--sui-space-2); }
+.sui-mx-3 { margin-inline: var(--sui-space-3); }
+.sui-mx-4 { margin-inline: var(--sui-space-4); }
+.sui-mx-5 { margin-inline: var(--sui-space-5); }
+.sui-mx-6 { margin-inline: var(--sui-space-6); }
+.sui-mx-8 { margin-inline: var(--sui-space-8); }
+.sui-mx-10 { margin-inline: var(--sui-space-10); }
+.sui-mx-12 { margin-inline: var(--sui-space-12); }
+.sui-mx-auto { margin-inline: auto; }
+
+.sui-my-0 { margin-block: 0px; }
+.sui-my-1 { margin-block: var(--sui-space-1); }
+.sui-my-2 { margin-block: var(--sui-space-2); }
+.sui-my-3 { margin-block: var(--sui-space-3); }
+.sui-my-4 { margin-block: var(--sui-space-4); }
+.sui-my-5 { margin-block: var(--sui-space-5); }
+.sui-my-6 { margin-block: var(--sui-space-6); }
+.sui-my-8 { margin-block: var(--sui-space-8); }
+.sui-my-10 { margin-block: var(--sui-space-10); }
+.sui-my-12 { margin-block: var(--sui-space-12); }
+.sui-my-auto { margin-block: auto; }
+
+.sui-mt-0 { margin-top: 0px; }
+.sui-mt-1 { margin-top: var(--sui-space-1); }
+.sui-mt-2 { margin-top: var(--sui-space-2); }
+.sui-mt-4 { margin-top: var(--sui-space-4); }
+.sui-mt-6 { margin-top: var(--sui-space-6); }
+.sui-mt-8 { margin-top: var(--sui-space-8); }
+.sui-mt-auto { margin-top: auto; }
+
+.sui-mr-0 { margin-right: 0px; }
+.sui-mr-1 { margin-right: var(--sui-space-1); }
+.sui-mr-2 { margin-right: var(--sui-space-2); }
+.sui-mr-4 { margin-right: var(--sui-space-4); }
+.sui-mr-6 { margin-right: var(--sui-space-6); }
+.sui-mr-8 { margin-right: var(--sui-space-8); }
+.sui-mr-auto { margin-right: auto; }
+
+.sui-mb-0 { margin-bottom: 0px; }
+.sui-mb-1 { margin-bottom: var(--sui-space-1); }
+.sui-mb-2 { margin-bottom: var(--sui-space-2); }
+.sui-mb-4 { margin-bottom: var(--sui-space-4); }
+.sui-mb-6 { margin-bottom: var(--sui-space-6); }
+.sui-mb-8 { margin-bottom: var(--sui-space-8); }
+.sui-mb-auto { margin-bottom: auto; }
+
+.sui-ml-0 { margin-left: 0px; }
+.sui-ml-1 { margin-left: var(--sui-space-1); }
+.sui-ml-2 { margin-left: var(--sui-space-2); }
+.sui-ml-4 { margin-left: var(--sui-space-4); }
+.sui-ml-6 { margin-left: var(--sui-space-6); }
+.sui-ml-8 { margin-left: var(--sui-space-8); }
+.sui-ml-auto { margin-left: auto; }
+
+/* --------------------------------------------------------------------------
+   5. SIZING (Width & Height)
+   -------------------------------------------------------------------------- */
+.sui-w-0 { width: 0px; }
+.sui-w-px { width: 1px; }
+.sui-w-1\/2 { width: 50%; }
+.sui-w-1\/3 { width: 33.333333%; }
+.sui-w-2\/3 { width: 66.666667%; }
+.sui-w-1\/4 { width: 25%; }
+.sui-w-3\/4 { width: 75%; }
+.sui-w-full { width: 100%; }
+.sui-w-screen { width: 100vw; }
+.sui-w-min { width: min-content; }
+.sui-w-max { width: max-content; }
+.sui-w-fit { width: fit-content; }
+.sui-w-auto { width: auto; }
+
+.sui-min-w-0 { min-width: 0px; }
+.sui-min-w-full { min-width: 100%; }
+.sui-min-w-min { min-width: min-content; }
+.sui-min-w-max { min-width: max-content; }
+.sui-min-w-fit { min-width: fit-content; }
+
+.sui-max-w-0 { max-width: 0px; }
+.sui-max-w-xs { max-width: 20rem; }
+.sui-max-w-sm { max-width: 24rem; }
+.sui-max-w-md { max-width: 28rem; }
+.sui-max-w-lg { max-width: 32rem; }
+.sui-max-w-xl { max-width: 36rem; }
+.sui-max-w-2xl { max-width: 42rem; }
+.sui-max-w-full { max-width: 100%; }
+.sui-max-w-min { max-width: min-content; }
+.sui-max-w-max { max-width: max-content; }
+.sui-max-w-fit { max-width: fit-content; }
+.sui-max-w-prose { max-width: 65ch; }
+
+.sui-h-0 { height: 0px; }
+.sui-h-px { height: 1px; }
+.sui-h-full { height: 100%; }
+.sui-h-screen { height: 100vh; }
+.sui-h-svh { height: 100svh; }
+.sui-h-lvh { height: 100lvh; }
+.sui-h-dvh { height: 100dvh; }
+.sui-h-min { height: min-content; }
+.sui-h-max { height: max-content; }
+.sui-h-fit { height: fit-content; }
+.sui-h-auto { height: auto; }
+
+.sui-min-h-0 { min-height: 0px; }
+.sui-min-h-full { min-height: 100%; }
+.sui-min-h-screen { min-height: 100vh; }
+.sui-min-h-dvh { min-height: 100dvh; }
+
+.sui-max-h-0 { max-height: 0px; }
+.sui-max-h-full { max-height: 100%; }
+.sui-max-h-screen { max-height: 100vh; }
+.sui-max-h-dvh { max-height: 100dvh; }
+
+/* --------------------------------------------------------------------------
+   6. TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+.sui-text-2xs { font-size: var(--sui-text-2xs); }
+.sui-text-xs { font-size: var(--sui-text-xs); }
+.sui-text-sm { font-size: var(--sui-text-sm); }
+.sui-text-base { font-size: var(--sui-text-base); }
+.sui-text-md { font-size: var(--sui-text-md); }
+.sui-text-lg { font-size: var(--sui-text-lg); }
+.sui-text-xl { font-size: var(--sui-text-xl); }
+.sui-text-2xl { font-size: var(--sui-text-2xl); }
+.sui-text-3xl { font-size: var(--sui-text-3xl); }
+.sui-text-4xl { font-size: var(--sui-text-4xl); }
+.sui-text-hero { font-size: var(--sui-text-hero); font-weight: 800; letter-spacing: -0.02em; }
+
+.sui-font-thin { font-weight: 100; }
+.sui-font-light { font-weight: 300; }
+.sui-font-normal { font-weight: 400; }
+.sui-font-medium { font-weight: 500; }
+.sui-font-semibold { font-weight: 600; }
+.sui-font-bold { font-weight: 700; }
+.sui-font-extrabold { font-weight: 800; }
+.sui-font-black { font-weight: 900; }
+
+.sui-tracking-tighter { letter-spacing: -0.04em; }
+.sui-tracking-tight { letter-spacing: -0.02em; }
+.sui-tracking-normal { letter-spacing: 0em; }
+.sui-tracking-wide { letter-spacing: 0.03em; }
+.sui-tracking-widest { letter-spacing: 0.08em; }
+
+.sui-leading-none { line-height: 1; }
+.sui-leading-tight { line-height: 1.15; }
+.sui-leading-snug { line-height: 1.3; }
+.sui-leading-normal { line-height: 1.5; }
+.sui-leading-relaxed { line-height: 1.7; }
+.sui-leading-loose { line-height: 2; }
+
+.sui-text-left { text-align: left; }
+.sui-text-center { text-align: center; }
+.sui-text-right { text-align: right; }
+.sui-text-justify { text-align: justify; }
+.sui-text-start { text-align: start; }
+.sui-text-end { text-align: end; }
+
+.sui-underline { text-decoration: underline; }
+.sui-no-underline { text-decoration: none; }
+.sui-line-through { text-decoration: line-through; }
+.sui-uppercase { text-transform: uppercase; }
+.sui-lowercase { text-transform: lowercase; }
+.sui-capitalize { text-transform: capitalize; }
+.sui-normal-case { text-transform: none; }
+
+.sui-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sui-text-wrap { text-wrap: wrap; }
+.sui-text-nowrap { white-space: nowrap; }
+.sui-text-balance { text-wrap: balance; }
+.sui-text-pretty { text-wrap: pretty; }
+.sui-break-normal { overflow-wrap: normal; word-break: normal; }
+.sui-break-words { overflow-wrap: break-word; }
+.sui-break-all { word-break: break-all; }
+
+/* --------------------------------------------------------------------------
+   7. COLOR TOKENS (Text, Background, Border)
+   -------------------------------------------------------------------------- */
+.sui-text-transparent { color: transparent; }
+.sui-text-current { color: currentColor; }
+.sui-text-primary { color: var(--sui-color-primary-500); }
+.sui-text-accent { color: var(--sui-color-accent-500); }
+.sui-text-success { color: var(--sui-color-success-600); }
+.sui-text-warning { color: var(--sui-color-warning-600); }
+.sui-text-danger { color: var(--sui-color-danger-600); }
+.sui-text-muted { color: var(--sui-text-muted); }
+.sui-text-faint { color: var(--sui-text-faint); }
+.sui-text-inverse { color: var(--sui-text-inverse); }
+.sui-text-strong { color: var(--sui-text-strong); }
+
+.sui-bg-transparent { background-color: transparent; }
+.sui-bg-current { background-color: currentColor; }
+.sui-bg-surface { background-color: var(--sui-surface); }
+.sui-bg-surface-hover { background-color: var(--sui-surface-hover); }
+.sui-bg-surface-active { background-color: var(--sui-surface-active); }
+.sui-bg-primary { background-color: var(--sui-color-primary-500); }
+.sui-bg-accent { background-color: var(--sui-color-accent-500); }
+.sui-bg-success { background-color: var(--sui-color-success-500); }
+.sui-bg-warning { background-color: var(--sui-color-warning-500); }
+.sui-bg-danger { background-color: var(--sui-color-danger-500); }
+.sui-bg-neutral { background-color: var(--sui-color-neutral-950); }
+.sui-bg-inverse { background-color: var(--sui-text-strong); }
+
+/* --------------------------------------------------------------------------
+   8. BORDERS & RADII
+   -------------------------------------------------------------------------- */
+.sui-rounded-none { border-radius: 0px; }
+.sui-rounded-xs { border-radius: var(--sui-radius-xs); }
+.sui-rounded-sm { border-radius: var(--sui-radius-sm); }
+.sui-rounded-md { border-radius: var(--sui-radius-md); }
+.sui-rounded-lg { border-radius: var(--sui-radius-lg); }
+.sui-rounded-xl { border-radius: var(--sui-radius-xl); }
+.sui-rounded-2xl { border-radius: var(--sui-radius-2xl); }
+.sui-rounded-3xl { border-radius: var(--sui-radius-3xl); }
+.sui-rounded-full { border-radius: var(--sui-radius-full); }
+
+.sui-border-0 { border-width: 0px; }
+.sui-border { border-width: 1px; }
+.sui-border-2 { border-width: 2px; }
+.sui-border-4 { border-width: 4px; }
+.sui-border-8 { border-width: 8px; }
+
+.sui-border-t-0 { border-top-width: 0px; }
+.sui-border-t { border-top-width: 1px; }
+.sui-border-t-2 { border-top-width: 2px; }
+
+.sui-border-r-0 { border-right-width: 0px; }
+.sui-border-r { border-right-width: 1px; }
+.sui-border-r-2 { border-right-width: 2px; }
+
+.sui-border-b-0 { border-bottom-width: 0px; }
+.sui-border-b { border-bottom-width: 1px; }
+.sui-border-b-2 { border-bottom-width: 2px; }
+
+.sui-border-l-0 { border-left-width: 0px; }
+.sui-border-l { border-left-width: 1px; }
+.sui-border-l-2 { border-left-width: 2px; }
+
+.sui-border-solid { border-style: solid; }
+.sui-border-dashed { border-style: dashed; }
+.sui-border-dotted { border-style: dotted; }
+.sui-border-double { border-style: double; }
+.sui-border-none { border-style: none; }
+
+.sui-border-transparent { border-color: transparent; }
+.sui-border-current { border-color: currentColor; }
+.sui-border-default { border-color: var(--sui-border); }
+.sui-border-subtle { border-color: var(--sui-border-subtle); }
+.sui-border-strong { border-color: var(--sui-border-strong); }
+.sui-border-primary { border-color: var(--sui-color-primary-500); }
+.sui-border-danger { border-color: var(--sui-color-danger-500); }
+
+/* --------------------------------------------------------------------------
+   9. FLEXBOX & GRID UTILITIES
+   -------------------------------------------------------------------------- */
+.sui-flex-row { flex-direction: row; }
+.sui-flex-row-reverse { flex-direction: row-reverse; }
+.sui-flex-col { flex-direction: column; }
+.sui-flex-col-reverse { flex-direction: column-reverse; }
+
+.sui-flex-wrap { flex-wrap: wrap; }
+.sui-flex-wrap-reverse { flex-wrap: wrap-reverse; }
+.sui-flex-nowrap { flex-wrap: nowrap; }
+
+.sui-flex-1 { flex: 1 1 0%; }
+.sui-flex-auto { flex: 1 1 auto; }
+.sui-flex-initial { flex: 0 1 auto; }
+.sui-flex-none { flex: none; }
+
+.sui-grow { flex-grow: 1; }
+.sui-grow-0 { flex-grow: 0; }
+.sui-shrink { flex-shrink: 1; }
+.sui-shrink-0 { flex-shrink: 0; }
+
+.sui-justify-start { justify-content: flex-start; }
+.sui-justify-end { justify-content: flex-end; }
+.sui-justify-center { justify-content: center; }
+.sui-justify-between { justify-content: space-between; }
+.sui-justify-around { justify-content: space-around; }
+.sui-justify-evenly { justify-content: space-evenly; }
+
+.sui-items-start { align-items: flex-start; }
+.sui-items-end { align-items: flex-end; }
+.sui-items-center { align-items: center; }
+.sui-items-baseline { align-items: baseline; }
+.sui-items-stretch { align-items: stretch; }
+
+.sui-content-center { align-content: center; }
+.sui-content-start { align-content: flex-start; }
+.sui-content-end { align-content: flex-end; }
+.sui-content-between { align-content: space-between; }
+.sui-content-around { align-content: space-around; }
+.sui-content-evenly { align-content: space-evenly; }
+
+.sui-self-auto { align-self: auto; }
+.sui-self-start { align-self: flex-start; }
+.sui-self-end { align-self: flex-end; }
+.sui-self-center { align-self: center; }
+.sui-self-stretch { align-self: stretch; }
+
+/* Grid Spanning */
+.sui-col-auto { grid-column: auto; }
+.sui-col-span-1 { grid-column: span 1 / span 1; }
+.sui-col-span-2 { grid-column: span 2 / span 2; }
+.sui-col-span-3 { grid-column: span 3 / span 3; }
+.sui-col-span-4 { grid-column: span 4 / span 4; }
+.sui-col-span-5 { grid-column: span 5 / span 5; }
+.sui-col-span-6 { grid-column: span 6 / span 6; }
+.sui-col-span-7 { grid-column: span 7 / span 7; }
+.sui-col-span-8 { grid-column: span 8 / span 8; }
+.sui-col-span-9 { grid-column: span 9 / span 9; }
+.sui-col-span-10 { grid-column: span 10 / span 10; }
+.sui-col-span-11 { grid-column: span 11 / span 11; }
+.sui-col-span-12 { grid-column: span 12 / span 12; }
+.sui-col-span-full { grid-column: 1 / -1; }
+
+.sui-row-auto { grid-row: auto; }
+.sui-row-span-1 { grid-row: span 1 / span 1; }
+.sui-row-span-2 { grid-row: span 2 / span 2; }
+.sui-row-span-3 { grid-row: span 3 / span 3; }
+.sui-row-span-4 { grid-row: span 4 / span 4; }
+.sui-row-span-5 { grid-row: span 5 / span 5; }
+.sui-row-span-6 { grid-row: span 6 / span 6; }
+.sui-row-span-full { grid-row: 1 / -1; }
+
+.sui-order-first { order: -9999; }
+.sui-order-last { order: 9999; }
+.sui-order-none { order: 0; }
+.sui-order-1 { order: 1; }
+.sui-order-2 { order: 2; }
+.sui-order-3 { order: 3; }
+.sui-order-4 { order: 4; }
+
+/* --------------------------------------------------------------------------
+   10. EFFECTS, OPACITY, & OVERLAYS
+   -------------------------------------------------------------------------- */
+.sui-shadow-none { box-shadow: 0 0 #0000; }
+.sui-shadow-xs { box-shadow: var(--sui-shadow-xs); }
+.sui-shadow-sm { box-shadow: var(--sui-shadow-sm); }
+.sui-shadow-md { box-shadow: var(--sui-shadow-md); }
+.sui-shadow-lg { box-shadow: var(--sui-shadow-lg); }
+.sui-shadow-xl { box-shadow: var(--sui-shadow-xl); }
+.sui-shadow-2xl { box-shadow: var(--sui-shadow-2xl); }
+.sui-shadow-inner { box-shadow: var(--sui-shadow-inner); }
+
+.sui-opacity-0 { opacity: 0; }
+.sui-opacity-10 { opacity: 0.1; }
+.sui-opacity-20 { opacity: 0.2; }
+.sui-opacity-30 { opacity: 0.3; }
+.sui-opacity-40 { opacity: 0.4; }
+.sui-opacity-50 { opacity: 0.5; }
+.sui-opacity-60 { opacity: 0.6; }
+.sui-opacity-70 { opacity: 0.7; }
+.sui-opacity-80 { opacity: 0.8; }
+.sui-opacity-90 { opacity: 0.9; }
+.sui-opacity-100 { opacity: 1; }
+
+.sui-mix-blend-normal { mix-blend-mode: normal; }
+.sui-mix-blend-multiply { mix-blend-mode: multiply; }
+.sui-mix-blend-screen { mix-blend-mode: screen; }
+.sui-mix-blend-overlay { mix-blend-mode: overlay; }
+.sui-mix-blend-darken { mix-blend-mode: darken; }
+.sui-mix-blend-lighten { mix-blend-mode: lighten; }
+.sui-mix-blend-color-dodge { mix-blend-mode: color-dodge; }
+.sui-mix-blend-color-burn { mix-blend-mode: color-burn; }
+.sui-mix-blend-hard-light { mix-blend-mode: hard-light; }
+.sui-mix-blend-soft-light { mix-blend-mode: soft-light; }
+.sui-mix-blend-difference { mix-blend-mode: difference; }
+.sui-mix-blend-exclusion { mix-blend-mode: exclusion; }
+
+.sui-backdrop-blur-none { backdrop-filter: blur(0); -webkit-backdrop-filter: blur(0); }
+.sui-backdrop-blur-sm { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.sui-backdrop-blur { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.sui-backdrop-blur-md { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.sui-backdrop-blur-lg { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.sui-backdrop-blur-xl { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+
+/* --------------------------------------------------------------------------
+   11. INTERACTIVITY & CURSORS
+   -------------------------------------------------------------------------- */
+.sui-cursor-auto { cursor: auto; }
+.sui-cursor-default { cursor: default; }
+.sui-cursor-pointer { cursor: pointer; }
+.sui-cursor-wait { cursor: wait; }
+.sui-cursor-text { cursor: text; }
+.sui-cursor-move { cursor: move; }
+.sui-cursor-help { cursor: help; }
+.sui-cursor-not-allowed { cursor: not-allowed; }
+.sui-cursor-none { cursor: none; }
+.sui-cursor-progress { cursor: progress; }
+
+.sui-pointer-events-none { pointer-events: none; }
+.sui-pointer-events-auto { pointer-events: auto; }
+
+.sui-resize-none { resize: none; }
+.sui-resize-y { resize: vertical; }
+.sui-resize-x { resize: horizontal; }
+.sui-resize { resize: both; }
+
+.sui-select-none { user-select: none; -webkit-user-select: none; }
+.sui-select-text { user-select: text; -webkit-user-select: text; }
+.sui-select-all { user-select: all; -webkit-user-select: all; }
+.sui-select-auto { user-select: auto; -webkit-user-select: auto; }
+
+.sui-touch-auto { touch-action: auto; }
+.sui-touch-none { touch-action: none; }
+.sui-touch-pan-x { touch-action: pan-x; }
+.sui-touch-pan-y { touch-action: pan-y; }
+.sui-touch-manipulation { touch-action: manipulation; }
+
+/* --------------------------------------------------------------------------
+   12. OVERFLOW
+   -------------------------------------------------------------------------- */
+.sui-overflow-auto { overflow: auto; }
+.sui-overflow-hidden { overflow: hidden; }
+.sui-overflow-clip { overflow: clip; }
+.sui-overflow-visible { overflow: visible; }
+.sui-overflow-scroll { overflow: scroll; }
+.sui-overflow-x-auto { overflow-x: auto; }
+.sui-overflow-y-auto { overflow-y: auto; }
+.sui-overflow-x-hidden { overflow-x: hidden; }
+.sui-overflow-y-hidden { overflow-y: hidden; }
+
+/* --------------------------------------------------------------------------
+   13. TRANSITIONS & TRANSFORMS
+   -------------------------------------------------------------------------- */
+.sui-transition-none { transition-property: none; }
+.sui-transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.sui-transition { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.sui-transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.sui-transition-opacity { transition-property: opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.sui-transition-shadow { transition-property: box-shadow; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.sui-transition-transform { transition-property: transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+
+.sui-duration-75 { transition-duration: 75ms; }
+.sui-duration-100 { transition-duration: 100ms; }
+.sui-duration-150 { transition-duration: 150ms; }
+.sui-duration-200 { transition-duration: 200ms; }
+.sui-duration-300 { transition-duration: 300ms; }
+.sui-duration-500 { transition-duration: 500ms; }
+.sui-duration-700 { transition-duration: 700ms; }
+.sui-duration-1000 { transition-duration: 1000ms; }
+
+.sui-ease-linear { transition-timing-function: linear; }
+.sui-ease-in { transition-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+.sui-ease-out { transition-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+.sui-ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Native Syntax Highlighter Theme (Enforced) */
+pre code { color: #d4d4d4 !important; }
+
+/* HTML Tokens */
+.token.comment { color: #6a9955 !important; }
+.token.tag { color: #569cd6 !important; }
+.token.attr-name { color: #9cdcfe !important; }
+.token.attr-value { color: #ce9178 !important; }
+.token.punctuation { color: #808080 !important; }
+
+/* CSS Tokens */
+.token.selector { color: #d7ba7d !important; }
+.token.property { color: #9cdcfe !important; }
+.token.function { color: #dcdcaa !important; }
+.token.value { color: #b5cea8 !important; }
+
+/* ==========================================================================
+   14. SEMANTIC COLOR UTILITIES (SUI v2.1.0)
+   ========================================================================== */
+.sui-bg-primary { background-color: var(--sui-color-primary-500) !important; color: var(--sui-text-contrast, white); }
+.sui-bg-accent  { background-color: var(--sui-color-accent-500) !important; color: white; }
+.sui-bg-success { background-color: var(--sui-color-success-500) !important; color: white; }
+.sui-bg-warning { background-color: var(--sui-color-warning-500) !important; color: black; }
+.sui-bg-danger  { background-color: var(--sui-color-danger-500) !important; color: white; }
+.sui-bg-info    { background-color: var(--sui-color-info-500, oklch(60% 0.18 215)) !important; color: white; }
+
+/* Subtle Tints */
+.sui-bg-primary-subtle { background-color: var(--sui-primary-subtle) !important; color: var(--sui-color-primary-500); }
+.sui-bg-accent-subtle  { background-color: oklch(from var(--sui-color-accent-500) l c h / 0.12) !important; color: var(--sui-color-accent-500); }
+.sui-bg-success-subtle { background-color: oklch(from var(--sui-color-success-500) l c h / 0.12) !important; color: var(--sui-color-success-500); }
+.sui-bg-warning-subtle { background-color: oklch(from var(--sui-color-warning-500) l c h / 0.14) !important; color: var(--sui-color-warning-500); }
+.sui-bg-danger-subtle  { background-color: oklch(from var(--sui-color-danger-500) l c h / 0.12) !important; color: var(--sui-color-danger-500); }
+.sui-bg-info-subtle    { background-color: oklch(from var(--sui-color-info-500, oklch(60% 0.18 215)) l c h / 0.12) !important; color: var(--sui-color-info-500, oklch(60% 0.18 215)); }
+
+/* Semantic Text Colors */
+.sui-text-primary { color: var(--sui-color-primary-500) !important; }
+.sui-text-accent  { color: var(--sui-color-accent-500) !important; }
+.sui-text-success { color: var(--sui-color-success-500) !important; }
+.sui-text-warning { color: var(--sui-color-warning-500) !important; }
+.sui-text-danger  { color: var(--sui-color-danger-500) !important; }
+.sui-text-info    { color: var(--sui-color-info-500, oklch(60% 0.18 215)) !important; }
+
+/* ==========================================================================
+   15. ASPECT RATIOS (SUI v2.1.0)
+   ========================================================================== */
+.sui-aspect-square { aspect-ratio: 1 / 1; }
+.sui-aspect-video  { aspect-ratio: 16 / 9; }
+.sui-aspect-4-3    { aspect-ratio: 4 / 3; }
+.sui-aspect-3-4    { aspect-ratio: 3 / 4; }
+.sui-aspect-auto   { aspect-ratio: auto; }
+
+/* ==========================================================================
+   16. Z-INDEX SCALE (SUI v2.1.0)
+   ========================================================================== */
+.sui-z-0        { z-index: 0; }
+.sui-z-10       { z-index: 10; }
+.sui-z-20       { z-index: 20; }
+.sui-z-30       { z-index: 30; }
+.sui-z-40       { z-index: 40; }
+.sui-z-50       { z-index: 50; }
+.sui-z-dropdown { z-index: 1000; }
+.sui-z-sticky   { z-index: 1020; }
+.sui-z-modal    { z-index: 1050; }
+.sui-z-popover  { z-index: 1060; }
+.sui-z-toast    { z-index: 1090; }
+
+/* ==========================================================================
+   17. DIRECTIONAL BORDERS (SUI v2.1.0)
+   ========================================================================== */
+.sui-border-t { border-top: 1px solid var(--sui-border); }
+.sui-border-b { border-bottom: 1px solid var(--sui-border); }
+.sui-border-l { border-left: 1px solid var(--sui-border); }
+.sui-border-r { border-right: 1px solid var(--sui-border); }
+.sui-border-x { border-left: 1px solid var(--sui-border); border-right: 1px solid var(--sui-border); }
+.sui-border-y { border-top: 1px solid var(--sui-border); border-bottom: 1px solid var(--sui-border); }
+
+.sui-border-none   { border: none !important; }
+.sui-border-dashed { border-style: dashed; }
+.sui-border-dotted { border-style: dotted; }
+
+
+/* Layer: animations.css */
+/* -------------------------------------------------------------------------- */
+/* SUI.CSS - PREMIUM ANIMATION ENGINE                                         */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  /* Premium Easing Curves */
+  --sui-ease-smooth: cubic-bezier(0.16, 1, 0.3, 1); /* Apple-style buttery smooth */
+  --sui-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Natural overshoot */
+  --sui-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Playful pop */
+  
+  /* Animation Durations */
+  --sui-duration-fast: 200ms;
+  --sui-duration-normal: 400ms;
+  --sui-duration-slow: 800ms;
+}
+
+/* ==========================================================================
+   1. ENTRY REVEALS (Page Load & Scroll In)
+   ========================================================================== */
+
+/* The "Luxury" Blur Reveal - Starts blurred and moves up into focus */
+@keyframes sui-blur-in {
+  0% { opacity: 0; filter: blur(12px); transform: translateY(30px) scale(0.98); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+.sui-animate-blur-in {
+  animation: sui-blur-in var(--sui-duration-slow) var(--sui-ease-smooth) forwards;
+  opacity: 0; /* Prevent flash */
+  will-change: transform, opacity, filter;
+}
+
+/* Spring Up - Pops up with a slight natural bounce */
+@keyframes sui-spring-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.sui-animate-spring-up {
+  animation: sui-spring-up var(--sui-duration-normal) var(--sui-ease-spring) forwards;
+  opacity: 0;
+}
+
+/* Scale Fade - Subtle zoom in for cards and images */
+@keyframes sui-scale-fade {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.sui-animate-scale-fade {
+  animation: sui-scale-fade var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+  opacity: 0;
+}
+
+/* ==========================================================================
+   2. STAGGER DELAYS (For lists, grids, and sequences)
+   ========================================================================== */
+.sui-delay-1 { animation-delay: 100ms; }
+.sui-delay-2 { animation-delay: 200ms; }
+.sui-delay-3 { animation-delay: 300ms; }
+.sui-delay-4 { animation-delay: 400ms; }
+.sui-delay-5 { animation-delay: 500ms; }
+
+/* ==========================================================================
+   3. MICRO-INTERACTIONS (Hover & Active States)
+   ========================================================================== */
+
+/* Lift - Elevates the element on hover */
+.sui-hover-lift {
+  transition: transform var(--sui-duration-fast) var(--sui-ease-spring), box-shadow var(--sui-duration-fast) var(--sui-ease-smooth);
+}
+.sui-hover-lift:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 24px -8px oklch(0% 0 0 / 0.15);
+}
+
+/* Push - Compresses the element when clicked (Great for buttons) */
+.sui-active-push:active {
+  transform: scale(0.95);
+  transition: transform 100ms ease;
+}
+
+/* Glow - Adds a pulsating neon aura on hover */
+.sui-hover-glow {
+  transition: box-shadow var(--sui-duration-normal) var(--sui-ease-smooth);
+}
+.sui-hover-glow:hover {
+  box-shadow: 0 0 20px oklch(from var(--sui-primary-500) l c h / 0.5), 
+              0 0 40px oklch(from var(--sui-primary-500) l c h / 0.2);
+}
+
+/* ==========================================================================
+   4. CONTINUOUS MOTION (Loading & Idle States)
+   ========================================================================== */
+
+/* Shimmer - For Skeleton Loaders */
+@keyframes sui-shimmer-sweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.sui-animate-shimmer {
+  background: linear-gradient(90deg, 
+    var(--sui-surface-hover) 25%, 
+    var(--sui-border) 50%, 
+    var(--sui-surface-hover) 75%
+  );
+  background-size: 200% 100%;
+  animation: sui-shimmer-sweep 2s infinite linear;
+}
+
+/* Floating - Gentle up/down idle movement */
+@keyframes sui-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.sui-animate-float {
+  animation: sui-float 3s ease-in-out infinite;
+}
+
+/* Pulse Glow - Breathing effect for notification dots or recording states */
+@keyframes sui-pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 oklch(from var(--sui-primary-500) l c h / 0.7); }
+  50% { opacity: 0.8; transform: scale(1.05); box-shadow: 0 0 0 10px oklch(from var(--sui-primary-500) l c h / 0); }
+}
+.sui-animate-pulse-glow {
+  animation: sui-pulse-glow 2s infinite;
+}
+
+/* Continuous Slow Spin - For loading wheels or decorative background gradients */
+@keyframes sui-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.sui-animate-spin {
+  animation: sui-spin-slow 8s linear infinite;
+}
+
+/* ==========================================================================
+   5. ACCESSIBILITY (Respect User Preferences)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   ADDITIONAL 10 ULTRA PRO MAX MOTION PRIMITIVES
+   ========================================================================== */
+
+/* 7. Slide In Right (Off-canvas & Drawers) */
+@keyframes sui-slide-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.sui-animate-slide-right {
+  animation: sui-slide-right var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* 8. Slide Up Fade (Bottom sheets & Toasts) */
+@keyframes sui-slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sui-animate-slide-up {
+  animation: sui-slide-up var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+  opacity: 0;
+}
+
+/* 9. Jelly / Squash & Stretch Pop */
+@keyframes sui-jelly {
+  0% { transform: scale(1, 1); }
+  30% { transform: scale(1.25, 0.75); }
+  40% { transform: scale(0.75, 1.25); }
+  50% { transform: scale(1.15, 0.85); }
+  65% { transform: scale(0.95, 1.05); }
+  75% { transform: scale(1.05, 0.95); }
+  100% { transform: scale(1, 1); }
+}
+.sui-animate-jelly {
+  animation: sui-jelly 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* 10. Shake Warning (Error states, invalid inputs) */
+@keyframes sui-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+.sui-animate-shake {
+  animation: sui-shake 0.45s ease-in-out both;
+}
+
+/* 11. Heartbeat / Reaction Burst (Like button, favorite toggle) */
+@keyframes sui-heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.3); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.3); }
+  70% { transform: scale(1); }
+}
+.sui-animate-heartbeat {
+  animation: sui-heartbeat 1.2s ease-in-out both;
+}
+
+/* 12. 3D Card Flip In */
+@keyframes sui-flip-3d {
+  from { opacity: 0; transform: perspective(800px) rotateY(-90deg); }
+  to { opacity: 1; transform: perspective(800px) rotateY(0deg); }
+}
+.sui-animate-flip-3d {
+  animation: sui-flip-3d var(--sui-duration-slow) var(--sui-ease-smooth) forwards;
+  transform-style: preserve-3d;
+  opacity: 0;
+}
+
+/* 13. Shimmer Border Glow (Continuous luxury rotating ring) */
+@keyframes sui-border-spin {
+  0% { --sui-angle: 0deg; }
+  100% { --sui-angle: 360deg; }
+}
+@property --sui-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.sui-animate-border-glow {
+  background: linear-gradient(var(--sui-surface), var(--sui-surface)) padding-box,
+              conic-gradient(from var(--sui-angle), var(--sui-color-primary-500), var(--sui-color-accent-500), var(--sui-color-primary-500)) border-box;
+  border: 2px solid transparent;
+  animation: sui-border-spin 4s linear infinite;
+}
+
+/* 14. Aurora Gradient Flow (Hero text or dynamic backgrounds) */
+@keyframes sui-gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.sui-animate-gradient-flow {
+  background: linear-gradient(-45deg, var(--sui-color-primary-500), var(--sui-color-accent-500), #ec4899, #8b5cf6);
+  background-size: 300% 300%;
+  animation: sui-gradient-flow 6s ease infinite;
+}
+
+/* 15. Glitch Snap (Cyberpunk / Matrix micro-glitch) */
+@keyframes sui-glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+.sui-animate-glitch {
+  animation: sui-glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* 16. Ripple Click Aura (Expands & fades) */
+@keyframes sui-ripple-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.sui-animate-ripple {
+  position: relative;
+}
+.sui-animate-ripple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--sui-color-primary-500);
+  animation: sui-ripple-ring 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+/* ==========================================================================
+   SCROLL-DRIVEN ANIMATIONS ENGINE
+   ========================================================================== */
+
+/* 1. Viewport Reading Progress Bar */
+@keyframes sui-scroll-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.sui-scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sui-color-primary-500), var(--sui-color-accent-500));
+  transform-origin: 0 50%;
+  animation: sui-scroll-progress auto linear;
+  animation-timeline: scroll(root block);
+  z-index: 1000;
+}
+
+/* 2. Scroll Reveal for Cards / Feed Items */
+@keyframes sui-view-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.sui-scroll-reveal {
+  animation: sui-view-reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 30%;
+}
+
+/* 3. Parallax Header / Image Zoom */
+@keyframes sui-parallax-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.15); }
+}
+
+.sui-scroll-parallax {
+  animation: sui-parallax-zoom linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0vh 100vh;
+}
+
+/* ==========================================================================
+   EXTENDED MOTION SUITE (SUI v2.1.0)
+   ========================================================================== */
+
+/* 17. Wiggle / Playful Bell Vibration */
+@keyframes sui-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(-14deg); }
+  30% { transform: rotate(12deg); }
+  45% { transform: rotate(-8deg); }
+  60% { transform: rotate(6deg); }
+  75% { transform: rotate(-3deg); }
+}
+.sui-animate-wiggle {
+  animation: sui-wiggle 0.75s ease-in-out both;
+  transform-origin: 50% 5em;
+}
+
+/* 18. Rubber Band Elasticity */
+@keyframes sui-rubber {
+  0% { transform: scale3d(1, 1, 1); }
+  30% { transform: scale3d(1.25, 0.75, 1); }
+  40% { transform: scale3d(0.75, 1.25, 1); }
+  50% { transform: scale3d(1.15, 0.85, 1); }
+  65% { transform: scale3d(0.95, 1.05, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+  100% { transform: scale3d(1, 1, 1); }
+}
+.sui-animate-rubber {
+  animation: sui-rubber 0.9s both;
+}
+
+/* 19. Bounce In Pop */
+@keyframes sui-bounce-in {
+  0% { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+  20% { transform: scale3d(1.1, 1.1, 1.1); }
+  40% { transform: scale3d(0.9, 0.9, 0.9); }
+  60% { opacity: 1; transform: scale3d(1.03, 1.03, 1.03); }
+  80% { transform: scale3d(0.97, 0.97, 0.97); }
+  100% { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+.sui-animate-bounce-in {
+  animation: sui-bounce-in 0.75s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+/* 20. Zoom In Focus */
+@keyframes sui-zoom-in {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.sui-animate-zoom-in {
+  animation: sui-zoom-in var(--sui-duration-normal) var(--sui-ease-spring) forwards;
+}
+
+/* 21. Swing Pendulum */
+@keyframes sui-swing {
+  20% { transform: rotate3d(0, 0, 1, 15deg); }
+  40% { transform: rotate3d(0, 0, 1, -10deg); }
+  60% { transform: rotate3d(0, 0, 1, 5deg); }
+  80% { transform: rotate3d(0, 0, 1, -5deg); }
+  100% { transform: rotate3d(0, 0, 1, 0deg); }
+}
+.sui-animate-swing {
+  transform-origin: top center;
+  animation: sui-swing 1s ease-in-out both;
+}
+
+/* 22. Error / Warning Shake */
+@keyframes sui-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80% { transform: translateX(6px); }
+}
+.sui-animate-shake {
+  animation: sui-shake 0.6s ease-in-out both;
+}
+
+/* 23. Rotate In Spiral */
+@keyframes sui-rotate-in {
+  0% { opacity: 0; transform: rotate(-200deg) scale(0.4); }
+  100% { opacity: 1; transform: rotate(0) scale(1); }
+}
+.sui-animate-rotate-in {
+  animation: sui-rotate-in 0.6s var(--sui-ease-spring) forwards;
+}
+
+/* 24. Slide Down Curtain */
+@keyframes sui-slide-down {
+  0% { opacity: 0; transform: translateY(-40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.sui-animate-slide-down {
+  animation: sui-slide-down var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+}
+
+/* 25. Lateral Slide Left */
+@keyframes sui-slide-left {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.sui-animate-slide-left {
+  animation: sui-slide-left var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+}
+
+/* 26. Lateral Slide Right */
+@keyframes sui-slide-right {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.sui-animate-slide-right {
+  animation: sui-slide-right var(--sui-duration-normal) var(--sui-ease-smooth) forwards;
+}
+
+/* 27. Shimmer Text */
+@keyframes sui-shimmer-text {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.sui-animate-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--sui-text) 0%,
+    oklch(from var(--sui-color-primary-500) l c h / 0.9) 25%,
+    var(--sui-text) 50%,
+    oklch(from var(--sui-color-accent-500) l c h / 0.9) 75%,
+    var(--sui-text) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sui-shimmer-text 4s linear infinite;
+}
+
+/* 28. Continuous Slow Spin */
+@keyframes sui-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.sui-animate-spin-slow {
+  animation: sui-spin-slow 12s linear infinite;
+}
+
+/* Micro-Interaction Hover Classes */
+.sui-hover-wiggle:hover {
+  animation: sui-wiggle 0.6s ease-in-out;
+}
+.sui-hover-grow {
+  transition: transform var(--sui-duration-fast) var(--sui-ease-spring);
+}
+.sui-hover-grow:hover {
+  transform: scale(1.08);
+}
+.sui-hover-rotate {
+  transition: transform var(--sui-duration-fast) var(--sui-ease-spring);
+}
+.sui-hover-rotate:hover {
+  transform: rotate(6deg) scale(1.04);
+}
+.sui-hover-glow {
+  transition: box-shadow var(--sui-duration-fast) var(--sui-ease-smooth);
+}
+.sui-hover-glow:hover {
+  box-shadow: 0 0 25px oklch(from var(--sui-color-primary-500) l c h / 0.45);
+}
+
+
+/* Layer: advanced.css */
+/* ==========================================================================
+   SUI.CSS - ADVANCED NATIVE APIs & LOGIC ENGINE (2026 SPECS)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. SCROLL-DRIVEN ANIMATIONS & VIEW TIMELINES
+   ========================================================================== */
+
+/* Reading Progress Bar */
+@keyframes sui-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.sui-scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--sui-color-primary-500), var(--sui-color-accent-500));
+  transform-origin: 0 50%;
+  animation: sui-progress linear;
+  animation-timeline: scroll(root);
+  z-index: var(--sui-z-toast);
+}
+
+/* Scroll-Linked Shrinking Header (Zero JS Sticky Nav) */
+@keyframes sui-header-shrink {
+  from { padding-block: var(--sui-space-6); background: transparent; backdrop-filter: blur(0px); border-bottom-color: transparent; }
+  to { padding-block: var(--sui-space-3); background: oklch(from var(--sui-surface) l c h / 0.85); backdrop-filter: blur(12px); border-bottom-color: var(--sui-border); }
+}
+.sui-header-dynamic {
+  position: sticky;
+  top: 0;
+  animation: sui-header-shrink linear forwards;
+  animation-timeline: scroll(root block);
+  animation-range: 0 150px; /* Completes animation after 150px of scrolling */
+  z-index: var(--sui-z-sticky);
+}
+
+/* Scroll Reveal Engine for Cards and Images */
+@keyframes sui-reveal-card {
+  from { opacity: 0; transform: translateY(80px) scale(0.95); clip-path: inset(10% 10% 10% 10% round 16px); }
+  to { opacity: 1; transform: translateY(0) scale(1); clip-path: inset(0% 0% 0% 0% round 16px); }
+}
+.sui-view-reveal {
+  animation: sui-reveal-card linear both;
+  animation-timeline: view();
+  animation-range: entry 5% cover 30%; /* Starts when 5% visible, finishes at 30% */
+}
+
+/* Parallax Image Engine */
+@keyframes sui-parallax {
+  from { object-position: 50% 0%; }
+  to { object-position: 50% 100%; }
+}
+.sui-img-parallax {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  animation: sui-parallax linear;
+  animation-timeline: view();
+}
+
+
+/* ==========================================================================
+   2. COMMAND MODULE (ANCHOR POSITIONING & POPOVERS)
+   ========================================================================== */
+
+/* Universal Anchor Reference */
+.sui-anchor { anchor-name: --sui-dynamic-anchor; }
+
+/* Base Popover Engine */
+.sui-popover {
+  position-anchor: --sui-dynamic-anchor;
+  margin: 0;
+  inset: auto;
+  border: 1px solid var(--sui-border-strong);
+  background: var(--sui-surface);
+  border-radius: var(--sui-radius-lg);
+  padding: var(--sui-space-4);
+  box-shadow: var(--sui-shadow-lg);
+  
+  /* @starting-style transition for smooth entry/exit */
+  opacity: 0;
+  transform: translateY(var(--sui-popover-offset, -10px));
+  transition: opacity 0.25s var(--sui-ease-spring), transform 0.25s var(--sui-ease-spring), display 0.25s allow-discrete, overlay 0.25s allow-discrete;
+}
+.sui-popover:popover-open { opacity: 1; transform: translateY(0); }
+@starting-style { .sui-popover:popover-open { opacity: 0; transform: translateY(var(--sui-popover-offset, -10px)); } }
+
+/* Intelligent Positioning Variants */
+.sui-popover-bottom { position-area: bottom span-all; position-try-fallbacks: flip-block, flip-inline; --sui-popover-offset: -10px; }
+.sui-popover-top { position-area: top span-all; position-try-fallbacks: flip-block, flip-inline; --sui-popover-offset: 10px; }
+.sui-popover-right { position-area: right span-all; position-try-fallbacks: flip-inline, flip-block; --sui-popover-offset: -10px; }
+
+/* Anchor-Sized Menus (Dropdown matches exact width of the button) */
+.sui-dropdown-menu {
+  position-area: bottom span-all;
+  width: anchor-size(width); /* Matches anchor width natively */
+  margin-top: var(--sui-space-2);
+}
+
+
+/* ==========================================================================
+   3. ADVANCED LAYOUTS (MASONRY & CAROUSELS)
+   ========================================================================== */
+
+/* Native CSS Masonry (Pinterest-style grids without JS) */
+.sui-masonry {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-rows: masonry; /* The 2026 Masonry Spec */
+  gap: var(--sui-space-6);
+  align-tracks: stretch;
+}
+
+/* Ultra Pro Max Carousel (Snap, Markers, Auto-scroll) */
+.sui-carousel {
+  display: flex;
+  gap: var(--sui-space-4);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--sui-space-4);
+  scroll-marker-group: after; /* Native Pagination Dots */
+  padding-bottom: var(--sui-space-6);
+  scrollbar-width: none; /* Hide scrollbar for clean UI */
+}
+.sui-carousel::-webkit-scrollbar { display: none; }
+
+.sui-carousel-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always; /* Forces stopping on each slide */
+}
+@media (min-width: 768px) { .sui-carousel-slide { flex: 0 0 calc(50% - var(--sui-space-2)); } }
+@media (min-width: 1024px) { .sui-carousel-slide { flex: 0 0 calc(33.333% - var(--sui-space-3)); } }
+
+/* Carousel Pagination Styling */
+.sui-carousel-slide::scroll-marker {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--sui-border-strong);
+  cursor: pointer;
+  transition: all 0.3s var(--sui-ease-smooth);
+}
+.sui-carousel-slide::scroll-marker:target-current {
+  background-color: var(--sui-color-primary-500);
+  width: 24px; /* Expands active dot into a pill shape */
+  border-radius: var(--sui-radius-full);
+}
+.sui-carousel::scroll-marker-group {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+
+/* ==========================================================================
+   4. NEXT-GEN FORM CONTROLS
+   ========================================================================== */
+
+/* Auto-expanding Textarea (Replaces JS resize scripts) */
+.sui-textarea-auto {
+  field-sizing: content; /* Expands height natively based on text content */
+  min-height: 3lh; /* Minimum 3 lines of height */
+  max-height: 10lh; /* Max 10 lines before scrolling */
+  resize: none;
+}
+
+/* Native Custom Select Picker (Customizing the dropdown UI directly) */
+select.sui-select-custom, 
+selectlist.sui-selectlist {
+  appearance: none;
+}
+select.sui-select-custom::picker(select) {
+  /* Targets the actual dropdown window rendered by the OS */
+  background: var(--sui-surface);
+  border: 1px solid var(--sui-border-strong);
+  border-radius: var(--sui-radius-md);
+  padding: var(--sui-space-2);
+  box-shadow: var(--sui-shadow-lg);
+}
+
+
+/* ==========================================================================
+   5. VIEW TRANSITIONS API (NATIVE APP ROUTING)
+   ========================================================================== */
+
+/* Base Transition Configuration */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Page Forward / Backward Directional Logic */
+:root:active-view-transition-type(forwards) {
+  &::view-transition-old(page-content) { animation: sui-slide-out-left 0.4s both; }
+  &::view-transition-new(page-content) { animation: sui-slide-in-right 0.4s both; }
+}
+:root:active-view-transition-type(backwards) {
+  &::view-transition-old(page-content) { animation: sui-slide-out-right 0.4s both; }
+  &::view-transition-new(page-content) { animation: sui-slide-in-left 0.4s both; }
+}
+
+/* Targeted Element Morphing */
+.sui-vt-hero { view-transition-name: hero-image; }
+.sui-vt-profile-dp { view-transition-name: profile-dp; }
+.sui-vt-header { view-transition-name: site-header; }
+
+
+/* ==========================================================================
+   6. CONTAINER STYLE QUERIES & LOGIC ENGINE
+   ========================================================================== */
+
+/* Define the Container Name */
+.sui-logic-container {
+  container-name: sui-logic;
+}
+
+/* Components style themselves based on the parent's CSS variables */
+@container style(--theme: dark) {
+  .sui-smart-card {
+    background: oklch(20% 0.05 var(--sui-brand-hue));
+    color: white;
+    border-color: oklch(30% 0.05 var(--sui-brand-hue));
+  }
+}
+
+@container style(--layout: dense) {
+  .sui-smart-card {
+    padding: var(--sui-space-2);
+    font-size: var(--sui-text-sm);
+  }
+}
+
+/* ==========================================================================
+   7. MATH FUNCTIONS & CIRCULAR LAYOUTS
+   ========================================================================== */
+
+/* Trigonometric Circular Avatar Arrangement */
+.sui-circle-cluster {
+  display: grid;
+  place-items: center;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.sui-circle-item {
+  position: absolute;
+  /* Uses sin/cos to place items in a perfect circle dynamically */
+  --angle: calc(360deg / var(--total) * var(--index));
+  --radius: 80px;
+  transform: translate(
+    calc(cos(var(--angle)) * var(--radius)),
+    calc(sin(var(--angle)) * var(--radius))
+  );
+}
+
+
+/* ==========================================================================
+   8. HEIGHT: AUTO ANIMATIONS (ACCORDIONS)
+   ========================================================================== */
+
+/* The Holy Grail of CSS: Animating to height: auto natively */
+.sui-accordion {
+  interpolate-size: allow-keywords; /* Enables calc() and animations to keyword sizes */
+}
+.sui-accordion-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.4s var(--sui-ease-spring), opacity 0.3s;
+  opacity: 0;
+}
+.sui-accordion:has(input:checked) .sui-accordion-content,
+.sui-accordion[open] .sui-accordion-content {
+  height: auto; /* Now animates smoothly thanks to interpolate-size */
+  opacity: 1;
+}
+
+/* ==========================================================================
+   9. CUSTOM HIGHLIGHT API (SEARCH RESULTS)
+   ========================================================================== */
+
+/* Styles text ranges mapped via the CSS Highlight API */
+::highlight(sui-search-result) {
+  background-color: var(--sui-color-warning-500);
+  color: var(--sui-bg);
+  font-weight: bold;
+}
+

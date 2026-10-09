@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "node build.cjs && vite build",
+    "build": "node build.cjs && vite build && node build.cjs --post",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "build:bundle": "node build.cjs",
