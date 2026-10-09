@@ -1,6 +1,24 @@
 const fs = require('fs');
 const path = require('path');
-const esbuild = require('esbuild');
+
+let esbuild = null;
+try {
+  esbuild = require('esbuild');
+} catch (e) {
+  try {
+    const vitePath = require.resolve('vite');
+    const viteEsbuild = path.join(path.dirname(vitePath), '../esbuild');
+    esbuild = require(viteEsbuild);
+  } catch (e2) {
+    esbuild = null;
+  }
+}
+
+if (!esbuild) {
+  console.warn('\n⚠️  [NOTICE] "esbuild" is not yet installed in your local node_modules.');
+  console.warn('💡 To install it, run: npm install');
+  console.warn('⚡ Using built-in fallback compiler in the meantime...\n');
+}
 
 const FRAMEWORK_VERSION = '2.1.0';
 const CSS_BANNER = `/*!
@@ -46,12 +64,24 @@ function buildCss() {
     }
   }
 
-  // Minify CSS using esbuild
-  const minifiedCss = esbuild.transformSync(fullCss, {
-    loader: 'css',
-    minify: true,
-    banner: CSS_BANNER.trim()
-  });
+  // Minify CSS
+  let minifiedCssCode = '';
+  if (esbuild) {
+    const minifiedCss = esbuild.transformSync(fullCss, {
+      loader: 'css',
+      minify: true,
+      banner: CSS_BANNER.trim()
+    });
+    minifiedCssCode = minifiedCss.code;
+  } else {
+    const stripped = fullCss
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .replace(/\s+/g, ' ')
+      .replace(/\s*([{}:;,>+~])\s*/g, '$1')
+      .replace(/;\}/g, '}')
+      .trim();
+    minifiedCssCode = CSS_BANNER.trim() + '\n' + stripped;
+  }
 
   // Write unminified CSS
   fs.writeFileSync('dist/sui.css', fullCss);
@@ -59,33 +89,48 @@ function buildCss() {
   fs.writeFileSync('public/dist/sui.css', fullCss);
 
   // Write minified CSS
-  fs.writeFileSync('dist/sui.min.css', minifiedCss.code);
-  fs.writeFileSync('public/sui.min.css', minifiedCss.code);
-  fs.writeFileSync('public/dist/sui.min.css', minifiedCss.code);
+  fs.writeFileSync('dist/sui.min.css', minifiedCssCode);
+  fs.writeFileSync('public/sui.min.css', minifiedCssCode);
+  fs.writeFileSync('public/dist/sui.min.css', minifiedCssCode);
 
-  console.log(`✓ CSS Bundle generated: dist/sui.css (${fullCss.length} bytes) & dist/sui.min.css (${minifiedCss.code.length} bytes)`);
+  console.log(`✓ CSS Bundle generated: dist/sui.css (${fullCss.length} bytes) & dist/sui.min.css (${minifiedCssCode.length} bytes)`);
 }
 
 function buildJs() {
-  // 1. Unminified JS
-  esbuild.buildSync({
-    entryPoints: ['src/sui.js'],
-    bundle: true,
-    minify: false,
-    banner: { js: JS_BANNER },
-    outfile: 'dist/sui.js'
-  });
+  const srcJs = fs.readFileSync('src/sui.js', 'utf-8');
+  const fullJs = JS_BANNER + srcJs;
+
+  if (esbuild) {
+    // 1. Unminified JS
+    esbuild.buildSync({
+      entryPoints: ['src/sui.js'],
+      bundle: true,
+      minify: false,
+      banner: { js: JS_BANNER },
+      outfile: 'dist/sui.js'
+    });
+
+    // 2. Minified JS
+    esbuild.buildSync({
+      entryPoints: ['src/sui.js'],
+      bundle: true,
+      minify: true,
+      banner: { js: JS_BANNER.trim() },
+      outfile: 'dist/sui.min.js'
+    });
+  } else {
+    fs.writeFileSync('dist/sui.js', fullJs);
+    const minJs = JS_BANNER.trim() + '\n' + srcJs
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .split('\n')
+      .map(l => l.trim())
+      .filter(l => l && !l.startsWith('//'))
+      .join('\n');
+    fs.writeFileSync('dist/sui.min.js', minJs);
+  }
+
   fs.copyFileSync('dist/sui.js', 'public/sui.js');
   fs.copyFileSync('dist/sui.js', 'public/dist/sui.js');
-
-  // 2. Minified JS
-  esbuild.buildSync({
-    entryPoints: ['src/sui.js'],
-    bundle: true,
-    minify: true,
-    banner: { js: JS_BANNER.trim() },
-    outfile: 'dist/sui.min.js'
-  });
   fs.copyFileSync('dist/sui.min.js', 'public/sui.min.js');
   fs.copyFileSync('dist/sui.min.js', 'public/dist/sui.min.js');
 
