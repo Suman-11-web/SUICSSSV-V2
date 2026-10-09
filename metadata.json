@@ -1,6 +1,0 @@
-{
-  "name": "SUI CSS Framework",
-  "description": "SUI.css is a modern, reusable CSS framework with responsive utilities, layouts, components, animations, and JavaScript utilities for building modern web interfaces.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
