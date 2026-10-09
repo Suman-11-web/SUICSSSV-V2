@@ -1,0 +1,8 @@
+{
+  "name": "SUI.css Framework",
+  "description": "Ultra pro max modern CSS framework with OKLCH colors, responsive utilities, layouts, components, animations, and zero-build CDN.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

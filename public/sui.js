@@ -1,3 +1,9 @@
+/*!
+ * SUI.css v2.1.0 Core Interactive Engine
+ * https://github.com/suman-11-web/SUICSSSV-V2
+ * License: MIT
+ */
+
 (() => {
   // src/sui.js
   (function(root, factory) {

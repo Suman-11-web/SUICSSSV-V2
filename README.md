@@ -43,14 +43,26 @@ Sui.css requires absolutely no build tools, Node modules, or PostCSS configurati
 
 To get started immediately, copy and paste these code blocks into your `index.html` file. 
 
-**1. CSS Core:** Place this link inside your `<head>` tag.
+**1. CSS Core (v2.1.0):** Place this link inside your `<head>` tag.
 ```html
-<link rel="stylesheet" href="[https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.css](https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.css)">
+<!-- SUI.css v2.1.0 Minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.css">
 ```
 
-**2. JavaScript Core:** Place this script tag at the very bottom of your document, just before the closing `</body>` tag.
+*For unminified CSS during development:*
 ```html
-<script src="[https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.js](https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.js)"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.css">
+```
+
+**2. JavaScript Core (v2.1.0):** Place this script tag at the bottom before `</body>`.
+```html
+<!-- SUI.css v2.1.0 Core Interactive Engine -->
+<script src="https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.js"></script>
+```
+
+*For unminified JS during development:*
+```html
+<script src="https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.js"></script>
 ```
 
 ### Local Offline Setup
@@ -305,7 +317,7 @@ Features fluid layout, interactive buttons, and choreographed entry animations.
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Software Launch - Sui.css</title>
-  <link rel="stylesheet" href="[https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.css](https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.css)">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.css">
 </head>
 <body class="sui-bg">
 
@@ -321,7 +333,7 @@ Features fluid layout, interactive buttons, and choreographed entry animations.
 
   <!-- Hero Section -->
   <main class="sui-flex sui-flex-col sui-items-center sui-justify-center sui-text-center sui-px-6 sui-py-24">
-    <span class="sui-badge sui-badge-primary sui-badge-outline sui-animate-spring-up sui-mb-6">Architecture v2.0 Live</span>
+    <span class="sui-badge sui-badge-primary sui-badge-outline sui-animate-spring-up sui-mb-6">Architecture v2.1.0 Live</span>
     
     <h1 class="sui-text-hero sui-font-black sui-animate-blur-in sui-delay-1 sui-max-w-4xl sui-mb-6" style="line-height: 1.1;">
       Build software faster.<br>Scale infinitely.
@@ -337,7 +349,7 @@ Features fluid layout, interactive buttons, and choreographed entry animations.
     </div>
   </main>
 
-  <script src="[https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.js](https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.js)"></script>
+  <script src="https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.js"></script>
 </body>
 </html>
 ```
@@ -352,7 +364,7 @@ Features a multi-column application layout, static sidebars, and analytical metr
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Application Dashboard - Sui.css</title>
-  <link rel="stylesheet" href="[https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.css](https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.css)">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.css">
 </head>
 <body class="sui-bg sui-flex" style="min-height: 100vh;">
 
@@ -392,10 +404,32 @@ Features a multi-column application layout, static sidebars, and analytical metr
     </div>
   </main>
 
-  <script src="[https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.js](https://cdn.jsdelivr.net/gh/Suman-11-web/SUI-FRAMEWORK.CSS@v2.0.0/dist/sui.min.js)"></script>
+  <script src="https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.js"></script>
 </body>
 </html>
 ```
+
+---
+
+## 11. CDN Release & Publishing Guide
+
+### jsDelivr CDN Endpoints (Repository: `suman-11-web/SUICSSSV-V2`)
+| Artifact | Recommended Production CDN URL |
+| :--- | :--- |
+| **Minified CSS** | `https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.css` |
+| **Unminified CSS** | `https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.css` |
+| **Minified JS** | `https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.js` |
+| **Unminified JS** | `https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.js` |
+
+*Active immediate fallback on GitHub tag `v2.1.0`: `https://cdn.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/public/sui.min.css` & `public/sui.min.js`.*
+
+### Release Checklist for Future Versions
+1. **Build Bundles**: Run `npm run build:bundle` to compile and verify `dist/sui.min.css`, `dist/sui.min.js`, etc.
+2. **Verify Output**: Run `npm run verify` to test file integrity and minimum byte thresholds.
+3. **Commit Artifacts**: Ensure `dist/` is staged (`git add dist/ package.json`) and committed.
+4. **Tag Release**: Create an annotated git tag matching `package.json` version: `git tag -a v2.1.0 -m "Release v2.1.0"`.
+5. **Push Tag & Commits**: `git push origin main --tags`.
+6. **Purge CDN Cache**: If updating an existing tag, run `curl -X POST https://purge.jsdelivr.net/gh/suman-11-web/SUICSSSV-V2@v2.1.0/dist/sui.min.css`.
 
 ---
 
